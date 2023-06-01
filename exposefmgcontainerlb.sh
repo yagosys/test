@@ -6,7 +6,8 @@ kind: Service
 metadata:
   name: fmgcontainerhttps
 spec:
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
   ports:
   - port: 443
     name: webgui

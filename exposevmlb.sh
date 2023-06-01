@@ -7,7 +7,8 @@ kind: Service
 metadata:
   name: $svcname
 spec:
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
   ports:
   - port: 443
     name: fmg
