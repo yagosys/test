@@ -220,36 +220,9 @@ spec:
 EOF
 kubectl apply -f fmgNodePort.yml && 
 
-#echo deploy fmg74 contaier 
+#echo deploy fmg707 contaier 
 
 cat << EOF > fmgcontainer.yml
-apiVersion: v1
-kind: Service
-metadata:
-  name: fortimanager-clusterip
-spec:
-  selector:
-    app: fortimanager
-  ports:
-    - protocol: TCP
-      port: 443
-      targetPort: 443
-  type: ClusterIP
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: fortimanager-nodeport
-spec:
-  selector:
-    app: fortimanager
-  ports:
-    - protocol: TCP
-      port: 443
-      targetPort: 443
-  type: NodePort
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -267,7 +240,7 @@ spec:
     spec:
       containers:
         - name: fortimanager
-          image: fortinet/fortimanager:latest
+          image: fortinet/fortimanager:7.0.7
           ports:
             - containerPort: 541
             - containerPort: 443
@@ -283,6 +256,12 @@ spec:
             capabilities:
               add:
                 - ALL
+          readinessProbe:
+            tcpSocket:
+              port: 443
+            initialDelaySeconds: 180
+            periodSeconds: 10
+            failureThreshold: 3
           volumeMounts:
             - name: var-fmgt100
               mountPath: /var
@@ -306,7 +285,5 @@ kubectl create token ftntconnector -n kube-system
 podname=$(kubectl get pod -l app=fmg | grep Running | awk '{ print $1 }')
 fmgip=$(kubectl get pod $podname -o jsonpath='{.status.podIP}')
 echo fmg pod ip = $fmgip
-#pubip=$(curl -s ipinfo.io | jq -r '.ip')
-#echo please access via https://$pubip:$nodeport for fmgvm
 
 echo deploymentcompleted
