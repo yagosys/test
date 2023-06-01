@@ -132,6 +132,8 @@ spec:
         kubevirt.io/domain: fmg
         app: fmg
     spec:
+      nodeSelector: #nodeSelector matches nodes where performance key has high as value.
+        nested: "true"
       domain:
         cpu:
           cores: 4
@@ -218,7 +220,7 @@ spec:
       targetPort: $port
       nodePort: $nodeport
 EOF
-kubectl apply -f fmgNodePort.yml && 
+#kubectl apply -f fmgNodePort.yml && 
 
 #echo deploy fmg707 contaier 
 
