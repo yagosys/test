@@ -1,0 +1,57 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/os: linux
+  name: fmg
+spec:
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: fmg
+        app: fmg
+    spec:
+      nodeSelector: #nodeSelector matches nodes where performance key has high as value.
+        nested: "true"
+      domain:
+        cpu:
+          cores: 4
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: disk0
+          - disk:
+              bus: virtio
+            name: disk1
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: cloudinitdisk
+        resources:
+          requests:
+            memory: 8000M
+      readinessProbe:
+        tcpSocket:
+          port: 443
+        initialDelaySeconds: 180
+        periodSeconds: 10
+        failureThreshold: 3
+      volumes:
+      - name: disk0
+        persistentVolumeClaim:
+          claimName: fmg
+      - name: disk1
+        persistentVolumeClaim:
+          claimName: fmglog
+      - cloudInitNoCloud:
+          #secretRef:
+             #name: fmg-cloudconfig
+          userData: |
+            #cloud-config
+            hostname: fmg
+            ssh_pwauth: True
+            disable_root: false
+        name: cloudinitdisk

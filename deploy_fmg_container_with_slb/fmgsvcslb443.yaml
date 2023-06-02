@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fmgcontainerhttps
+spec:
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
+  ports:
+  - port: 443
+    name: webgui
+    protocol: TCP
+    targetPort: 443
+  selector:
+    app: fortimanager
+  type: LoadBalancer

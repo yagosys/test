@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortimanager-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortimanager
+  template:
+    metadata:
+      labels:
+        app: fortimanager
+    spec:
+      containers:
+        - name: fortimanager
+          image: fortinet/fortimanager:7.0.7
+          ports:
+            - containerPort: 541
+            - containerPort: 443
+            - containerPort: 22
+            - containerPort: 23
+            - containerPort: 8888
+            - containerPort: 8889
+            - containerPort: 8890
+            - containerPort: 8080
+            - containerPort: 161
+              protocol: UDP
+          securityContext:
+            capabilities:
+              add:
+                - ALL
+          readinessProbe:
+            tcpSocket:
+              port: 443
+            initialDelaySeconds: 180
+            periodSeconds: 10
+            failureThreshold: 3
+          volumeMounts:
+            - name: var-fmgt100
+              mountPath: /var
+            - name: data-fmgt100
+              mountPath: /data
+      volumes:
+        - name: var-fmgt100
+          hostPath:
+            path: /var/fmg/var_fmgt100
+        - name: data-fmgt100
+          hostPath:
+            path: /var/fmg/data_fmgt100

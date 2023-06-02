@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fazvmhttps
+spec:
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
+  ports:
+  - port: 443
+    name: faz
+    protocol: TCP
+    targetPort: 443
+  selector:
+    kubevirt.io/domain: faz
+  type: LoadBalancer

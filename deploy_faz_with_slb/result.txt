@@ -1,0 +1,3 @@
+faz bootup record
+boot at Fri 02 Jun 2023 08:51:54 AM CST
+service ready at Fri 02 Jun 2023 08:57:39 AM CST

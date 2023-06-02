@@ -1,0 +1,2 @@
+fmg bootup record
+boot at
