@@ -11,5 +11,5 @@ spec:
     protocol: TCP
     targetPort: 443
   selector:
-    kubevirt.io/domain: faztemp
+    kubevirt.io/domain: faz
   type: LoadBalancer

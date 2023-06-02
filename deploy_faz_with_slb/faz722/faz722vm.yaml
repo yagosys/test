@@ -10,7 +10,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        kubevirt.io/domain: faztemp
+        kubevirt.io/domain: faz722
         app: faz
     spec:
       nodeSelector: #nodeSelector matches nodes where performance key has high as value.
