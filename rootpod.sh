@@ -20,6 +20,13 @@ spec:
     tty: true
     securityContext:
       privileged: true
+    volumeMounts:
+    - mountPath: /host
+      name: host
+  volumes:
+  - name: host
+    hostPath:
+      path: /
 EOF
 
 kubectl apply -f privilegepod.yml
