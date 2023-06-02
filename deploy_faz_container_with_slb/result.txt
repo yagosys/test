@@ -1,0 +1,2 @@
+faz bootup record
+boot at

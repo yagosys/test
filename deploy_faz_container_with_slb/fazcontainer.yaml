@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortianalyzer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortianalyzer
+  template:
+    metadata:
+      labels:
+        app: fortianalyzer
+    spec:
+      containers:
+        - name: fortianalyzer
+          image: fortinet/fortianalyzer:7.0.7
+          ports:
+            - containerPort: 541
+            - containerPort: 443
+            - containerPort: 22
+            - containerPort: 23
+            - containerPort: 8888
+            - containerPort: 8889
+            - containerPort: 8890
+            - containerPort: 8080
+            - containerPort: 161
+              protocol: UDP
+          securityContext:
+            capabilities:
+              add:
+                - ALL
+          readinessProbe:
+            tcpSocket:
+              port: 443
+            initialDelaySeconds: 180
+            periodSeconds: 10
+            failureThreshold: 3
+          volumeMounts:
+            - name: var-fazt100
+              mountPath: /var
+            - name: data-fazt100
+              mountPath: /data
+      volumes:
+        - name: var-fazt100
+          hostPath:
+            path: /var/faz/var_fazt100
+        - name: data-fazt100
+          hostPath:
+            path: /var/faz/data_fazt100

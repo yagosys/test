@@ -1,2 +1,3 @@
 fmg bootup record
 boot at
+service ready at Fri 02 Jun 2023 09:10:41 AM CST

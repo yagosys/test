@@ -1,5 +1,5 @@
 #!/bin/bash -x
-service_name="fmgcontainerhttps"
+service_name="fazcontainerhttps"
 
 
 
@@ -23,10 +23,10 @@ while true; do
     break
   fi
   sleep 2
-  kubectl get pod  -l app=fortimanager
+  kubectl get pod  -l app=fortianalyzer
 done
 dateStop=$(date)
 
-echo fmg bootup record > result.txt
-echo boot start at $dateStart >> result.txt
+echo faz bootup record > result.txt
+echo boot at $dateStart >> result.txt
 echo service ready at $dateStop  >> result.txt
