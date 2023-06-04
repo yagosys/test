@@ -1,0 +1,10 @@
+#cloud-config
+powershell:
+  - command: |
+      Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/microsoft/Windows-Containers/Main/helpful_tools/Install-DockerCE/install-docker-ce.ps1" -OutFile "install-docker-ce.ps1"
+      .\install-docker-ce.ps1
+      Invoke-WebRequest -Uri  https://wandy-public-7326-0030-8177.s3.ap-southeast-1.amazonaws.com/FortiClientEndpointManagementServer_7.0.7.0398_x64.exe -OutFile FortiClientEndpointManagementServer_7.0.7.0398_x64.exe
+      Start-Process -FilePath "FortiClientEndpointManagementServer_7.0.7.0398_x64.exe" -Args "/quiet" -NoNewWindow -Wait
+      Invoke-WebRequest "http://dl.google.com/chrome/install/375.126/chrome_installer.exe" -OutFile chrome_installer.exe
+      Start-Process -FilePath "chrome_installer.exe" -Args "/silent /install" -NoNewWindow -Wait
+#Start-Process -FilePath "C:\temp\installems.exe" -Args "/quiet" -NoNewWindow -Wait
