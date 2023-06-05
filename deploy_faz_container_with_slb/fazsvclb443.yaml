@@ -47,10 +47,6 @@ spec:
     name: webg
     protocol: TCP
     targetPort: 8443
-  - port: 8443
-    name: webg
-    protocol: TCP
-    targetPort: 8443
   - port: 9999
     name: webh
     protocol: TCP
