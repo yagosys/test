@@ -1,3 +1,4 @@
+#!/bin/bash -x
 LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
 INSTANCETYPE="Standard_D4_v4"
@@ -19,6 +20,7 @@ az aks create \
 
 az aks nodepool add \
     --resource-group $RESOURCEGROUP \
+    --generate-ssh-keys \
     --cluster-name myAKSCluster \
     --os-type Windows \
     --os-sku Windows2022 \
@@ -30,6 +32,7 @@ az aks nodepool add \
 
 az aks nodepool add \
     --resource-group $RESOURCEGROUP \
+    --generate-ssh-keys \
     --cluster-name myAKSCluster \
     --os-type Linux \
     --node-vm-size $INSTANCETYPE \
