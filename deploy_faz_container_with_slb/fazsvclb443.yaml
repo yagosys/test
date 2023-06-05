@@ -15,7 +15,27 @@ spec:
     name: ssh
     protocol: TCP
     targetPort: 22
+  - port: 8888
+    name: 8888
+    protocol: TCP
+    targetPort: 8888
+  - port: 8889
+    name: 8889
+    protocol: TCP
+    targetPort: 8889
+  - port: 8890
+    name: 8890
+    protocol: TCP
+    targetPort: 8890
+  - port: 8080
+    name: 8080
+    protocol: TCP
+    targetPort: 8080
+  - port: 161
+    name: 161
+    protocol: UDP
+    targetPort: 161
   selector:
     app: fortianalyzer
   type: LoadBalancer
-
+ 
