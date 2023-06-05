@@ -2,7 +2,8 @@
 LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
 CLUSTERNAME="myAKSCluster"
-NODENAME="npwin ubuntu"
+#NODENAME="npwin ubuntu"
+NODENAME=$(az aks nodepool list --cluster-name $CLUSTERNAME --resource-group $RESOURCEGROUP | jq -r .[].name)
 echo "delete nodepool"
 sleep 5
 
