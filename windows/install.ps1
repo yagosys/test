@@ -60,6 +60,7 @@ choco install gawk -y
 choco install make -y
 choco install 7zip -y
 choco install azure-cli -y
+choco install awscli -y
 choco install -y microsoft-windows-terminal 
 choco install -y windows-iso-downloader
 

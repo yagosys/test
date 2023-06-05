@@ -1,26 +1,40 @@
-az group create --name myResourceGroup --location westus && 
+LOCATION="eastasia"
+RESOURCEGROUP="wandyaks"
+INSTANCETYPE="Standard_D4_v4"
+az group create --name $RESOURCEGROUP --location $LOCATION && 
 
-WINDOWS_USERNAME=adminuser
-WINDOWS_PASSWORD="Welcome.123456!#"
+WINDOWS_USERNAME='adminuser'
+WINDOWS_PASSWORD='Welcome.123456!#'
 az aks create \
-    --resource-group myResourceGroup \
+    --resource-group $RESOURCEGROUP \
     --name myAKSCluster \
     --node-count 1 \
     --enable-addons monitoring \
+#    --node-vm-size $INSTANCETYPE \
     --generate-ssh-keys \
     --windows-admin-username $WINDOWS_USERNAME \
     --windows-admin-password $WINDOWS_PASSWORD \
     --vm-set-type VirtualMachineScaleSets \
-    --network-plugin azure && 
+    --network-plugin azure &&  
 
-az aks nodepool add \
-    --resource-group myResourceGroup \
+#az aks nodepool add \
+    --resource-group $RESOURCEGROUP \
     --cluster-name myAKSCluster \
     --os-type Windows \
-    --os-sku Windows2019 \
+    --os-sku Windows2022 \
+    --node-vm-size $INSTANCETYPE \
     --name npwin \
+    --labels windows=true \
     --node-count 1
 
-
+az aks nodepool add \
+    --resource-group $RESOURCEGROUP \
+    --cluster-name myAKSCluster \
+    --os-type Linux \
+    --node-vm-size $INSTANCETYPE \
+    --name ubuntu \
+    --labels nested=true \
+    --labels linux=true \
+    --node-count 1 && 
  
-
+az aks get-credentials -g $RESOURCEGROUP -n myAKSCluster --overwrite-existing
