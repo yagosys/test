@@ -2,7 +2,7 @@
 LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
 INSTANCETYPE="Standard_D4_v4"
-az group create --name $RESOURCEGROUP --location $LOCATION --generate-ssh-keys && 
+az group create --name $RESOURCEGROUP --location $LOCATION --generate-ssh-keys 
 
 WINDOWS_USERNAME='adminuser'
 WINDOWS_PASSWORD='Welcome.123456!#'
@@ -12,7 +12,6 @@ az aks create \
     --node-count 1 \
     --enable-addons monitoring \
 #    --node-vm-size $INSTANCETYPE \
-    --generate-ssh-keys \
     --windows-admin-username $WINDOWS_USERNAME \
     --windows-admin-password $WINDOWS_PASSWORD \
     --vm-set-type VirtualMachineScaleSets \
@@ -20,7 +19,6 @@ az aks create \
 
 az aks nodepool add \
     --resource-group $RESOURCEGROUP \
-    --generate-ssh-keys \
     --cluster-name myAKSCluster \
     --os-type Windows \
     --os-sku Windows2022 \
@@ -32,7 +30,6 @@ az aks nodepool add \
 
 az aks nodepool add \
     --resource-group $RESOURCEGROUP \
-    --generate-ssh-keys \
     --cluster-name myAKSCluster \
     --os-type Linux \
     --node-vm-size $INSTANCETYPE \
