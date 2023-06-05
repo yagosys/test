@@ -28,9 +28,33 @@ spec:
     protocol: TCP
     targetPort: 8890
   - port: 8080
-    name: webd
+    name: soap
     protocol: TCP
     targetPort: 8080
+  - port: 514
+    name: oftpd
+    protocol: TCP
+    targetPort: 514
+  - port: 541
+    name: fgfm
+    protocol: TCP
+    targetPort: 541
+  - port: 8793
+    name: mast
+    protocol: TCP
+    targetPort: 8793
+  - port: 8443
+    name: webg
+    protocol: TCP
+    targetPort: 8443
+  - port: 8443
+    name: webg
+    protocol: TCP
+    targetPort: 8443
+  - port: 9999
+    name: webh
+    protocol: TCP
+    targetPort: 9999
   - port: 161
     name: syslog
     protocol: UDP

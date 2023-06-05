@@ -27,6 +27,15 @@ spec:
             - containerPort: 8889
             - containerPort: 8890
             - containerPort: 8080
+            - containerPort: 8080
+            - containerPort: 8123
+            - containerPort: 9009
+            - containerPort: 9000
+            - containerPort: 8793
+            - containerPort: 9999
+            - containerPort: 8443
+            - containerPort: 514
+            - containerPort: 26443
             - containerPort: 161
               protocol: UDP
           securityContext:
