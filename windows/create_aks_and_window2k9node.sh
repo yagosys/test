@@ -25,6 +25,7 @@ az aks nodepool add \
     --node-vm-size $INSTANCETYPE \
     --name npwin \
     --labels windows=true \
+    --labels kubernetes.io/os=windows \
     --node-count 1
 
 az aks nodepool add \
