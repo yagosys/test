@@ -13,6 +13,8 @@ spec:
       labels:
         app: fortianalyzer
     spec:
+      nodeSelector: 
+        linux: "true"
       containers:
         - name: fortianalyzer
           image: fortinet/fortianalyzer:7.0.7
@@ -37,6 +39,14 @@ spec:
             initialDelaySeconds: 180
             periodSeconds: 10
             failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 443
+              scheme: HTTPS
+            initialDelaySeconds: 240
+            periodSeconds: 10
+            failureThreshold: 3
           volumeMounts:
             - name: var-fazt100
               mountPath: /var
@@ -44,8 +54,9 @@ spec:
               mountPath: /data
       volumes:
         - name: var-fazt100
-          hostPath:
-            path: /var/faz/var_fazt100
+          persistentVolumeClaim:
+            claimName: fazvar
         - name: data-fazt100
-          hostPath:
-            path: /var/faz/data_fazt100
+          persistentVolumeClaim:
+            claimName: fazdata
+
