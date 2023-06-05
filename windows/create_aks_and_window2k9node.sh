@@ -17,7 +17,7 @@ az aks create \
     --vm-set-type VirtualMachineScaleSets \
     --network-plugin azure &&  
 
-#az aks nodepool add \
+az aks nodepool add \
     --resource-group $RESOURCEGROUP \
     --cluster-name myAKSCluster \
     --os-type Windows \
