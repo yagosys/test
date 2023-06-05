@@ -16,23 +16,23 @@ spec:
     protocol: TCP
     targetPort: 22
   - port: 8888
-    name: 8888
+    name: weba
     protocol: TCP
     targetPort: 8888
   - port: 8889
-    name: 8889
+    name: webb
     protocol: TCP
     targetPort: 8889
   - port: 8890
-    name: 8890
+    name: webc
     protocol: TCP
     targetPort: 8890
   - port: 8080
-    name: 8080
+    name: webd
     protocol: TCP
     targetPort: 8080
   - port: 161
-    name: 161
+    name: syslog
     protocol: UDP
     targetPort: 161
   selector:
