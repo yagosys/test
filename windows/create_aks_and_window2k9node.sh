@@ -2,7 +2,7 @@
 LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
 INSTANCETYPE="Standard_D4_v4"
-az group create --name $RESOURCEGROUP --location $LOCATION --generate-ssh-keys 
+az group create --name $RESOURCEGROUP --location $LOCATION 
 
 WINDOWS_USERNAME='adminuser'
 WINDOWS_PASSWORD='Welcome.123456!#'
