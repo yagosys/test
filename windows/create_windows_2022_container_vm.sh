@@ -12,8 +12,7 @@ VM_NAME="myVM"
 az group create --name $CLUSTER_RG --location  $LOCATION
 az network nsg create --name wandynsg --resource-group $CLUSTER_RG  --location $LOCATION
 az network vnet create --name $VNET_NAME --resource-group $CLUSTER_RG --location $LOCATION --address-prefix 10.0.0.0/16
-az network vnet subnet create --name $SUBNET_NAME --resource-group $CLUSTER_RG --vnet-name vmvnet --address-prefix 10.0.0.0/24
-
+az network vnet subnet create --name $SUBNET_NAME --resource-group $CLUSTER_RG --vnet-name $VNET_NAME --address-prefix 10.0.0.0/24
 
 az vm create \
     --resource-group $CLUSTER_RG \
