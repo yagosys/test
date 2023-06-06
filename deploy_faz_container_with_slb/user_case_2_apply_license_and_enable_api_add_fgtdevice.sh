@@ -48,8 +48,16 @@ while true; do
 done
 }
 
-wait_for_faz_ready
-add_license_from_homedirectory_and_setup_admin_password
+wait_for_faz_ready && 
+add_license_from_homedirectory_and_setup_admin_password &&
 echo after apply license,faz will restart , wait for faz ready again
+echo sleep 60 for faz to reboot
+sleep 60
 wait_for_faz_ready
+current_date=$(date '+%Y-%m-%d')
+filename="usercase_2${current_date}.txt"
+echo "license applied" > $filename
+pod_name=$(kubectl get pod  -l app=fortianalyzer)
+echo "$pod_name user admin has password $adminpassword" >> $filename
+
 
