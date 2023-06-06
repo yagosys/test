@@ -16,13 +16,13 @@ spec:
         "kubernetes.io/os": windows
       containers:
       - name: sample
-        image: mcr.microsoft.com/dotnet/framework/samples:aspnetapp
+        image: interbeing/ems:latest
         resources:
           limits:
-            cpu: 1
-            memory: 800M
+            cpu: 2
+            memory: 8000M
         ports:
-          - containerPort: 80
+          - containerPort: 443
   selector:
     matchLabels:
       app: sample
@@ -35,6 +35,6 @@ spec:
   type: LoadBalancer
   ports:
   - protocol: TCP
-    port: 80
+    port: 443
   selector:
     app: sample
