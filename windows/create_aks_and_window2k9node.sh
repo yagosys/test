@@ -4,7 +4,7 @@ RESOURCEGROUP="wandyaks"
 INSTANCETYPE="Standard_D4_v4"
 az group create --name $RESOURCEGROUP --location $LOCATION 
 
-WINDOWS_USERNAME='adminuser'
+WINDOWS_USERNAME='azureuser'
 WINDOWS_PASSWORD='Welcome.123456!#'
 az aks create \
     --resource-group $RESOURCEGROUP \
@@ -26,7 +26,7 @@ az aks nodepool add \
     --name npwin \
     --labels windows=true \
     --labels kubernetes.io/os=windows \
-    --node-count 1
+    --node-count 1 &&
 
 az aks nodepool add \
     --resource-group $RESOURCEGROUP \
