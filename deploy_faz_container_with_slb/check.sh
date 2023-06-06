@@ -27,7 +27,8 @@ while true; do
   kubectl get pod  -l app=fortianalyzer
 done
 dateStop=$(date)
-
-echo faz bootup record > result.txt
-echo boot at $dateStart >> result.txt
-echo service ready at $dateStop  >> result.txt
+current_date=$(date '+%Y-%m-%d')
+filename="file_${current_date}.txt"
+echo faz bootup record > $filename 
+echo boot at $dateStart >> $filename
+echo service ready at $dateStop  >> $filename
