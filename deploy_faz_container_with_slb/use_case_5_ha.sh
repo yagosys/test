@@ -79,7 +79,10 @@ ping_lb_publicip | tee -a $filename
 kubectl get ep  | tee -a $filename
 kubectl get pod -l app=fortianalyzer | tee -a $filename
 
-echo delete one of the pod | tee -a $filename
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+echo delete one of the pod $podname | tee -a $filename
 kubectl delete po/$podname | tee -a $filename
-
+sleep 5 
+echo sleep 5
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
 wait_for_faz_ready | tee -a $filename
