@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fazlog
+  name: fazlogvm
 spec:
   accessModes:
     - ReadWriteOnce

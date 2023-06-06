@@ -53,7 +53,7 @@ spec:
           claimName: faz
       - name: disk1
         persistentVolumeClaim:
-          claimName: fazlog
+          claimName: fazlogvm
       - cloudInitNoCloud:
           #secretRef:
              #name: faz-cloudconfig
