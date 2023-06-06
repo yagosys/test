@@ -1,6 +1,6 @@
 #!/bin/bash -x
 version=$1
-[[ $version=="" ]] && version="7.2.2"
+[[ -z $version ]] && version="7.2.2"
 
 function get_devicelist_from_faz() {
 podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
