@@ -56,17 +56,4 @@ spec:
           claimName: fazlogvm
       - name: cloudinitdisk
         persistentVolumeClaim:
-          claimName: cidata-pvc
-    dataVolumeTemplates:
-    - metadata:
-        name: cidata-dv
-      spec:
-        pvc:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 1Gi
-        source:
-          http:
-            url:  "https://wandy-public-7326-0030-8177.s3.ap-southeast-1.amazonaws.com/cidata.iso"
+          claimName: cidata
