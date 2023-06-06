@@ -57,7 +57,10 @@ wait_for_faz_ready
 current_date=$(date '+%Y-%m-%d')
 filename="usercase_2${current_date}.txt"
 echo "license applied" > $filename
-pod_name=$(kubectl get pod  -l app=fortianalyzer)
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
 echo "$pod_name user admin has password $adminpassword" >> $filename
+
+echo "use cli to get system status" >> $filename
+kubectl exec -it $podname -- /bin/bash -c 'echo -e "get system status" | cli' | tee >> $filename
 
 
