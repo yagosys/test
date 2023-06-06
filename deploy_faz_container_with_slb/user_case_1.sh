@@ -5,5 +5,7 @@ kubectl create -f ./pvc.yaml
 kubectl create -f ./fazcontainer.yaml
 kubectl create -f ./fazsvclb443.yaml
 ./check.sh usercase1
-./delete.sh
+kubectl delete -f fazsvclb443.yaml
+kubectl delete -f fazcontainer.yaml
+kubectl delete -f pvc.yaml
 
