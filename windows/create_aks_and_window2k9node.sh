@@ -25,6 +25,7 @@ az aks nodepool add \
     --name npwin \
     --labels windows=true \
     --labels kubernetes.io/os=windows \
+    --labels node.kubernetes.io=windows \
     --node-count 1 &&
 
 az aks nodepool add \
