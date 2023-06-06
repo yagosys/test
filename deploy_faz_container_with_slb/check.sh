@@ -28,7 +28,7 @@ while true; do
 done
 dateStop=$(date)
 current_date=$(date '+%Y-%m-%d')
-filename="file_${current_date}.txt"
+filename="faz_boot_time_${current_date}.txt"
 echo faz bootup record > $filename 
 echo boot at $dateStart >> $filename
 echo service ready at $dateStop  >> $filename
