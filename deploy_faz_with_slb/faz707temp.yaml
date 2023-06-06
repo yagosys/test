@@ -14,7 +14,8 @@ spec:
         app: faz
     spec:
       nodeSelector: #nodeSelector matches nodes where performance key has high as value.
-        nested: "true"
+      #nested: "true"
+        linux: "true"
       domain:
         cpu:
           cores: 4
