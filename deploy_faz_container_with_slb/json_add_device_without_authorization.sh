@@ -23,13 +23,13 @@ cat << EOF > request.json
         "adom": "root",
         "device": {
           "adm_pass": [
-            $fgtpassword
+            "$fgtpassword"
           ],
           "adm_usr": "admin",
           "desc": "FortiGate-VM64-ALI",
           "device action": "string",
           "faz.quota": 0,
-          "ip": $fgtip,
+          "ip": "$fgtip",
           "meta fields": "string",
           "mgmt_mode": "string",
           "mr": 0,
@@ -37,8 +37,8 @@ cat << EOF > request.json
           "os_type": "0",
           "os_ver": "-1",
           "patch": 0,
-          "platform_str": $platform_str,
-          "sn": $fgtsn
+          "platform_str": "$platform_str",
+          "sn": "$fgtsn"
         },
         "flags": [
           "{option}"
