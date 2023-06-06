@@ -32,7 +32,7 @@ podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 
 
 echo "start scale out"
 
-kubectl scale deplyment fortianalyer-deployment --replicas=2
+kubectl scale deployment fortianalyer-deployment --replicas=2
 
 podname=$(kubectl get pod -l app=fortianalyzer | grep 0/1 | awk '{ print $1 }')
 while true; do
