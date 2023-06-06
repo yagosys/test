@@ -10,6 +10,18 @@ spec:
     name: faz
     protocol: TCP
     targetPort: 443
+  - port: 514
+    name: oftpd
+    protocol: TCP
+    targetPort: 514
+  - port: 541
+    name: fgfm
+    protocol: TCP
+    targetPort: 541
+  - port: 22
+    name: ssh
+    protocol: TCP
+    targetPort: 22
   selector:
-    kubevirt.io/domain: faztemp
+    kubevirt.io/domain: faz
   type: LoadBalancer
