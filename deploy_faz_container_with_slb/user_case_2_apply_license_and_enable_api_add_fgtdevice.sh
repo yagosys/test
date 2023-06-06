@@ -24,6 +24,33 @@ echo add license from $licfile
 kubectl exec -it $podname -- /bin/bash -c 'echo -e "execute add-vm-license \"$(cat /tmp/'$licfile')\"" | cli'
 }
 
+function enable_api_for_admin() {
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+service_name="fazcontainerhttps"
+ip=$(kubectl get svc $service_name --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+kubectl exec -it $podname -- /bin/bash -c 'echo -e "config system admin user \n edit admin\n set rpc-permit read-write\n end\n" | cli'
+#echo -e "config system admin user \n edit admin\n set rpc-permit read-write\n end\n" | cli
+# Login and get session ID
+session_id=$(curl -k -s -d '{"method":"exec","params":[{"url":"/sys/login/user","data":{"user":"admin","passwd":"Welcome.123"}}]}' -H "Content-Type: application/json" -X POST https://$ip/jsonrpc | jq -r .session)
+
+# Create the request JSON with the session ID
+cat << EOF > request.json
+{
+  "method": "get",
+  "params": [
+    {
+      "url": "/cli/global/system/dns"
+    }
+  ],
+  "session": "$session_id",
+  "id": 1
+}
+EOF
+
+# Send the request
+curl -k -d @request.json -H "Content-Type: application/json" -X POST https://$ip/jsonrpc
+}
+
 function wait_for_faz_ready() {
 service_name="fazcontainerhttps"
 while true; do
@@ -62,5 +89,10 @@ echo "$pod_name user admin has password $adminpassword" >> $filename
 
 echo "use cli to get system status" >> $filename
 kubectl exec -it $podname -- /bin/bash -c 'echo -e "get system status" | cli' | tee >> $filename
+
+echo "start enable json rpc api for $podname" >> $filename
+
+enable_api_for_admin && echo "admin user json rpc api enable" >> $filename
+
 
 
