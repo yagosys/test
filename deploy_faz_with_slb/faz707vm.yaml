@@ -39,6 +39,14 @@ spec:
         initialDelaySeconds: 180
         periodSeconds: 10
         failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 443
+          scheme: HTTPS
+        initialDelaySeconds: 240
+        periodSeconds: 10
+        failureThreshold: 3
       volumes:
       - name: disk0
         persistentVolumeClaim:
