@@ -1,5 +1,5 @@
 #!/bin/bash -xe
-if sudo pwd ; then echo you are sudoer; fi
+#if sudo pwd ; then echo you are sudoer; fi
 
 export VERSION=$(curl -s https://api.github.com/repos/kubevirt/kubevirt/releases | grep tag_name | grep -v -- '-rc' | sort -r | head -1 | awk -F': ' '{print $2}' | sed 's/,//' | xargs)
 echo $VERSION
@@ -25,13 +25,13 @@ echo "Status.phase is now Deployed"
 echo  install virtcl client  
 #export KUBEVIRT_VERSION=$(curl -s https://api.github.com/repos/kubevirt/kubevirt/releases/latest | jq -r .tag_name)
 export KUBEVIRT_VERSION=$VERSION
-wget -O ~/virtctl https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/virtctl-${KUBEVIRT_VERSION}-linux-amd64
-chmod +x ~/virtctl
-sudo install ~/virtctl /usr/local/bin
+mkdir -p ~/bin
+wget -O ~/bin/virtctl https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/virtctl-${KUBEVIRT_VERSION}-linux-amd64
+chmod +x ~/bin/virtctl
+#sudo install ~/virtctl /usr/local/bin
 
 echo install krew
-
-(
+function (){
   set -x; cd "$(mktemp -d)" &&
   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
   ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
@@ -39,11 +39,11 @@ echo install krew
   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
   tar zxvf "${KREW}.tar.gz" &&
   ./"${KREW}" install krew
-)
+}
 
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
-echo export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
-source ~/.bashrc
+#export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
+#echo export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
+#source ~/.bashrc
 #kubectl krew install virt
 
 
