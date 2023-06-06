@@ -11,7 +11,6 @@ az aks create \
     --name myAKSCluster \
     --node-count 1 \
     --enable-addons monitoring \
-#    --node-vm-size $INSTANCETYPE \
     --windows-admin-username $WINDOWS_USERNAME \
     --windows-admin-password $WINDOWS_PASSWORD \
     --vm-set-type VirtualMachineScaleSets \
