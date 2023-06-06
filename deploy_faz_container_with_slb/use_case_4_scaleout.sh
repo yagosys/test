@@ -32,7 +32,7 @@ podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 
 
 echo "start scale out"
 
-kubectl scale deployment fortianalyer-deployment --replicas=2
+kubectl scale deployment fortianalyer-deployment --replicas=2 | tee -a $filename
 
 podname=$(kubectl get pod -l app=fortianalyzer | grep 0/1 | awk '{ print $1 }')
 while true; do
@@ -44,9 +44,6 @@ while true; do
   sleep 5
 done
 
-get_lb_ip
-ping_lb_publicip
-kubectl get ep 
 
 
 function get_lb_ip() {
@@ -75,6 +72,11 @@ while true; do
   kubectl get pod  -l app=fortianalyzer
 done
 }
+
+
+get_lb_ip
+ping_lb_publicip | tee -a $filename 
+kubectl get ep  | tee -a $filename
 
 
 
