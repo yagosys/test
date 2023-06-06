@@ -28,7 +28,7 @@ done
 wait_for_faz_ready
 current_date=$(date '+%Y-%m-%d')
 filename="usecase_5_${current_date}.txt"
-podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | head -n 1 | awk '{ print $1 }')
 
 
 echo "start use kubectl scale deployment fortianalyer-deployment --replicas=2 to scale out"  | tee -a $filename
@@ -79,10 +79,10 @@ ping_lb_publicip | tee -a $filename
 kubectl get ep  | tee -a $filename
 kubectl get pod -l app=fortianalyzer | tee -a $filename
 
-podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | head -n 1 | awk '{ print $1 }')
 echo delete one of the pod $podname | tee -a $filename
 kubectl delete po/$podname | tee -a $filename
 sleep 5 
 echo sleep 5
-podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+podname=$(kubectl get pod -l app=fortianalyzer | grep Running | head -n 1 | awk '{ print $1 }')
 wait_for_faz_ready | tee -a $filename
