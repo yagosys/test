@@ -3,7 +3,7 @@ kubectl create -f ./pvc.yaml
 kubectl create -f ./fazcontainer.yaml
 kubectl create -f ./fazsvclb443.yaml
 
-func wait_for_faz-ready() {
+function wait_for_faz_ready() {
 service_name="fazcontainerhttps"
 while true; do
     ip=$(kubectl get svc $service_name --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
