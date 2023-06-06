@@ -18,7 +18,7 @@ done
 dateStart=$(date)
 while true; do
 #  if httping -qc1 "https://$ip"; then
-  if nc -zv $ip 443; then
+  if nc -zv $ip 443 -w 60; then
     echo "Ping successful, breaking loop"
     curl -k -I https://$ip
     break
