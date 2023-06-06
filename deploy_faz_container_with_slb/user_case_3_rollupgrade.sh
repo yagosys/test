@@ -56,7 +56,7 @@ done
 
 wait_for_faz_ready
 current_date=$(date '+%Y-%m-%d')
-filename="usercase_3${current_date}.txt"
+filename="usercase_3_${current_date}.txt"
 echo "get device list from current version of faz" > $filename
 podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
 
