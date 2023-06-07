@@ -17,7 +17,6 @@ spec:
       containers:
       - name: sample
         image: interbeing/ems:latest
-        command: ["cmd", "/c", "echo Hello, World! && pause"]
         command: ["cmd", "/c", "echo Hello, World! && ping -t 127.0.0.1 > NUL"]
         resources:
           limits:
