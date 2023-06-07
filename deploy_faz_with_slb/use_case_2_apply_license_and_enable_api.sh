@@ -19,14 +19,9 @@ adminpassword="Welcome.123"
 podname=$(kubectl get pod -l app=$applabel | grep Running | awk '{ print $1 }')
 echo $podname
 
-echo cp license to container
-kubectl cp $HOME/$licfile $podname:/tmp/$licfile
-sleep 5
 echo config admin password to $adminpassword
-kubectl exec -it $podname -- /bin/bash -c 'echo -e "config system admin user \n edit admin\n set password '$adminpassword'\n end\n" | cli'
 echo add license from $licfile
-
-kubectl exec -it $podname -- /bin/bash -c 'echo -e "execute add-vm-license \"$(cat /tmp/'$licfile')\"" | cli'
+ssh admin@$ip  execute add-vm-license \"$lic\"  
 }
 
 function enable_api_for_admin() {
@@ -91,11 +86,12 @@ podname=$(kubectl get pod -l app=$appleable | grep Running | awk '{ print $1 }')
 echo "$pod_name user admin has password $adminpassword" >> $filename
 
 echo "use cli to get system status" >> $filename
-kubectl exec -it $podname -- /bin/bash -c 'echo -e "get system status" | cli' | tee -a  $filename
 
-echo "start enable json rpc api for $podname" >> $filename
+ssh admin@$ip 'get system status' | tee -a $filename
 
-enable_api_for_admin && echo "admin user json rpc api enable" >> $filename
+#echo "start enable json rpc api for $podname" >> $filename
+
+#enable_api_for_admin && echo "admin user json rpc api enable" >> $filename
 
 
 
