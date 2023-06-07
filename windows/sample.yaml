@@ -17,6 +17,7 @@ spec:
       containers:
       - name: sample
         image: interbeing/ems:latest
+        command: ["cmd", "/c", "echo Hello, World! && pause"]
         resources:
           limits:
             cpu: 2
