@@ -14,7 +14,7 @@ spec:
         app: faz
     spec:
       nodeSelector: #nodeSelector matches nodes where performance key has high as value.
-        #nested: "true"
+      #nested: "true"
         linux: "true"
       domain:
         cpu:
@@ -55,12 +55,6 @@ spec:
       - name: disk1
         persistentVolumeClaim:
           claimName: fazlogvm
-      - cloudInitNoCloud:
-          #secretRef:
-             #name: faz-cloudconfig
-          userData: |
-            #cloud-config
-            hostname: faz
-            ssh_pwauth: True
-            disable_root: false
-        name: cloudinitdisk
+      - name: cloudinitdisk
+        persistentVolumeClaim:
+          claimName: cidata
