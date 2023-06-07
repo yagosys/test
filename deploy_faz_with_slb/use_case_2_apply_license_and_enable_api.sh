@@ -82,7 +82,7 @@ echo sleep 60 for faz to reboot
 sleep 60
 wait_for_faz_ready
 current_date=$(date '+%Y-%m-%d')
-filename="usercase_2_${current_date}.txt"
+filename="usecase_2_${current_date}.txt"
 echo "license applied" > $filename
 podname=$(kubectl get pod -l app=$appleable | grep Running | awk '{ print $1 }')
 echo "$pod_name user admin has password $adminpassword" >> $filename
