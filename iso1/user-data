@@ -1,0 +1,25 @@
+Content-Type: multipart/mixed; boundary="===============0740947994048919689=="
+MIME-Version: 1.0
+
+--===============0740947994048919689==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="config"
+
+config system admin setting
+    set idle_timeout 480
+    set shell-access enable
+end
+config system global
+    set hostname faz-boot-strap
+end
+config system admin user
+   edit admin
+     set rpc-permit read-write
+     set force-password-change disable
+     set password Welcome.123
+     set ssh-public-key1 "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsnyD20db9cPiMs8LlTpbJtIk9iLvkpXIgDMSJFxUKz3C20N25O5jf/CDIsD+197Bug1PoyhNzR9rGtWmcTihJknBE0Vo9gBPURSBMQwHzvvjuI2Axc6HLJnRSmnMv8mnXV6mhNG2Fxv0/Y+gKhFc1n2KVnbgyORcQEgkJNo/uAtftCmEnV+3ceqSnBvF3irz2pAdgDPV1Iu626I2715ELWVg1K4QKR7/iSa1Ussq4kWo63GN0BwDr2efqHYG0enodDo+orQvnZ++nVvIqlXIlMzOHsVmEYdqZD+P4PAqRSuXtvSOJ1eyRbgD4vR23pUPRswMEWqOYCQbNZ2qjJ0ln"
+end
+--===============0740947994048919689==
+
