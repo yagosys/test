@@ -12,7 +12,7 @@ config system admin setting
     set shell-access enable
 end
 config system global
-    set hostname faz-boot-strap
+    set hostname kvmfaz
 end
 config system admin user
    edit admin
