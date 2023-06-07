@@ -35,6 +35,6 @@ echo boot at $dateStart >> $filename
 echo service ready at $dateStop  >> $filename
 echo -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip  'diag cdb upgrade summary' | tee -a $filename
 ssh admin@$ip 'diag cdb upgrade summary' | tee -a $filename
-echo -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'diag faz-cdb upgrade summary' | ee -a $filename
+echo -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'diag faz-cdb upgrade summary' | tee -a $filename
 ssh admin@$ip 'diag faz-cdb upgrade summary' | tee -a $filename
 echo upgrade done
