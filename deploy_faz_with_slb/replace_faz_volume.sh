@@ -1,1 +1,1 @@
-k delete -f faz707temp.yaml && k delete pvc faz && k delete pvc cidata && k create -f cidatadv.yaml  && k create -f fazdv.yaml && k create -f faz707temp.yaml
+kubectl delete -f faz707temp.yaml && kubectl delete pvc faz && kubectl delete pvc cidata && kubectl create -f cidatadv.yaml  && kubectl create -f fazdv.yaml && kubectl create -f faz707temp.yaml
