@@ -1,6 +1,7 @@
 #!/bin/bash -x
 service_name="fazvmhttps"
 applabel="faz"
+alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
 
 while true; do
