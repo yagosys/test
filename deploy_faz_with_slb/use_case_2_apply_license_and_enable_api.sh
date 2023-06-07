@@ -1,5 +1,6 @@
 #!/bin/bash -x
 
+kubectl create -f cidatadv.yaml
 kubectl create -f fazlogpvc.yaml 
 kubectl create -f fazdv.yaml 
 kubectl create -f faz707vm.yaml 
@@ -21,7 +22,8 @@ echo $podname
 
 echo config admin password to $adminpassword
 echo add license from $licfile
-ssh admin@$ip  execute add-vm-license \"$lic\"  
+lic=$(cat $HOME/$licfile)
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip  execute add-vm-license \"$lic\"  
 }
 
 function enable_api_for_admin() {
@@ -87,11 +89,8 @@ echo "$pod_name user admin has password $adminpassword" >> $filename
 
 echo "use cli to get system status" >> $filename
 
-ssh admin@$ip 'get system status' | tee -a $filename
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'get system status' | tee -a $filename
 
 #echo "start enable json rpc api for $podname" >> $filename
 
 #enable_api_for_admin && echo "admin user json rpc api enable" >> $filename
-
-
-
