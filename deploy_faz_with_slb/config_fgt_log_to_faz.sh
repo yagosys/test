@@ -2,7 +2,7 @@
 service_name="fazvmhttps"
 ip=$(kubectl get svc $service_name --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
 echo $ip
-fazsn=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $ip 'get system status' | grep "Serial Number" | cut -d ':' -f 2 | tr -d ' ')
+fazsn=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  admin@$ip 'get system status' | grep "Serial Number" | cut -d ':' -f 2 | tr -d ' ')
 echo $fazsn
 fgtip=$1
 echo $fgtip
