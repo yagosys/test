@@ -40,10 +40,11 @@ function install_krew (){
   tar zxvf "${KREW}.tar.gz" &&
   ./"${KREW}" 
 }
-
+install_krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
 echo export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
 source ~/.bashrc
+
 kubectl krew install virt
 
 
