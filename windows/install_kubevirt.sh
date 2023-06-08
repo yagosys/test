@@ -41,10 +41,10 @@ function install_krew (){
   ./"${KREW}" 
 }
 
-#export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
-#echo export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
-#source ~/.bashrc
-#kubectl krew install virt
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
+echo export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc
+source ~/.bashrc
+kubectl krew install virt
 
 
 #echo #install localhost storageclass
