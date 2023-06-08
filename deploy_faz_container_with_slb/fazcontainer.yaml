@@ -57,7 +57,7 @@ spec:
               path: /
               port: 443
               scheme: HTTPS
-            initialDelaySeconds: 240
+            initialDelaySeconds: 300
             periodSeconds: 10
             failureThreshold: 3
           volumeMounts:
