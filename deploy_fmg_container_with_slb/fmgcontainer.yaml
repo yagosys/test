@@ -38,7 +38,7 @@ spec:
             - containerPort: 8443
             - containerPort: 514
             - containerPort: 514
-              protcol: UDP
+              protocol: UDP
             - containerPort: 26443
             - containerPort: 161
               protocol: UDP
