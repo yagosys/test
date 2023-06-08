@@ -497,6 +497,29 @@ apply license and enable api access
 ```
 result 
 ```
+andy [ ~/test/deploy_faz_with_slb ]$ cat usecase_2_2023-06-08.txt
+license applied
+ user admin has password Welcome.123
+use cli to get system status
+fmg-boot-strap # Platform Type                   : FAZVM64-IBM
+Platform Full Name              : FortiAnalyzer-VM64-IBM
+Version                         : v7.0.7-build0419 230320 (GA)
+Serial Number                   : FAZ-VMTM23008181
+BIOS version                    : 04000002
+Hostname                        : fmg-boot-strap
+Max Number of Admin Domains     : 2
+Admin Domain Configuration      : Disabled
+FIPS Mode                       : Disabled
+HA Mode                         : Stand Alone
+Branch Point                    : 0419
+Release Version Information     : GA
+Current Time                    : Thu Jun 08 16:43:07 PDT 2023
+Daylight Time Saving            : Yes
+Time Zone                       : (GMT-8:00) Pacific Time (US & Canada).
+x86-64 Applications             : Yes
+Disk Usage                      : Free 3.36GB, Total 6.61GB
+File System                     : Ext4
+License Status                  : Valid
 
 ```
 
