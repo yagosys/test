@@ -1,0 +1,14 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: "fmgcidata"
+spec:
+  source:
+    http:
+      url: "https://wandy-public-7326-0030-8177.s3.ap-southeast-1.amazonaws.com/fmgcidata.iso"
+  pvc:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: "1000Mi"
