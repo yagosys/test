@@ -33,7 +33,7 @@ podname=$(kubectl get pod -l app=$applabel | grep Running | head -n 1 | awk '{ p
 
 
 echo "start use kubectl scale deployment fortianalyer-deployment --replicas=2 to scale out"  | tee -a $filename
-kubectl scale deployment fortianalyer-deployment --replicas=2 | tee -a $filename
+kubectl scale deployment $applabel-deployment --replicas=2 | tee -a $filename
 
 podname=$(kubectl get pod -l app=$applabel | grep 0/1 | awk '{ print $1 }')
 while true; do
