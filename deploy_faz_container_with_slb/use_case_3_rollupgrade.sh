@@ -1,5 +1,6 @@
 #!/bin/bash -x
 version=$1
+applabel="fortianalyzer"
 [[ -z $version ]] && version="7.2.2"
 
 function get_devicelist_from_faz() {
@@ -71,7 +72,7 @@ wait_for_faz_ready
 current_date=$(date '+%Y-%m-%d')
 filename="usercase_3_${current_date}.txt"
 echo "get device list from current version of faz" > $filename
-podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+podname=$(kubectl get pod -l app=$applabel | grep Running | awk '{ print $1 }')
 
 get_devicelist_from_faz | tee -a $filename
 
@@ -79,7 +80,7 @@ echo "start upgrade to version $version"
 
 kubectl set image deployment/fortianalyzer-deployment fortianalyzer=fortinet/fortianalyzer:$version | tee -a $filename
 
-podname=$(kubectl get pod -l app=fortianalyzer | grep 0/1 | awk '{ print $1 }')
+podname=$(kubectl get pod -l app=$applabel | grep 0/1 | awk '{ print $1 }')
 while true; do
   if kubectl get pod $podname | grep -q "1/1"; then
     wait_for_faz_ready
