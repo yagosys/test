@@ -78,6 +78,8 @@ get_devicelist_from_fmg | tee -a $filename
 echo "start upgrade to version $version"
 
 kubectl set image deployment/$applabel-deployment $applabel=fortinet/$applabel:$version | tee -a $filename
+echo sleep 30 for it get ready
+sleep 30
 
 podname=$(kubectl get pod -l app=$applabel | grep 0/1 | awk '{ print $1 }')
 while true; do
