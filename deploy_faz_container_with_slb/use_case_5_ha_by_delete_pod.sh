@@ -94,7 +94,13 @@ kubectl get pod -l app=$applabel | tee -a $filename
 kubectl get ep  | tee -a $filename
 
 podname=$(kubectl get pod -l app=$applabel | grep Running | grep "0/1" | head -n 1 | awk '{ print $1 }')
-wait_for_faz_ready | tee -a $filename
-kubectl get pod -l app=$applabel | tee -a $filename
-kubectl get ep  | tee -a $filename
-
+kubectl get pod $podname | tee -a $filename
+while true; do
+  if kubectl get pod $podname | grep -q "1/1"; then
+    wait_for_faz_ready
+    echo "new pod come back"
+    break
+  fi
+  sleep 5
+done
+kubectl get ep | tee -a $filename
