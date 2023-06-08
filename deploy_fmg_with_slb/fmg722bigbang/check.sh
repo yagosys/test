@@ -36,6 +36,4 @@ echo service ready at $dateStop  >> $filename
 echo -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip  'diag cdb upgrade summary' | tee -a $filename
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'diag cdb upgrade summary' | tee -a $filename
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'diag cdb upgrade log' | tee -a $filename
-echo -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'diag fmg-cdb upgrade summary' | tee -a $filename
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@$ip 'diag fmg-cdb upgrade summary' | tee -a $filename
-echo upgrade done
+echo upgrade done | tee -a $filename
