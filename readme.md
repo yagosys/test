@@ -1,24 +1,28 @@
 - Prepare use az shell 
--- install tools
+
+- install tools
 use below script to insall netcat (nc), in the script, this tool is used to check whether peer is live. if you already have nc installed. skip this.
+
 ```
 install_tools_for_azshell.sh
+
 ```
 
 - Prepare for demo 
 
-
--- prepare license
+- prepare license
 
 
 you need have 2 FMG and 2 FAZ license for demo
+```
 please these license under $HOME/ 
 andy [ ~/test ]$ ls -l $HOME/*.lic
 -rw-r--r-- 1 andy andy 9236 Jun  6 10:57 /home/andy/xxx.lic
 -rw-r--r-- 1 andy andy 9171 Jun  8 00:09 /home/andy/xxx.lic
 -rw-r--r-- 1 andy andy 9171 Jun  8 00:09 /home/andy/xxx.lic
 
--- install aks cluster
+```
+- install aks cluster
 
 create aks with one windows node, and one linux node. 
 
@@ -31,13 +35,15 @@ after deployment, your existing kubectl config will be overwritten.
 
 - demo use case
 
--- FMG container
+- FMG container
 
--- use case 1
+- use case 1
+
 ```
 cd deploy_fmg_container_with_slb
 use_case_1_clean_boot_fmg.sh
-``
+
+```
 result
 
 ```
@@ -46,7 +52,8 @@ fortimanager bootup record
 boot at Thu Jun 8 03:46:23 AM UTC 2023
 service ready at Thu Jun 8 03:50:48 AM UTC 2023
 ```
--- use case 2 
+- use case 2 
+
 ```
 use_case_2_apply_license_and_enable_api.sh
 ```
@@ -80,13 +87,14 @@ FMG-DOCKER # start enable json rpc api for fortimanager-deployment-554bd468fb-zj
 admin user json rpc api enable
 
 ```
--- use case 3
+- use case 3
 
 ```
 ./use_case_3_rollupgrade.sh
 
 ```
 result
+
 ```
 andy [ ~/test/deploy_fmg_container_with_slb ]$ cat usecase_3_2023-06-08.txt 
 get device list from current version of fmg
@@ -119,13 +127,15 @@ FMG-DOCKER #
 FMG-DOCKER # FMG-DOCKER # diag cdb upgrade check +all
 ```
 
--- use case 4 
+- use case 4 
 
 normal scale out
+
 ```
 kubectl scale deployment fortimanager-deployment --replicas=2
 ```
 result
+
 ```
 kubectl rollout status deployment fortimanager-deployment
 Waiting for deployment "fortimanager-deployment" rollout to finish: 1 of 2 updated replicas are available...
@@ -135,7 +145,7 @@ NAME                ENDPOINTS                                                   
 fmgcontainerhttps   10.224.0.73:8793,10.224.0.82:8793,10.224.0.73:8889 + 21 more...   20m
 ```
 
--- use case 5 
+- use case 5 
 normal kill pod, new pod wil be generated with different ip , and this pod will be remvoed from load balacner until it pass readiness check.
 
 ```
@@ -144,7 +154,7 @@ kubectl delete pod fortimanager-deployment-b456747b5-6ztw2
 
 - FMG VM as container 
 
--- prepare cloudinit disk 
+- prepare cloudinit disk 
 modify meta-data and user-data  content with your own key
 use mkiso.sh to create iso
 copy iso to your own s3 directory for fetch. 
@@ -164,13 +174,14 @@ total 80
 andy [ ~/test ]$ 
 ```
 
--- install kubevirt
+- install kubevirt
+
 ```
 cd windows
 ./install_kubevirt.sh 
 
 ```
--- use case 1 
+- use case 1 
 ```
 cd deploy_fmg_with_slb
 ./use_case_1_clean_boot_fmg.sh
@@ -184,7 +195,7 @@ boot at Thu Jun 8 05:18:38 AM UTC 2023
 service ready at Thu Jun 8 05:24:53 AM UTC 2023
 ```
 
--- use case 2
+- use case 2
 ```
 cd deploy_fmg_with_slb
 ./use_case_2_apply_license_and_enable_api.sh
@@ -217,6 +228,277 @@ File System                     : Ext4
 License Status                  : Valid
 ```
 
+- FAZ container
+
+- use case 1  bootup time
+
+measure from boot to ready for service
+
+```
+cd  deploy_faz_container_with_slb
+./use_case_1_clean_boot_faz.sh
+```
+
+result
+
+```
+andy [ ~/test/deploy_faz_container_with_slb ]$ cat usercase1_faz_boot_time_2023-06-08.txt
+faz bootup record
+boot at Thu Jun 8 09:52:16 PM UTC 2023
+service ready at Thu Jun 8 09:56:41 PM UTC 2023
+```
+
+- use case 2 apply license
+
+apply license via kubectl command 
+
+```
+./use_case_2_apply_license_and_enable_api.sh
+
+```
+
+result
+```
+license applied
+ user admin has password Welcome.123
+use cli to get system status
+FAZ-DOCKER # Platform Type                   : FAZ-DOCKER
+Platform Full Name              : FortiAnalyzer-DOCKER
+Version                         : v7.0.7-build0419 230320 (GA)
+Serial Number                   : FAZ-VMTM23008295
+BIOS version                    : 04000002
+Hostname                        : FAZ-DOCKER
+Max Number of Admin Domains     : 1200
+Admin Domain Configuration      : Disabled
+FIPS Mode                       : Disabled
+HA Mode                         : Stand Alone
+Branch Point                    : 0419
+Release Version Information     : GA
+Current Time                    : Thu Jun 08 15:07:25 PDT 2023
+Daylight Time Saving            : Yes
+Time Zone                       : (GMT-8:00) Pacific Time (US & Canada).
+x86-64 Applications             : Yes
+Disk Usage                      : Free 5.65GB, Total 6.80GB
+License Status                  : Valid
+
+FAZ-DOCKER # start enable json rpc api for fortianalyzer-deployment-794dd855f9-xlsg6
+admin user json rpc api enable
+```
+
+
+- use case 3 upgrade
+
+upgrade from versio 7.0.7 to 7.2.2 
+
+```
+./use_case_3_rollupgrade.sh
+```
+result
+```
+andy [ ~/test/deploy_faz_container_with_slb ]$ cat usercase_3_2023-06-08.txt
+get device list from current version of faz
+WfwRnC9fbyffgzmbj/KYnG3CCcX7BYNdU3Zq1z1Ux/iubJLyBtnFzXFVxWmfTnkjrHOcSzOsR0S7mMN3rR6OGP34bTunemc9
+{ "id": 1, "result": [ { "status": { "code": -3, "message": "Object does not exist" }, "url": "\/dvmdb\/device\/fgt" } ] }upgraded to 7.2.2 done
+WfwRnC9fbyfFqrpHujuoZlf33DEkVU6iFmRy6MiOCPe4sk+GWoW1es8imbbS0j4i2vFedUw+tetvnSfMFUbp8gosL94p2q2m
+{ "id": 1, "result": [ { "status": { "code": -3, "message": "Object does not exist" }, "url": "\/dvmdb\/device\/fgt" } ] }fortianalyzer-deployment-7b47b55c86-qj2qz
+diag cdb upgrade summary
+diag cdb upgrade summary
+FAZ-DOCKER # FAZ-DOCKER # 
+
+   ==== New configuration database initiated ====
+2023-06-08 15:02:25     v7.0.7-build0419 230320 (GA)
+2023-06-08 15:12:59     v7.2.2-build1334 230201 (GA)
+
+FAZ-DOCKER # FAZ-DOCKER #    ==== New configuration database initiated ====
+2023-06-08 15:02:25     v7.0.7-build0419 230320 (GA)
+2023-06-08 15:12:59     v7.2.2-build1334 230201 (GA)
+
+FAZ-DOCKER # FAZ-DOCKER # diag cdb  upgrade log
+diag cdb  upgrade log
+FAZ-DOCKER # 
+FAZ-DOCKER # 
+   ==== New configuration database initiated ====
+2023-06-08 15:02:25     v7.0.7-build0419 230320 (GA)
+2023-06-08 15:12:59     v7.2.2-build1334 230201 (GA)
+2023-06-08 15:12:59             Success         Upgrade rtm db
+2023-06-08 15:12:59             Success         Upgrade Management ID to UUID
+   ==== New configuration database initiated ====
+2023-06-08 15:02:25     v7.0.7-build0419 230320 (GA)
+2023-06-08 15:12:59     v7.2.2-build1334 230201 (GA)
+2023-06-08 15:12:59             Success         Upgrade rtm db
+2023-06-08 15:12:59             Success         Upgrade Management ID to UUID
+
+FAZ-DOCKER # FAZ-DOCKER # 
+FAZ-DOCKER # FAZ-DOCKER # diag cdb upgrade check +all
+diag cdb upgrade check +all
+FAZ-DOCKER # FAZ-DOCKER # 
+Checking: Resync and add any missing vdoms from device database to DVM database
+No error found.
+
+FAZ-DOCKER # FAZ-DOCKER # 
+Checking: Resync and add any missing vdoms from device database to DVM database
+No error found.
+
+```
+
+- use case 4 scale out
+
+scale deployment from one pod to 2 pod
+
+```
+use_case_4_scaleout.sh
+```
+result
+```
+andy [ ~/test/deploy_faz_container_with_slb ]$ cat usecase_4_2023-06-08.txt
+start use kubectl scale deployment fortianalyer-deployment --replicas=2 to scale out
+Ping successful, breaking loop
+HTTP/1.1 200 OK
+Date: Thu, 08 Jun 2023 22:21:00 GMT
+X-Frame-Options: SAMEORIGIN
+Last-Modified: Thu, 02 Feb 2023 05:11:02 GMT
+ETag: "59-5f3b09750c580"
+Accept-Ranges: bytes
+Content-Length: 89
+Vary: Accept-Encoding
+Strict-Transport-Security: max-age=63072000
+X-UA-Compatible: IE=Edge
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'sha256-PoMasaLzN2PWG4ByL9UkAULQUkNpN9b1gLHfuQHsYhM=';
+Content-Type: text/html
+
+NAME                ENDPOINTS                                                       AGE
+fazcontainerhttps   10.224.0.68:8793,10.224.0.68:8889,10.224.0.68:161 + 9 more...   22m
+kubernetes          52.246.140.183:443                                              39m
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-7b47b55c86-qj2qz   1/1     Running   0          12m
+start use kubectl scale deployment fortianalyzer-deployment --replicas=2 to scale out
+deployment.apps/fortianalyzer-deployment scaled
+Ping successful, breaking loop
+HTTP/1.1 200 OK
+Date: Thu, 08 Jun 2023 22:26:27 GMT
+X-Frame-Options: SAMEORIGIN
+Last-Modified: Thu, 02 Feb 2023 05:11:02 GMT
+ETag: "59-5f3b09750c580"
+Accept-Ranges: bytes
+Content-Length: 89
+Vary: Accept-Encoding
+Strict-Transport-Security: max-age=63072000
+X-UA-Compatible: IE=Edge
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; script-src 'sha256-PoMasaLzN2PWG4ByL9UkAULQUkNpN9b1gLHfuQHsYhM=';
+Content-Type: text/html
+
+NAME                ENDPOINTS                                                         AGE
+fazcontainerhttps   10.224.0.68:8793,10.224.0.76:8793,10.224.0.68:8889 + 21 more...   27m
+kubernetes          52.246.140.183:443                                                45m
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-7b47b55c86-qj2qz   1/1     Running   0          17m
+fortianalyzer-deployment-7b47b55c86-tvdxx   1/1     Running   0          3m13s
+```
+
+- use case 5 HA
+
+kill one of POD
+
+```
+use_case_5_ha_by_delete_pod.sh
+```
+result 
+```
+andy [ ~/test/deploy_faz_container_with_slb ]$ cat usecase_5_2023-06-08.txt
+start use kubectl scale deployment fortianalyer-deployment --replicas=2 to scale out
+deployment.apps/fortianalyzer-deployment scaled
+Ping successful, breaking loop
+HTTP/1.1 200 OK
+NAME                ENDPOINTS                                                         AGE
+fazcontainerhttps   10.224.0.68:8793,10.224.0.76:8793,10.224.0.68:8889 + 21 more...   70m
+kubernetes          52.246.140.183:443                                                87m
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-7b47b55c86-kcdcb   1/1     Running   0          6m18s
+fortianalyzer-deployment-7b47b55c86-tvdxx   1/1     Running   0          45m
+\n
+
+ delete one of the pod fortianalyzer-deployment-7b47b55c86-kcdcb
+
+\n
+pod "fortianalyzer-deployment-7b47b55c86-kcdcb" deleted
+Public IP assigned: 20.187.160.210
+Ping successful, breaking loop
+HTTP/1.1 200 OK
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-7b47b55c86-fwhpz   0/1     Running   0          37s
+fortianalyzer-deployment-7b47b55c86-tvdxx   1/1     Running   0          46m
+NAME                ENDPOINTS                                                       AGE
+fazcontainerhttps   10.224.0.76:8793,10.224.0.76:8889,10.224.0.76:161 + 9 more...   71m
+kubernetes          52.246.140.183:443                                              88m
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-7b47b55c86-fwhpz   0/1     Running   0          38s
+new pod come back
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-7b47b55c86-fwhpz   1/1     Running   0          3m15s
+fortianalyzer-deployment-7b47b55c86-tvdxx   1/1     Running   0          49m
+NAME                ENDPOINTS                                                         AGE
+fazcontainerhttps   10.224.0.76:8793,10.224.0.84:8793,10.224.0.76:8889 + 21 more...   73m
+kubernetes          52.246.140.183:443      
+```
+
+- FAZ VM as container
+
+- prepare cloudinit disk
+modify meta-data and user-data  content with your own key
+use mkiso.sh to create iso
+copy iso to your own s3 directory for fetch.
+
+above can be skipped if already done. 
+
+```
+andy [ ~/test ]$ ls -l fazisoinitdisk/
+total 12
+-rw-r--r-- 1 andy andy   48 Jun  8 00:00 meta-data
+-rwxr-xr-x 1 andy andy  167 Jun  8 00:00 mkiso.sh
+-rw-r--r-- 1 andy andy 1009 Jun  8 00:00 user-data
+
+andy [ ~/test ]$ ls -l fmgisoinitdisk
+total 80
+-rw-r--r-- 1 andy andy     48 Jun  8 00:28 meta-data
+-rwxr-xr-x 1 andy andy    162 Jun  8 00:28 mkiso.sh
+-rw-r--r-- 1 andy andy   1009 Jun  8 00:28 user-data
+andy [ ~/test ]$
+```
+
+- install kubevirt
+this can be skipped if kubevirt already installed 
+```
+cd windows
+./install_kubevirt.sh
+
+```
+- use case 1
+```
+cd deploy_faz_with_slb
+./use_case_1_clean_boot_faz.sh
+```
+result
+```
+andy [ ~/test/deploy_faz_with_slb ]$ cat usecase1_faz_boot_time_2023-06-08.txt
+faz bootup record
+boot at Thu Jun 8 11:21:32 PM UTC 2023
+service ready at Thu Jun 8 11:28:17 PM UTC 2023
+```
+
+- use case 2 
+apply license and enable api access
+
+```
+./use_case_2_apply_license_and_enable_api.sh
+```
+result 
+```
+
+```
 
 
 
