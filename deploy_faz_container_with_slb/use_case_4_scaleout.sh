@@ -1,5 +1,6 @@
 #!/bin/bash -x
 
+applabel="fortianalyzer"
 
 function wait_for_faz_ready() {
 service_name="fazcontainerhttps"
@@ -21,20 +22,19 @@ while true; do
     break
   fi
   sleep 2
-  kubectl get pod  -l app=fortianalyzer
+  kubectl get pod  -l app=$applabel
 done
 }
 
 wait_for_faz_ready
 current_date=$(date '+%Y-%m-%d')
 filename="usecase_4_${current_date}.txt"
-podname=$(kubectl get pod -l app=fortianalyzer | grep Running | awk '{ print $1 }')
+podname=$(kubectl get pod -l app=$applabel | grep Running | awk '{ print $1 }')
 
 
-echo "start use kubectl scale deployment fortianalyer-deployment --replicas=2 to scale out"  | tee -a $filename
-kubectl scale deployment fortianalyer-deployment --replicas=2 | tee -a $filename
-
-podname=$(kubectl get pod -l app=fortianalyzer | grep 0/1 | awk '{ print $1 }')
+echo "start use kubectl scale deployment $applabel-deployment --replicas=2 to scale out"  | tee -a $filename
+kubectl scale deployment $applabel-deployment --replicas=2 | tee -a $filename
+podname=$(kubectl get pod -l app=$applabel | grep 0/1 | awk '{ print $1 }')
 while true; do
   if kubectl get pod $podname | grep -q "1/1"; then
     wait_for_faz_ready
@@ -69,7 +69,7 @@ while true; do
     break
   fi
   sleep 2
-  kubectl get pod  -l app=fortianalyzer
+  kubectl get pod  -l app=$applabel
 done
 }
 
@@ -77,6 +77,6 @@ done
 get_lb_ip
 ping_lb_publicip | tee -a $filename 
 kubectl get ep  | tee -a $filename
-kubectl get pod -l app=fortianalyzer | tee -a $filename
+kubectl get pod -l app=$applabel | tee -a $filename
 
 
