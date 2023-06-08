@@ -1,3 +1,5 @@
+#https://docs.fortinet.com/document/fortianalyzer/7.0.0/fortianalyzer-ports/290737/incoming-ports
+#514, logging, OFTP , both TCP and UDP  , TCP 8443 Log from chromebook, , 8080, SOAP , TCP/445 DC polling 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,6 +37,8 @@ spec:
             - containerPort: 9999
             - containerPort: 8443
             - containerPort: 514
+            - containerPort: 514
+              protocol: UDP
             - containerPort: 26443
             - containerPort: 161
               protocol: UDP
