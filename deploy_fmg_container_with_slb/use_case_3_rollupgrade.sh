@@ -59,8 +59,11 @@ function check_upgrade_result () {
 podname=$(kubectl get pod -l app=$applabel | grep Running | awk '{ print $1 }')
 echo $podname
 
+echo 'diag cdb upgrade summary' | tee -a $filename
 kubectl exec -it $podname -- /bin/bash -c 'echo -e "diag cdb upgrade summary \n" | cli'  | tee -a $filename
+echo 'diag cdb  upgrade log' | tee -a $filename
 kubectl exec -it $podname -- /bin/bash -c 'echo -e "diag cdb upgrade log \n" | cli'  | tee -a $filename
+echo 'diag cdb upgrade check +all' | tee -a $filename
 #kubectl exec -it $podname -- /bin/bash -c 'echo -e "diag cdb upgrade check +all\n" | cli'  | tee -a $filename
 
 }
