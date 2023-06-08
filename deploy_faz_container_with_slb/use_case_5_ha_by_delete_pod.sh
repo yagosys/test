@@ -98,9 +98,10 @@ kubectl get pod $podname | tee -a $filename
 while true; do
   if kubectl get pod $podname | grep -q "1/1"; then
     wait_for_faz_ready
-    echo "new pod come back"
+    echo "new pod come back" | tee -a $filename
     break
   fi
   sleep 5
 done
+kubectl get pod | tee -a $filename
 kubectl get ep | tee -a $filename
