@@ -81,9 +81,12 @@ kubectl get ep  | tee -a $filename
 kubectl get pod -l app=$applabel | tee -a $filename
 
 podname=$(kubectl get pod -l app=$applabel | grep Running | head -n 1 | awk '{ print $1 }')
-echo delete one of the pod $podname | tee -a $filename
+echo -e "\n delete one of the pod $podname\n" | tee -a $filename
 kubectl delete po/$podname | tee -a $filename
 sleep 5 
 echo sleep 5
 podname=$(kubectl get pod -l app=$applabel | grep Running | head -n 1 | awk '{ print $1 }')
 wait_for_faz_ready | tee -a $filename
+
+kubectl get pod -l app=$applabel | tee -a $filename
+kubectl get ep  | tee -a $filename
