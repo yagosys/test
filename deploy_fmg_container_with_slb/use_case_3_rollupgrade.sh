@@ -55,6 +55,15 @@ while true; do
 done
 }
 
+function check_upgrade_result () {
+podname=$(kubectl get pod -l app=$applabel | grep Running | awk '{ print $1 }')
+echo $podname
+
+kubectl exec -it $podname -- /bin/bash -c 'echo -e "diag cdb upgrade summary \n" | cli'  | tee -a $filename
+kubectl exec -it $podname -- /bin/bash -c 'echo -e "diag cdb upgrade log \n" | cli'  | tee -a $filename
+#kubectl exec -it $podname -- /bin/bash -c 'echo -e "diag cdb upgrade check +all\n" | cli'  | tee -a $filename
+
+}
 wait_for_fmg_ready
 current_date=$(date '+%Y-%m-%d')
 filename="usecase_3_${current_date}.txt"
@@ -78,5 +87,6 @@ while true; do
 done
 
 get_devicelist_from_fmg | tee -a $filename
+check_upgrade_result 
 
 
