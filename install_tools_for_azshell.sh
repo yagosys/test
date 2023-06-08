@@ -10,4 +10,5 @@ cd ./../
 cp ./nc $HOME/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/bin | tee -a $HOME/.bashrc
+alias "k=kubectl" | tee -a $HOME/.bashrc
 source $HOME/.bashrc
