@@ -18,7 +18,7 @@ done
 while true; do
   if nc -zv $ip 443 -w 60; then
     echo "Ping successful, breaking loop"
-    curl -k -s -I https://$ip grep "200 OK"
+    curl -k -s -I https://$ip | grep "200 OK"
     break
   fi
   sleep 2
@@ -66,7 +66,7 @@ while true; do
 #  if httping -qc1 "https://$ip"; then
   if nc -zv $ip 443 -w 60; then
     echo "Ping successful, breaking loop"
-    curl -k -s  -I https://$ip grep "200 OK"
+    curl -k -s  -I https://$ip  | grep "200 OK"
     break
   fi
   sleep 2
