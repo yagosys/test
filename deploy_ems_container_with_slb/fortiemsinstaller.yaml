@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ems
+  labels:
+    app: ems
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: ems
+      labels:
+        app: ems
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": windows
+      containers:
+      - name: ems
+        image: interbeing/ems:latest
+        command: ["cmd", "/c", "echo Hello, World! && ping -t 127.0.0.1 > NUL"]
+        resources:
+          limits:
+            cpu: 2
+            memory: 8000M
+        ports:
+          - containerPort: 443
+  selector:
+    matchLabels:
+      app: ems
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ems
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 443
+  selector:
+    app: ems
