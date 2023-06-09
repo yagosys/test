@@ -452,7 +452,6 @@ kubernetes          52.246.140.183:443
 
 
 ##  prepare cloudinit disk
-> 
 modify meta-data and user-data  content with your own key
 use mkiso.sh to create iso
 copy iso to your own s3 directory for fetch.
@@ -474,19 +473,23 @@ total 80
 andy [ ~/test ]$
 ```
 
-- install kubevirt
-this can be skipped if kubevirt already installed 
+## install kubevirt
+> this can be skipped if kubevirt already installed 
+
 ```
 cd windows
 ./install_kubevirt.sh
 
 ```
-- use case 1
+###  use case 1
+
 ```
 cd deploy_faz_with_slb
 ./use_case_1_clean_boot_faz.sh
 ```
 result
+
+
 ```
 andy [ ~/test/deploy_faz_with_slb ]$ cat usecase1_faz_boot_time_2023-06-08.txt
 faz bootup record
