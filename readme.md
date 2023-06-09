@@ -445,7 +445,9 @@ fazcontainerhttps   10.224.0.76:8793,10.224.0.84:8793,10.224.0.76:8889 + 21 more
 kubernetes          52.246.140.183:443      
 ```
 
-- FAZ VM as container
+- FAZ VM container
+miminal memory required for luanch FAZ VM is *8G* Memory and *4" vCPU. 
+
 
 - prepare cloudinit disk
 modify meta-data and user-data  content with your own key
