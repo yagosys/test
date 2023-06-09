@@ -1,6 +1,13 @@
 
 ## Prepare use az shell 
 
+## clone the code 
+
+```
+git clone https://github.com/yagosys/test.git
+
+```
+
 ## install tools
 > use below script to insall netcat (nc), in the script, this tool is used to check whether peer is live. if you already have nc installed. skip this.
 
@@ -35,6 +42,29 @@ cd windows
 ./create_aks_and_ubuntu_win_node.sh
 ```
 
+result 
+
+> a AKS cluster with one linux node and one windows label will be created.  
+
+> to Run FMG/FAZ VM on AKS, must use instanceTypes that support nested virtualization.
+
+
+```
+andy [ ~/test/deploy_ems_container_with_slb ]$ k get node -o wide -l "kubernetes.io/os"="windows"
+NAME             STATUS   ROLES   AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION    CONTAINER-RUNTIME
+aksnpwin000000   Ready    agent   8h    v1.25.6   10.224.0.33   <none>        Windows Server 2022 Datacenter   10.0.20348.1726   containerd://1.6.14+azure
+andy [ ~/test/deploy_ems_container_with_slb ]$ kubectl get node -l "kubernetes.io/os"="windows"
+NAME             STATUS   ROLES   AGE   VERSION
+aksnpwin000000   Ready    agent   8h    v1.25.6
+andy [ ~/test/deploy_ems_container_with_slb ]$ kubectl get node -l "linux=true"
+NAME                             STATUS   ROLES   AGE   VERSION
+aks-ubuntu-23006350-vmss000000   Ready    agent   8h    v1.25.6
+andy [ ~/test/deploy_ems_container_with_slb ]$ kubectl get node -o wide
+NAME                                STATUS   ROLES   AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION      CONTAINER-RUNTIME
+aks-nodepool1-28782460-vmss000000   Ready    agent   9h    v1.25.6   10.224.0.4    <none>        Ubuntu 22.04.2 LTS               5.15.0-1038-azure   containerd://1.7.1+azure-1
+aks-ubuntu-23006350-vmss000000      Ready    agent   8h    v1.25.6   10.224.0.64   <none>        Ubuntu 22.04.2 LTS               5.15.0-1038-azure   containerd://1.7.1+azure-1
+aksnpwin000000                      Ready    agent   8h    v1.25.6   10.224.0.33   <none>        Windows Server 2022 Datacenter   10.0.20348.1726     containerd://1.6.14+azure
+```
 after deployment, your existing kubectl config will be overwritten. 
 
 ## demo use case
