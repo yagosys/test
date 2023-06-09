@@ -446,7 +446,10 @@ kubernetes          52.246.140.183:443
 ```
 
 - FAZ VM container
-miminal memory required for luanch FAZ VM is *8G* Memory and *4" vCPU. 
+
+*
+miminal memory required for luanch FAZ VM is **8G** Memory and **4** vCPU. 
+*
 
 
 - prepare cloudinit disk
