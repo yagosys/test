@@ -949,7 +949,7 @@ No error found.
 ## sumary of all product boot up  time
 
 
-| Product | Start     | Stop     | Time    |
+| Product | Start     | Ready     | Time    |
 |---------|-----------|----------|---------|
 | cFMG    |  03:46:23 | 03:50:48 | 4:25    |
 | cFAZ    |  09:52:16 | 09:56:41 | 4:25    |
