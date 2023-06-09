@@ -163,7 +163,7 @@ modify meta-data and user-data  content with your own key
 use mkiso.sh to create iso
 copy iso to your own s3 directory for kubevirt dv to fetch later on 
 
-> ssh public key from you cliekt (az cloud shell) added on user-data
+> ssh public key from you client (az cloud shell) added on user-data , if you do not have a client key, use ssh-keygen to generate one
 
 > fmg license can also be added into user-data if needed
 
