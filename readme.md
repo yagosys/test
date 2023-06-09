@@ -93,6 +93,11 @@ fortimanager bootup record
 boot at Thu Jun 8 03:46:23 AM UTC 2023
 service ready at Thu Jun 8 03:50:48 AM UTC 2023
 ```
+
+
+
+
+
 ### use case 2  - apply license  use kubectl command 
 
 ```
@@ -941,7 +946,14 @@ Checking: Resync and add any missing vdoms from device database to DVM database
 No error found.
 ```
 
+## sumary of all product boot up  time
 
+| Product | Start     | Stop     | Time    |
+|---------|-----------|----------|---------|
+| cFMG    |  03:46:23 | 03:50:48 | 4:25    |
+| cFAZ    |  09:52:16 | 09:56:41 | 4:25    |
+| FMG VM  |  05:18:38 | 05:24:53 | 6:15    |
+| FAZ VM  |  11:21:32 | 11:28:17 | 6:45    | 
 
 
 
