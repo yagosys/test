@@ -164,8 +164,11 @@ use mkiso.sh to create iso
 copy iso to your own s3 directory for kubevirt dv to fetch later on 
 
 > ssh public key from you cliekt (az cloud shell) added on user-data
+
 > fmg license can also be added into user-data if needed
+
 > the default username is admin and password is Welcome.123 pre-configured on user-data for demo purpose
+
 > if cloudinit is not used, the default password for admin is empty. jsut press enter to continue in console `virtctl console FMG` of FMG VM
 
 ```
