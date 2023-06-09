@@ -37,6 +37,9 @@ andy [ ~/test ]$ ls -l $HOME/*.lic
 
 create aks with one windows node, and one linux node. 
 
+> the instanceType used for worker node is **Standard_D4_v4** which has 16G memory and **4vCPU**
+
+
 ```
 cd windows
 ./create_aks_and_ubuntu_win_node.sh
@@ -840,4 +843,21 @@ No error found.
 
 
 
+-- Reference website
 
+```
+https://learn.microsoft.com/en-us/azure/aks/learn/quick-windows-container-deploy-cli
+https://fndn.fortinet.net/index.php?/fortiapi/175-fortianalyzer/1481/175/eventmgmt/ 
+https://docs.fortinet.com/document/fortianalyzer/7.4.0/cli-reference/165084/ssh-known-hosts
+https://sourceforge.net/projects/netcat/
+https://kubevirtlegacy.gitbook.io/user-guide/docs/virtual_machines/disks_and_volumes#persistentvolumeclaim
+https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/bf68f29c-cce6-11e8-8784-00505692583a/FortiManager-KVM-VM-Install-Guide.pdf
+https://kubevirt.io/user-guide/virtual_machines/startup_scripts/
+https://kubevirt.io/user-guide/operations/installation/
+https://learn.microsoft.com/en-us/azure/lab-services/concept-nested-virtualization-template-vm 
+https://medium.com/cooking-with-azure/using-kubevirt-in-azure-kubernetes-service-part-1-8771bfb94d7 
+https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/bf68f29c-cce6-11e8-8784-00505692583a/FortiManager-KVM-VM-Install-Guide.pdf
+https://kubevirt.io/labs/kubernetes/lab1.html 
+https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/1048fcc2-f6f3-11ec-bb32-fa163e15d75b/FortiClient_EMS_7.0.6_Administration_Guide.pdf 
+https://kubebyexample.com/learning-paths/guided-exercise-use-cdi-manage-vm-disk-images 
+```
