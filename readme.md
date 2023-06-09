@@ -522,7 +522,79 @@ File System                     : Ext4
 License Status                  : Valid
 
 ```
+- use case 3 
 
+upgrade image via faz cli 
+
+```
+fmg-boot-strap # execute restore image scp /root/FAZ_VM64_IBM-v7.2.2-build1334-FORTINET.out "deletedip" "deleteduser" "deletedpassword"
+andy [ ~/test/deploy_faz_with_slb ]$ k get pod
+NAME                      READY   STATUS    RESTARTS   AGE
+virt-launcher-faz-tf56q   0/1     Running   0          42s
+andy [ ~/test/deploy_faz_with_slb ]$ virtctl console faz
+Successfully connected to faz console. The escape sequence is ^]
+                                                                Serial number:FAZ-VMTM23008181
+
+Upgrading sample reports...Done.
+
+Initialize file systems... 
+Old version: v7.0.7-build0419 branchpt0419 230320 (GA)
+New version: v7.2.2-build1334 branchpt1334 230201 (GA)
+Upgrade database ... adom[18] dev[0] global[1]
+
+Upgrading: Upgrade rtm db
+        Total 19 databases...
+...upgrading progress is 5%, estimated remain time is 0s. (1/19 step1/2)
+
+Upgrading: Upgrade Management ID to UUID
+Database upgrade finished, using 0m4s
+Upgrading report config from version:7, patch:7, branch point:419
+  Exporting existing config... (step 1/4)
+    Exporting existing config took 1.350 seconds.
+  Initializing default config... (step 2/4)
+    Initializing default config took 9.428 seconds.
+  Upgrading existing config... (step 3/4)
+    Upgrading V7.0.3->V7.2.0...
+    Upgrading V7.2.0->V7.2.1...
+    Upgrading V7.2.1->V7.2.2...
+    Upgrading existing config took 1.545 seconds.
+  Importing upgraded config... (step 4/4)
+    Importing upgraded config took 3.171 seconds.
+Upgrading report config completed, took 15.951 seconds.
+
+
+Please login with username=admin and password=[instance-id]
+ (Press 'a' to accept):Generate SIEM config file.
+
+0:0 2000/1/1
+ioc_bl_logs_tbls_trim() drop 0 tables OK!
+
+
+
+```
+check result
+```
+fmg-boot-strap # diagnose cdb upgrade  summary 
+
+   ==== New configuration database initiated ====
+2023-06-08 16:36:12     v7.0.7-build0419 230320 (GA)
+2023-06-08 18:16:09     v7.2.2-build1334 230201 (GA)
+
+fmg-boot-strap # diagnose cdb upgrade log 
+
+   ==== New configuration database initiated ====
+2023-06-08 16:36:12     v7.0.7-build0419 230320 (GA)
+2023-06-08 18:16:09     v7.2.2-build1334 230201 (GA)
+2023-06-08 18:16:09             Success         Upgrade rtm db
+2023-06-08 18:16:10             Success         Upgrade Management ID to UUID
+
+fmg-boot-strap # diagnose cdb upgrade check +all
+
+Checking: Resync and add any missing vdoms from device database to DVM database
+No error found.
+
+fmg-boot-strap # 
+```
 
 
 
