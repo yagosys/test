@@ -253,6 +253,81 @@ File System                     : Ext4
 License Status                  : Valid
 ```
 
+### use case 3 - upgrade software via FMG command
+
+> the upgrade can NOT be automatic, need human to confirm the input, as the operation will require FMG reboot to complete
+
+> require a sever like SCP  sever to store image file
+
+> login into FMG is required to do the upgrade, can via `virtctl console FMG` or `virtctl ssh FMG` or `ssh admin@publicipofFMG` to login
+
+> during upgrade, FMG new version will check the configuration and handle the upgrade the database.
+
+```
+andy [ ~/test/deploy_fmg_with_slb ]$ virtctl console fmg
+
+Successfully connected to fmg console. The escape sequence is ^]
+Please login with username=admin and password=[instance-id]
+ (Press 'a' to accept):
+
+kvmfmg login: admin
+Password: 
+kvmfmg # execute restore image scp /root/FMG_VM64_IBM-v7.2.2-build1334-FORTINET.out  "deletedip" "deleteduser" "deletedpassword"
+Start getting file from SCP Server...
+
+Upgrade image from v7.0.7-build0419-230320(GA) to v7.2.2-build1334-230201
+
+This operation will replace the current firmware version and reboot the system!
+Do you want to continue? (y/n)
+andy [ ~/test/deploy_fmg_with_slb ]$ virtctl console fmg
+Successfully connected to fmg console. The escape sequence is ^]
+
+
+Serial number:FMG-VMTM23008454
+
+Upgrading sample reports...Done.
+
+Initialize file systems... 
+Old version: v7.0.7-build0419 branchpt0419 230320 (GA)
+New version: v7.2.2-build1334 branchpt1334 230201 (GA)
+>>> 454: 1:  config system log-fetch server-settings
+>>> 455: 1:  end
+Upgrade database ... adom[18] dev[0] global[1]
+
+Upgrading: Upgrade rtm db
+        Total 19 databases...
+...upgrading progress is 0%, remain time is unknown. (1/163)
+
+Upgrading: Unify template urls
+
+Upgrading: Upgrade meta variables
+pm3_fmgvar_upgrade: in ADOM root: meta field upgrade complete: Success
+pm3_fmgvar_upgrade: in ADOM FortiCarrier: meta field upgrade complete: Success
+pm3_fmgvar_upgrade: in ADOM Unmanaged_Devices: meta field upgrade complete: Success
+
+Upgrading: Default configs for SD-WAN template
+
+Upgrading: Upgrade Management ID to UUID
+
+Upgrading: Upgrade IPS Templates
+
+Upgrading: Add default cli templates
+
+Upgrading: Pre-configured route maps for SD-WAN overlay templates
+
+Upgrading: Upgrade endpoint-control fctems
+
+Upgrading: Add default addresses and address group for the RFC1918 space
+
+Upgrading: Add global default entries to double-scoped objects for vdom enabled devices
+Database upgrade finished, using 0m8s
+
+
+Please login with username=admin and password=[instance-id]
+ (Press 'a' to accept):
+```
+
+
 ## FAZ container
 
 ### use case 1  bootup time
