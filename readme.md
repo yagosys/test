@@ -495,7 +495,9 @@ result
 the script shall show 
 **deploymentcompleted**
 
-###  demo use case 1
+##  demo use 
+
+### use case 1 - clean boot 
 
 demo boot up a VM FAZ and wait until it's ready for serivice, measure the time.
 
@@ -516,7 +518,7 @@ boot at Thu Jun 8 11:21:32 PM UTC 2023
 service ready at Thu Jun 8 11:28:17 PM UTC 2023
 ```
 
-### use case apply license via cli  
+### use case 2 -  apply license via cli  
 apply license and enable api access
 
 > use **execute add-vm-license** to add license
@@ -553,7 +555,7 @@ File System                     : Ext4
 License Status                  : Valid
 
 ```
-### use case 3 upgrade software via FAZ command  
+### use case 3 - upgrade software via FAZ command  
 
 > the upgrade can NOT be automatic, need human to confirm the input, as the operation will require FAZ reboot to complete 
 
