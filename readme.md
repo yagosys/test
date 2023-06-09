@@ -948,12 +948,35 @@ No error found.
 
 ## sumary of all product boot up  time
 
+
 | Product | Start     | Stop     | Time    |
 |---------|-----------|----------|---------|
 | cFMG    |  03:46:23 | 03:50:48 | 4:25    |
 | cFAZ    |  09:52:16 | 09:56:41 | 4:25    |
 | FMG VM  |  05:18:38 | 05:24:53 | 6:15    |
 | FAZ VM  |  11:21:32 | 11:28:17 | 6:45    | 
+
+## summary of all product miminal requirement 
+
+| Product    | vCPU      | Memory   | nested Virtualization |
+| -----------|-----------|----------|-----------------------|
+| cFMG       |  4        | 8G       | No need               |
+| cFAZ-7.0   |  4        | 8G       | No need               |
+| cFAZ-7.2   |  4        | 16G      | No need               |
+| FMG VM     |  4        | 8G       | Required              |
+| FAZ VM-7.0 |  4        | 8G       | Required              |
+| FAZ VM-7.2 |  4        | 16G      | Required              |
+
+
+## summary of all product capabilities
+
+| Product    | upgrade            | cloud-init| DHCP                      | Readiness Check | Liveness Check for multiple process  |
+| -----------|--------------------|-----------|---------------------------|-----------------|--------------------------------------|
+| cFMG       | Rolling upgrade    |  N/A      | default                   | Yes             |         need build custom image      | 
+| cFAZ       | Rolling upgrade    |  N/A      | default                   | Yes             |         need build custom image      |
+| FMG VM     | via Device,cli/GUI | Supported | Require use IBM-KVM image | Yes             | only support check singe port        |
+| FAZ VM     | via Device,cli/GUI | Supported | Require use IBM-KVM image | Yes             | only support check single port       |
+
 
 
 
