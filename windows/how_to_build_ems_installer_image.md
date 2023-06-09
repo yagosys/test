@@ -3,8 +3,12 @@
 
 -- Prepare Build VM
 
+
 -- Prepare VM host 
   Windows 2022 Data Center Version
+```
+create_windows_2022_container_vm.sh
+```
 
 -- install Docker
 ```
