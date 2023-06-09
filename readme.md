@@ -2,7 +2,10 @@
 # Prepare use az shell 
 
 ## install tools
-use below script to insall netcat (nc), in the script, this tool is used to check whether peer is live. if you already have nc installed. skip this.
+> use below script to insall netcat (nc), in the script, this tool is used to check whether peer is live. if you already have nc installed. skip this.
+
+
+
 
 ```
 install_tools_for_azshell.sh
@@ -38,7 +41,7 @@ after deployment, your existing kubectl config will be overwritten.
 
 ## FMG container
 
-### use case 1
+### use case 1 - deploy fmg container 
 
 ```
 cd deploy_fmg_container_with_slb
@@ -53,7 +56,7 @@ fortimanager bootup record
 boot at Thu Jun 8 03:46:23 AM UTC 2023
 service ready at Thu Jun 8 03:50:48 AM UTC 2023
 ```
-### use case 2 
+### use case 2  - apply license  use kubectl command 
 
 ```
 use_case_2_apply_license_and_enable_api.sh
@@ -88,7 +91,7 @@ FMG-DOCKER # start enable json rpc api for fortimanager-deployment-554bd468fb-zj
 admin user json rpc api enable
 
 ```
-### use case 3
+### use case 3 - rolling upgrade via kubectl 
 
 ```
 ./use_case_3_rollupgrade.sh
@@ -128,7 +131,7 @@ FMG-DOCKER #
 FMG-DOCKER # FMG-DOCKER # diag cdb upgrade check +all
 ```
 
-### use case 4 
+### use case 4  - scale out fmg deployment with replicas 
 
 normal scale out
 
@@ -146,7 +149,7 @@ NAME                ENDPOINTS                                                   
 fmgcontainerhttps   10.224.0.73:8793,10.224.0.82:8793,10.224.0.73:8889 + 21 more...   20m
 ```
 
-### use case 5 
+### use case 5  - delete pod to show HA 
 normal kill pod, new pod wil be generated with different ip , and this pod will be remvoed from load balacner until it pass readiness check.
 
 ```
@@ -158,15 +161,20 @@ kubectl delete pod fortimanager-deployment-b456747b5-6ztw2
 ## prepare cloudinit disk 
 modify meta-data and user-data  content with your own key
 use mkiso.sh to create iso
-copy iso to your own s3 directory for fetch. 
+copy iso to your own s3 directory for kubevirt dv to fetch later on 
+
+> ssh public key from you cliekt (az cloud shell) added on user-data
+> fmg license can also be added into user-data if needed
+> the default username is admin and password is Welcome.123 pre-configured on user-data for demo purpose
+> if cloudinit is not used, the default password for admin is empty. jsut press enter to continue in console `virtctl console FMG` of FMG VM
 
 ```
-andy [ ~/test ]$ ls -l fazisoinitdisk/
-total 12
--rw-r--r-- 1 andy andy   48 Jun  8 00:00 meta-data
--rwxr-xr-x 1 andy andy  167 Jun  8 00:00 mkiso.sh
--rw-r--r-- 1 andy andy 1009 Jun  8 00:00 user-data
+isoname="fmgcloudinitdata.iso"
+mkisofs -output $isoname -volid cidata -joliet -rock  user-data meta-data
+```
+then copy this iso to somewhere (for example s3) for access 
 
+```
 andy [ ~/test ]$ ls -l fmgisoinitdisk
 total 80
 -rw-r--r-- 1 andy andy     48 Jun  8 00:28 meta-data
@@ -182,7 +190,19 @@ cd windows
 ./install_kubevirt.sh 
 
 ```
-### use case 1 
+### use case 1  - create FMG vm as container 
+
+> miminal memory required for luanch FMG VM version 7.0.7  is **8G** Memory and **4** vCPU.
+
+> minimal memory required for luanch FMG VM version 7.2 is **8G** Memmory and **4** vCPU.
+
+> 2 DISK required, one for bootup FMG, at least one for log /var. the 3rd  DISK for cloudinit can be optional.
+
+> use readiness probe to wait for FMG VM ready
+
+> use liveness probe on port 443 to do healthcheck
+
+> use PVC with azure default storage class for all DISKs
 
 ```
 cd deploy_fmg_with_slb
@@ -197,7 +217,7 @@ boot at Thu Jun 8 05:18:38 AM UTC 2023
 service ready at Thu Jun 8 05:24:53 AM UTC 2023
 ```
 
-###  use case 2
+###  use case 2 - apply license via cli without human input
 ```
 cd deploy_fmg_with_slb
 ./use_case_2_apply_license_and_enable_api.sh
