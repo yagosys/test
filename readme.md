@@ -450,7 +450,11 @@ kubernetes          52.246.140.183:443
 ## FAZ VM container
 
 
-> miminal memory required for luanch FAZ VM is **8G** Memory and **4** vCPU. 
+> miminal memory required for luanch FAZ VM version 7.0.7  is **8G** Memory and **4** vCPU. 
+> minimal memory required for luanch FAZ VM version 7.2 is **16G** Memmory and **4** vCPU.
+> 2 DISK required, one for bootup FAZ, at least one for log /var. the 3rd  DISK for cloudinit can be optional. 
+> use readiness probe to wait for FAZ VM ready
+> use liveness probe on port 443 to do healthcheck 
 
 
 ##  prepare cloudinit disk
