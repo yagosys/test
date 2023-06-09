@@ -1,15 +1,3 @@
-- Install EMS on windows in unattentd way
-
--- Prepare windows
- 2022 Data Center version 
-
--- use powershell to install
-
-```
-Invoke-WebRequest -Uri https://filestore.fortinet.com/forticlient/downloads/FortiClientEndpointManagementServer_6.2.4.0894_x64.exe -OutFile "c:\temp\FortiClientEndpointManagementServer_6.2.4.0894_x64.exe" 
-
-Start-Process -FilePath "c:\temp\/FortiClientEndpointManagementServer_7.0.7.0398_x64.exe" -Args "/quiet" -NoNewWindow -Wait
-```
 
 - Build EMS windows container 
 
