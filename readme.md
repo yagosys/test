@@ -327,6 +327,32 @@ Please login with username=admin and password=[instance-id]
  (Press 'a' to accept):
 ```
 
+check upgrade config log 
+
+```
+kvmfmg # diagnose cdb upgrade  summary
+
+   ==== New configuration database initiated ====
+2023-06-08 20:24:16     v7.0.7-build0419 230320 (GA)
+2023-06-08 20:41:49     v7.2.2-build1334 230201 (GA)
+
+kvmfmg # diagnose cdb upgrade  log
+
+   ==== New configuration database initiated ====
+2023-06-08 20:24:16     v7.0.7-build0419 230320 (GA)
+2023-06-08 20:41:49     v7.2.2-build1334 230201 (GA)
+2023-06-08 20:41:49             Success         Upgrade rtm db
+2023-06-08 20:41:50             Success         Unify template urls
+2023-06-08 20:41:50             Success         Upgrade meta variables
+2023-06-08 20:41:52             Success         Default configs for SD-WAN template
+2023-06-08 20:41:52             Success         Upgrade Management ID to UUID
+2023-06-08 20:41:52             Success         Upgrade IPS Templates
+2023-06-08 20:41:52             Success         Add default cli templates
+2023-06-08 20:41:52             Success         Pre-configured route maps for SD-WAN overlay templates
+2023-06-08 20:41:53             Success         Upgrade endpoint-control fctems
+2023-06-08 20:41:55             Success         Add default addresses and address group for the RFC1918 space
+2023-06-08 20:41:55             Success         Add global default entries to double-scoped objects for vdom enabled devices
+```
 
 ## FAZ container
 
@@ -628,29 +654,30 @@ apply license and enable api access
 ```
 result 
 ```
-andy [ ~/test/deploy_faz_with_slb ]$ cat usecase_2_2023-06-08.txt
+andy [ ~/test/deploy_faz_with_slb ]$ cat usecase_2_2023-06-09.txt
 license applied
  user admin has password Welcome.123
 use cli to get system status
-fmg-boot-strap # Platform Type                   : FAZVM64-IBM
+kvmfaz # Platform Type                   : FAZVM64-IBM
 Platform Full Name              : FortiAnalyzer-VM64-IBM
 Version                         : v7.0.7-build0419 230320 (GA)
 Serial Number                   : FAZ-VMTM23008181
 BIOS version                    : 04000002
-Hostname                        : fmg-boot-strap
+Hostname                        : kvmfaz
 Max Number of Admin Domains     : 2
 Admin Domain Configuration      : Disabled
 FIPS Mode                       : Disabled
 HA Mode                         : Stand Alone
 Branch Point                    : 0419
 Release Version Information     : GA
-Current Time                    : Thu Jun 08 16:43:07 PDT 2023
+Current Time                    : Thu Jun 08 21:17:09 PDT 2023
 Daylight Time Saving            : Yes
 Time Zone                       : (GMT-8:00) Pacific Time (US & Canada).
 x86-64 Applications             : Yes
-Disk Usage                      : Free 3.36GB, Total 6.61GB
+Disk Usage                      : Free 3.41GB, Total 6.61GB
 File System                     : Ext4
 License Status                  : Valid
+
 
 ```
 ### use case 3 - upgrade software via FAZ command  
@@ -664,13 +691,34 @@ License Status                  : Valid
 > during upgrade, FAZ new version will check the configuration and handle the upgrade the database. 
 
 ```
-fmg-boot-strap # execute restore image scp /root/FAZ_VM64_IBM-v7.2.2-build1334-FORTINET.out "deletedip" "deleteduser" "deletedpassword"
-andy [ ~/test/deploy_faz_with_slb ]$ k get pod
-NAME                      READY   STATUS    RESTARTS   AGE
-virt-launcher-faz-tf56q   0/1     Running   0          42s
 andy [ ~/test/deploy_faz_with_slb ]$ virtctl console faz
 Successfully connected to faz console. The escape sequence is ^]
-                                                                Serial number:FAZ-VMTM23008181
+
+
+
+
+Please login with username=admin and password=[instance-id]
+ (Press 'a' to accept):
+
+
+kvmfaz login: admin
+Password: 
+kvmfaz # execute restore image scp /root/FAZ_VM64_IBM-v7.2.2-build1334-FORTINET.out <ipdeleted>  <usernamedeleted> <passworddeleted>
+Start getting file from SCP Server...
+
+Upgrade image from v7.0.7-build0419-230320(GA) to v7.2.2-build1334-230201
+
+This operation will replace the current firmware version and reboot the system!
+Do you want to continue? (y/n)y
+
+
+kvmfaz # The system is going down NOW !!
+
+andy [ ~/test/deploy_faz_with_slb ]$ virtctl console faz
+Successfully connected to faz console. The escape sequence is ^]
+
+
+Serial number:FAZ-VMTM23008181
 
 Upgrading sample reports...Done.
 
@@ -684,20 +732,20 @@ Upgrading: Upgrade rtm db
 ...upgrading progress is 5%, estimated remain time is 0s. (1/19 step1/2)
 
 Upgrading: Upgrade Management ID to UUID
-Database upgrade finished, using 0m4s
+Database upgrade finished, using 0m3s
 Upgrading report config from version:7, patch:7, branch point:419
   Exporting existing config... (step 1/4)
-    Exporting existing config took 1.350 seconds.
+    Exporting existing config took 7.214 seconds.
   Initializing default config... (step 2/4)
-    Initializing default config took 9.428 seconds.
+    Initializing default config took 7.933 seconds.
   Upgrading existing config... (step 3/4)
     Upgrading V7.0.3->V7.2.0...
     Upgrading V7.2.0->V7.2.1...
     Upgrading V7.2.1->V7.2.2...
-    Upgrading existing config took 1.545 seconds.
+    Upgrading existing config took 1.568 seconds.
   Importing upgraded config... (step 4/4)
-    Importing upgraded config took 3.171 seconds.
-Upgrading report config completed, took 15.951 seconds.
+    Importing upgraded config took 2.699 seconds.
+Upgrading report config completed, took 19.861 seconds.
 
 
 Please login with username=admin and password=[instance-id]
@@ -707,30 +755,34 @@ Please login with username=admin and password=[instance-id]
 ioc_bl_logs_tbls_trim() drop 0 tables OK!
 
 
-
 ```
 check result
 ```
-fmg-boot-strap # diagnose cdb upgrade  summary 
+kvmfaz # diagnose cdb upgrade 
+ check           Perform check to see if upgrade and repair is necessary.
+ force-retry     Re-run an upgrade that was already performed in previous release.
+ log             Display configuration database upgrade log.
+ pending-list    Display the list of scheduled upgrades on next reboot.
+ summary         Display firmware upgrade summary.
+
+kvmfaz # diagnose cdb upgrade summary 
 
    ==== New configuration database initiated ====
-2023-06-08 16:36:12     v7.0.7-build0419 230320 (GA)
-2023-06-08 18:16:09     v7.2.2-build1334 230201 (GA)
+2023-06-08 21:10:09     v7.0.7-build0419 230320 (GA)
+2023-06-08 21:23:39     v7.2.2-build1334 230201 (GA)
 
-fmg-boot-strap # diagnose cdb upgrade log 
+kvmfaz # diagnose cdb upgrade log
 
    ==== New configuration database initiated ====
-2023-06-08 16:36:12     v7.0.7-build0419 230320 (GA)
-2023-06-08 18:16:09     v7.2.2-build1334 230201 (GA)
-2023-06-08 18:16:09             Success         Upgrade rtm db
-2023-06-08 18:16:10             Success         Upgrade Management ID to UUID
+2023-06-08 21:10:09     v7.0.7-build0419 230320 (GA)
+2023-06-08 21:23:39     v7.2.2-build1334 230201 (GA)
+2023-06-08 21:23:39             Success         Upgrade rtm db
+2023-06-08 21:23:39             Success         Upgrade Management ID to UUID
 
-fmg-boot-strap # diagnose cdb upgrade check +all
+kvmfaz # diagnose cdb upgrade check +all
 
 Checking: Resync and add any missing vdoms from device database to DVM database
 No error found.
-
-fmg-boot-strap # 
 ```
 
 
