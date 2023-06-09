@@ -4,8 +4,5 @@
 kubectl create -f ./pvc.yaml
 kubectl create -f ./myfmgcontainer.yaml
 kubectl create -f ./fmgsvclb443.yaml
-./check.sh usecase1
-kubectl delete -f fmgsvclb443.yaml
-kubectl delete -f ./myfmgcontainer.yaml
-kubectl delete -f pvc.yaml
+./check.sh usecase6
 
