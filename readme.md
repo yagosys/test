@@ -41,7 +41,11 @@ after deployment, your existing kubectl config will be overwritten.
 
 ## FMG container
 
-### use case 1 - deploy fmg container 
+### use case 1 - deploy fmg container and measure boot up time
+
+> demo boot up a fmg container  and wait until it's ready for serivice, measure the time.
+
+> use curl to port 443 as indicator of service ready.
 
 ```
 cd deploy_fmg_container_with_slb
@@ -193,7 +197,7 @@ cd windows
 ./install_kubevirt.sh 
 
 ```
-### use case 1  - create FMG vm as container 
+### use case 1  - create FMG vm as container and measure boot up time
 
 > miminal memory required for luanch FMG VM version 7.0.7  is **8G** Memory and **4** vCPU.
 
@@ -206,6 +210,10 @@ cd windows
 > use liveness probe on port 443 to do healthcheck
 
 > use PVC with azure default storage class for all DISKs
+
+> demo boot up a VM FMG and wait until it's ready for serivice, measure the time.
+
+> use curl to access FMG port 443 as indicator of service readiness
 
 ```
 cd deploy_fmg_with_slb
@@ -356,9 +364,12 @@ kvmfmg # diagnose cdb upgrade  log
 
 ## FAZ container
 
-### use case 1  bootup time
+### use case 1 - bootup and measure  bootup time
 
-measure from boot to ready for service
+
+> demo boot up a fortianalyer container and wait until it's ready for serivice, measure the time.
+
+> use curl to access fortianalyzer container as indicator of service readiness
 
 ```
 cd  deploy_faz_container_with_slb
@@ -374,7 +385,7 @@ boot at Thu Jun 8 09:52:16 PM UTC 2023
 service ready at Thu Jun 8 09:56:41 PM UTC 2023
 ```
 
-### use case 2 apply license
+### use case 2 - apply license
 
 apply license via kubectl command 
 
@@ -412,9 +423,12 @@ admin user json rpc api enable
 ```
 
 
-### use case 3 upgrade
+### use case 3 -  use kubectl to do rolling upgrade 
 
-upgrade from versio 7.0.7 to 7.2.2 
+> upgrade from versio 7.0.7 to 7.2.2 
+
+> after upgrade, license and config shall remain 
+
 
 ```
 ./use_case_3_rollupgrade.sh
@@ -467,7 +481,7 @@ No error found.
 
 ```
 
-### use case 4 scale out
+### use case 4 - scale out with kubectl
 
 scale deployment from one pod to 2 pod
 
@@ -525,9 +539,13 @@ fortianalyzer-deployment-7b47b55c86-qj2qz   1/1     Running   0          17m
 fortianalyzer-deployment-7b47b55c86-tvdxx   1/1     Running   0          3m13s
 ```
 
-### use case 5 HA
+### use case 5 -  HA by delete one of POD 
 
-kill one of POD
+>  kill one of POD
+
+> shall not affect existing service of fortianalyzer 
+
+> once fortianalyzer POD come back, it will added to load balacner automatically
 
 ```
 use_case_5_ha_by_delete_pod.sh
@@ -587,6 +605,7 @@ kubernetes          52.246.140.183:443
 > use PVC with azure default storage class for all DISKs
 
 
+
 ##  prepare cloudinit disk
 modify meta-data and user-data  content with your own key
 use mkiso.sh to create iso
@@ -621,9 +640,9 @@ the script shall show
 
 ##  demo use 
 
-### use case 1 - clean boot 
+### use case 1 - clean boot  and measure boot up time
 
-demo boot up a VM FAZ and wait until it's ready for serivice, measure the time.
+> demo boot up a VM FAZ and wait until it's ready for serivice, measure the time.
 
 > use curl to access FAZ VM 443 port as indicator for FAZ readiness. 
 
@@ -643,7 +662,7 @@ service ready at Thu Jun 8 11:28:17 PM UTC 2023
 ```
 
 ### use case 2 -  apply license via cli  
-apply license and enable api access
+> apply license and enable api access
 
 > use **execute add-vm-license** to add license
 
