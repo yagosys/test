@@ -460,6 +460,8 @@ kubernetes          52.246.140.183:443
 
 > use liveness probe on port 443 to do healthcheck 
 
+> use PVC with azure default storage class for all DISKs
+
 
 ##  prepare cloudinit disk
 modify meta-data and user-data  content with your own key
@@ -475,23 +477,29 @@ total 12
 -rwxr-xr-x 1 andy andy  167 Jun  8 00:00 mkiso.sh
 -rw-r--r-- 1 andy andy 1009 Jun  8 00:00 user-data
 
-andy [ ~/test ]$ ls -l fmgisoinitdisk
-total 80
--rw-r--r-- 1 andy andy     48 Jun  8 00:28 meta-data
--rwxr-xr-x 1 andy andy    162 Jun  8 00:28 mkiso.sh
--rw-r--r-- 1 andy andy   1009 Jun  8 00:28 user-data
-andy [ ~/test ]$
 ```
 
 ## install kubevirt
 > this can be skipped if kubevirt already installed 
+
+> virtctl will be installed. we use `virtctl console faz` to access faz console 
+
 
 ```
 cd windows
 ./install_kubevirt.sh
 
 ```
-###  use case 1
+result 
+
+
+```
+```
+###  demo use case 1
+
+demo boot up a VM FAZ and wait until it's ready for serivice, measure the time.
+
+> use curl to access FAZ VM 443 port as indicator for FAZ readiness. 
 
 ```
 cd deploy_faz_with_slb
@@ -499,6 +507,7 @@ cd deploy_faz_with_slb
 ```
 result
 
+> the time from boot to get it ready is around 6 minutes 
 
 ```
 andy [ ~/test/deploy_faz_with_slb ]$ cat usecase1_faz_boot_time_2023-06-08.txt
