@@ -1,5 +1,5 @@
 
-# Prepare use az shell 
+## Prepare use az shell 
 
 ## install tools
 > use below script to insall netcat (nc), in the script, this tool is used to check whether peer is live. if you already have nc installed. skip this.
