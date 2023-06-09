@@ -193,6 +193,48 @@ normal kill pod, new pod wil be generated with different ip , and this pod will 
 kubectl delete pod fortimanager-deployment-b456747b5-6ztw2 
 ```
 
+### use case 6 - use custom script in liveness check to monitor container health
+
+> a tool is required to monitor process in FMG container , here we use nc
+
+> since nc does not exist in the base fortinet/fortimanager container , we have to build a new image with fortinet/fortimanager as base image
+
+> the nc is download from source code, and compild , then add binary to containr image
+
+> the new  container image is uploaded to interbeing/myfmg:707
+
+> the livenessProbe will check port 8080, 443, 22, 80, 541,8443 , 8900 and 53  with nc -zv option
+
+```
+./use_case_6_clean_boot_fmg_with_customlivenesscheck.sh
+```
+
+here is the piece of livness definition
+
+```
+          livenessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - "nc -zc 127.0.0.1 8080 && nc -zc 127.0.0.1 443 && nc -zc 127.0.0.1 22 && nc -zc 127.0.0.1 80 && nc -zc 127.0.0.1 541 && nc -zc 127.0.0.1 8443 && nc -zc 127.0.0.1 8900 && nc -zc 127.0.0.1 53"
+            initialDelaySeconds: 300
+            failureThreshold: 3
+            periodSeconds: 10
+```
+
+result
+
+
+```
+andy [ ~/test/deploy_fmg_container_with_slb ]$ cat usecase6_2023-06-09.txt 
+fortimanager bootup record
+boot at Fri Jun 9 09:39:31 AM UTC 2023
+service ready at Fri Jun 9 09:42:53 AM UTC 2023
+
+```
+
+
 ## FMG VM  container 
 
 ## prepare cloudinit disk 
