@@ -492,9 +492,9 @@ cd windows
 ```
 result 
 
+the script shall show 
+**deploymentcompleted**
 
-```
-```
 ###  demo use case 1
 
 demo boot up a VM FAZ and wait until it's ready for serivice, measure the time.
@@ -507,7 +507,7 @@ cd deploy_faz_with_slb
 ```
 result
 
-> the time from boot to get it ready is around 6 minutes 
+> the time from boot to get it ready is around **6** minutes 
 
 ```
 andy [ ~/test/deploy_faz_with_slb ]$ cat usecase1_faz_boot_time_2023-06-08.txt
@@ -516,8 +516,12 @@ boot at Thu Jun 8 11:21:32 PM UTC 2023
 service ready at Thu Jun 8 11:28:17 PM UTC 2023
 ```
 
-### use case 2 
+### use case apply license via cli  
 apply license and enable api access
+
+> use **execute add-vm-license** to add license
+
+> use **set rpc-permit read-write** to enable rpc access 
 
 ```
 ./use_case_2_apply_license_and_enable_api.sh
@@ -549,9 +553,15 @@ File System                     : Ext4
 License Status                  : Valid
 
 ```
-### use case 3 
+### use case 3 upgrade software via FAZ command  
 
-upgrade image via faz cli 
+> the upgrade can NOT be automatic, need human to confirm the input, as the operation will require FAZ reboot to complete 
+
+> require a sever like SCP  sever to store image file 
+
+> login into FAZ is required to do the upgrade, can via `virtctl console FAZ` or `virtctl ssh FAZ` or `ssh admin@publicipofFAZ` to login 
+
+> during upgrade, FAZ new version will check the configuration and handle the upgrade the database. 
 
 ```
 fmg-boot-strap # execute restore image scp /root/FAZ_VM64_IBM-v7.2.2-build1334-FORTINET.out "deletedip" "deleteduser" "deletedpassword"
