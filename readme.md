@@ -234,7 +234,7 @@ service ready at Fri Jun 9 09:42:53 AM UTC 2023
 
 ```
 
-### use case 7 - roll uprgade for custom myfmg image
+### use case 7 - roll uprgade for container that use myfmg custom image
 
 > also need to use custom image to do the upgrade. 
 
