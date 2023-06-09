@@ -1,6 +1,7 @@
-- Prepare use az shell 
 
-- install tools
+# Prepare use az shell 
+
+## install tools
 use below script to insall netcat (nc), in the script, this tool is used to check whether peer is live. if you already have nc installed. skip this.
 
 ```
@@ -8,9 +9,9 @@ install_tools_for_azshell.sh
 
 ```
 
-- Prepare for demo 
+## Prepare for demo 
 
-- prepare license
+## prepare license
 
 
 you need have 2 FMG and 2 FAZ license for demo
@@ -22,7 +23,7 @@ andy [ ~/test ]$ ls -l $HOME/*.lic
 -rw-r--r-- 1 andy andy 9171 Jun  8 00:09 /home/andy/xxx.lic
 
 ```
-- install aks cluster
+## install aks cluster
 
 create aks with one windows node, and one linux node. 
 
@@ -33,11 +34,11 @@ cd windows
 
 after deployment, your existing kubectl config will be overwritten. 
 
-- demo use case
+## demo use case
 
-- FMG container
+## FMG container
 
-- use case 1
+### use case 1
 
 ```
 cd deploy_fmg_container_with_slb
@@ -52,7 +53,7 @@ fortimanager bootup record
 boot at Thu Jun 8 03:46:23 AM UTC 2023
 service ready at Thu Jun 8 03:50:48 AM UTC 2023
 ```
-- use case 2 
+### use case 2 
 
 ```
 use_case_2_apply_license_and_enable_api.sh
@@ -87,7 +88,7 @@ FMG-DOCKER # start enable json rpc api for fortimanager-deployment-554bd468fb-zj
 admin user json rpc api enable
 
 ```
-- use case 3
+### use case 3
 
 ```
 ./use_case_3_rollupgrade.sh
@@ -127,7 +128,7 @@ FMG-DOCKER #
 FMG-DOCKER # FMG-DOCKER # diag cdb upgrade check +all
 ```
 
-- use case 4 
+### use case 4 
 
 normal scale out
 
@@ -145,16 +146,16 @@ NAME                ENDPOINTS                                                   
 fmgcontainerhttps   10.224.0.73:8793,10.224.0.82:8793,10.224.0.73:8889 + 21 more...   20m
 ```
 
-- use case 5 
+### use case 5 
 normal kill pod, new pod wil be generated with different ip , and this pod will be remvoed from load balacner until it pass readiness check.
 
 ```
 kubectl delete pod fortimanager-deployment-b456747b5-6ztw2 
 ```
 
-- FMG VM as container 
+## FMG VM  container 
 
-- prepare cloudinit disk 
+## prepare cloudinit disk 
 modify meta-data and user-data  content with your own key
 use mkiso.sh to create iso
 copy iso to your own s3 directory for fetch. 
@@ -174,14 +175,15 @@ total 80
 andy [ ~/test ]$ 
 ```
 
-- install kubevirt
+## install kubevirt
 
 ```
 cd windows
 ./install_kubevirt.sh 
 
 ```
-- use case 1 
+### use case 1 
+
 ```
 cd deploy_fmg_with_slb
 ./use_case_1_clean_boot_fmg.sh
@@ -195,7 +197,7 @@ boot at Thu Jun 8 05:18:38 AM UTC 2023
 service ready at Thu Jun 8 05:24:53 AM UTC 2023
 ```
 
-- use case 2
+###  use case 2
 ```
 cd deploy_fmg_with_slb
 ./use_case_2_apply_license_and_enable_api.sh
@@ -228,9 +230,9 @@ File System                     : Ext4
 License Status                  : Valid
 ```
 
-- FAZ container
+## FAZ container
 
-- use case 1  bootup time
+### use case 1  bootup time
 
 measure from boot to ready for service
 
@@ -248,7 +250,7 @@ boot at Thu Jun 8 09:52:16 PM UTC 2023
 service ready at Thu Jun 8 09:56:41 PM UTC 2023
 ```
 
-- use case 2 apply license
+### use case 2 apply license
 
 apply license via kubectl command 
 
@@ -286,7 +288,7 @@ admin user json rpc api enable
 ```
 
 
-- use case 3 upgrade
+### use case 3 upgrade
 
 upgrade from versio 7.0.7 to 7.2.2 
 
@@ -341,7 +343,7 @@ No error found.
 
 ```
 
-- use case 4 scale out
+### use case 4 scale out
 
 scale deployment from one pod to 2 pod
 
@@ -399,7 +401,7 @@ fortianalyzer-deployment-7b47b55c86-qj2qz   1/1     Running   0          17m
 fortianalyzer-deployment-7b47b55c86-tvdxx   1/1     Running   0          3m13s
 ```
 
-- use case 5 HA
+### use case 5 HA
 
 kill one of POD
 
@@ -445,7 +447,7 @@ fazcontainerhttps   10.224.0.76:8793,10.224.0.84:8793,10.224.0.76:8889 + 21 more
 kubernetes          52.246.140.183:443      
 ```
 
-# FAZ VM container
+## FAZ VM container
 
 
 > miminal memory required for luanch FAZ VM is **8G** Memory and **4** vCPU. 
@@ -497,7 +499,7 @@ boot at Thu Jun 8 11:21:32 PM UTC 2023
 service ready at Thu Jun 8 11:28:17 PM UTC 2023
 ```
 
-- use case 2 
+### use case 2 
 apply license and enable api access
 
 ```
@@ -530,7 +532,7 @@ File System                     : Ext4
 License Status                  : Valid
 
 ```
-- use case 3 
+### use case 3 
 
 upgrade image via faz cli 
 
