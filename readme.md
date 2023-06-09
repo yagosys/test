@@ -234,6 +234,68 @@ service ready at Fri Jun 9 09:42:53 AM UTC 2023
 
 ```
 
+### use case 7 - roll uprgade for custom myfmg image
+
+> also need to use custom image to do the upgrade. 
+
+> need to build 7.2.2 version myfmg image with fortinet/fortimanager:7.2.2 as base image and add nc 
+
+use below command to do upgrade
+
+```
+kubectl set image deployment fortimanager-deployment fortimanager=interbeing/myfmg:7.2.2
+```
+check upgrade result
+
+```
+andy [ ~/test/deploy_fmg_container_with_slb ]$ k exec -it po/fortimanager-deployment-59b68bf8f4-vvx2f  -- sh
+sh-5.0# cli    
+FMG-DOCKER # get system status
+Platform Type                   : FMG-DOCKER
+Platform Full Name              : FortiManager-DOCKER
+Version                         : v7.2.2-build1334 230201 (GA)
+Serial Number                   : FMG-VMTM23008863
+BIOS version                    : 04000002
+Hostname                        : FMG-DOCKER
+Max Number of Admin Domains     : 10000
+Max Number of Device Groups     : 10000
+Admin Domain Configuration      : Disabled
+FIPS Mode                       : Disabled
+HA Mode                         : Stand Alone
+Branch Point                    : 1334
+Release Version Information     : GA
+Current Time                    : Fri Jun 09 03:15:37 PDT 2023
+Daylight Time Saving            : Yes
+Time Zone                       : (GMT-8:00) Pacific Time (US & Canada).
+x86-64 Applications             : Yes
+Disk Usage                      : Free 5.46GB, Total 6.80GB
+License Status                  : Valid
+
+FMG-DOCKER # diagnose cdb upgrade summary 
+
+   ==== New configuration database initiated ====
+2023-06-09 02:42:36     v7.0.7-build0419 230320 (GA)
+2023-06-09 03:07:32     v7.2.2-build1334 230201 (GA)
+
+FMG-DOCKER # diagnose cdb upgrade log
+
+   ==== New configuration database initiated ====
+2023-06-09 02:42:36     v7.0.7-build0419 230320 (GA)
+2023-06-09 03:07:32     v7.2.2-build1334 230201 (GA)
+2023-06-09 03:07:32             Success         Upgrade rtm db
+2023-06-09 03:07:33             Success         Unify template urls
+2023-06-09 03:07:33             Success         Upgrade meta variables
+2023-06-09 03:07:34             Success         Default configs for SD-WAN template
+2023-06-09 03:07:34             Success         Upgrade Management ID to UUID
+2023-06-09 03:07:34             Success         Upgrade IPS Templates
+2023-06-09 03:07:34             Success         Add default cli templates
+2023-06-09 03:07:34             Success         Pre-configured route maps for SD-WAN overlay templates
+2023-06-09 03:07:35             Success         Upgrade endpoint-control fctems
+2023-06-09 03:07:36             Success         Add default addresses and address group for the RFC1918 space
+2023-06-09 03:07:36             Success         Add global default entries to double-scoped objects for vdom enabled devices
+```
+
+
 
 ## FMG VM  container 
 
