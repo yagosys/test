@@ -1,0 +1,48 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  generation: 1
+  labels:
+    kubevirt.io/os: windows
+  name: vm1
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: vm1
+    spec:
+#      nodeSelector: #nodeSelector matches nodes where performance key has high as value.
+#        "kubernetes.io/os": windows
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - cdrom:
+              bus: sata
+            bootOrder: 2
+            name: iso
+          - disk:
+              bus: virtio
+            name: harddrive
+            bootOrder: 1
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: virtio-drivers
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8000M
+      volumes:
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhdems
+      - name: iso
+        containerDisk:
+          image: 3pings/w2k9_iso:aug2022
+      - name:  virtio-drivers
+        containerDisk:
+          image: kubevirt/virtio-container-disk

@@ -1,0 +1,53 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  generation: 1
+  labels:
+    kubevirt.io/os: windows
+  name: vm1
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: vm1
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: harddrive
+            bootOrder: 1
+          - disk:
+              bus: virtio
+            name: cloudinitdisk
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8192M
+      volumes:
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhdems
+      - name: cloudinitdisk
+        cloudInitNoCloud:
+          userData: "#cloud-config"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vmrdp
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 3389
+    name: rdp
+    protocol: TCP
+    targetPort: 3389
+  selector:
+    kubevirt.io/domain: vm1
+  type: LoadBalancer
