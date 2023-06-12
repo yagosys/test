@@ -70,7 +70,7 @@ aksnpwin000000                      Ready    agent   8h    v1.25.6   10.224.0.33
 ```
 after deployment, your existing kubectl config will be overwritten. 
 
-## demo use case
+# demo use case
 
 ## FMG container
 
@@ -780,7 +780,7 @@ result
 the script shall show 
 **deploymentcompleted**
 
-##  demo use 
+##  demo use case 
 
 ### use case 1 - clean boot  and measure boot up time
 
@@ -946,7 +946,31 @@ Checking: Resync and add any missing vdoms from device database to DVM database
 No error found.
 ```
 
-## sumary of all product boot up  time
+## demo use case  - bring up both cFAZ and cFMG on one cluster
+
+this is to bring up cFAZ and CFMG together in one cluster on same worker node. then apply license and test API to get dns config from cFAZ and cFMG
+more detail result can be found at `deploy_faz_container_with_slb/faz_log.txt` and `deploy_fmg_container_with_slb/fmg_log.txt`
+the restart "1" is a result of apply license.
+```
+cd test
+
+./use_case_1_luanch_cfaz_cfmg_on_fortinet_namespace.sh
+
+```
+result
+
+cFAZ and cFMG deployed in different namespace, but on same worker node
+```
+$kubectl get pod -n fortimanager -o wide
+NAME                                       READY   STATUS    RESTARTS        AGE   IP            NODE                             NOMINATED NODE   READINESS GATES
+fortimanager-deployment-7cc7884988-2zhd2   1/1     Running   1 (9m18s ago)   15m   10.224.0.57   aks-ubuntu-39730414-vmss000000   <none>           <none>
+$kubectl get pod -n fortinet -o wide
+NAME                                        READY   STATUS    RESTARTS        AGE   IP            NODE                             NOMINATED NODE   READINESS GATES
+fortianalyzer-deployment-795db7d9f5-hwbrb   1/1     Running   1 (9m10s ago)   15m   10.224.0.41   aks-ubuntu-39730414-vmss000000   <none>           <none>
+
+```
+
+## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
 
 
 | Product | Start     | Ready     | Time    |
