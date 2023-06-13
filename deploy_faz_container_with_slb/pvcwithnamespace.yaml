@@ -4,6 +4,7 @@ metadata:
   name: fazdata
   namespace: fortinet
 spec:
+  storageClassName: managed-premium
   accessModes:
     - ReadWriteOnce
   resources:
@@ -16,6 +17,7 @@ metadata:
   name: fazvar
   namespace: fortinet
 spec:
+  storageClassName: managed-premium
   accessModes:
     - ReadWriteOnce
   resources:
