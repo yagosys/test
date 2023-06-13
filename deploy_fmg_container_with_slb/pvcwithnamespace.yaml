@@ -5,7 +5,7 @@ metadata:
   namespace: fortimanager
   name: fmgdata
 spec:
-#  storageClassName: managed-premium
+  storageClassName: managed-premium
   accessModes:
     - ReadWriteOnce
   resources:
@@ -18,7 +18,7 @@ metadata:
   namespace: fortimanager
   name: fmgvar
 spec:
-#  storageClassName: managed-premium
+  storageClassName: managed-premium
   accessModes:
     - ReadWriteOnce
   resources:
