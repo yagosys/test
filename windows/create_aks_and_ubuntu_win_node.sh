@@ -1,7 +1,7 @@
 #!/bin/bash -x
 LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
-INSTANCETYPE="Standard_D4_v4"
+INSTANCETYPE="Standard_D8s_v4"
 az group create --name $RESOURCEGROUP --location $LOCATION 
 
 WINDOWS_USERNAME='azureuser'
@@ -16,18 +16,18 @@ az aks create \
     --vm-set-type VirtualMachineScaleSets \
     --network-plugin azure &&  
 
-az aks nodepool add \
-    --resource-group $RESOURCEGROUP \
-    --cluster-name myAKSCluster \
-    --os-type Windows \
-    --os-sku Windows2022 \
-    --node-vm-size $INSTANCETYPE \
-    --name npwin \
-    --labels windows=true \
-    --labels kubernetes.io/os=windows \
-    --labels node.kubernetes.io=windows \
-    --node-count 1 &&
-
+#az aks nodepool add \
+#    --resource-group $RESOURCEGROUP \
+#    --cluster-name myAKSCluster \
+#    --os-type Windows \
+#    --os-sku Windows2022 \
+#    --node-vm-size $INSTANCETYPE \
+#    --name npwin \
+#    --labels windows=true \
+#    --labels kubernetes.io/os=windows \
+#    --labels node.kubernetes.io=windows \
+#    --node-count 1 &&
+#
 az aks nodepool add \
     --resource-group $RESOURCEGROUP \
     --cluster-name myAKSCluster \
