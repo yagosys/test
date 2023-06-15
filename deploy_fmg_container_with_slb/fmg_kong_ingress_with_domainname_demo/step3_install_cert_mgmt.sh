@@ -5,7 +5,7 @@ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/relea
 
 kubectl rollout status deployment  -n cert-manager 
 dnsname="fmgweb.eastasia.cloudapp.azure.com"
-
+namespace="default"
 filename="clusterissuer_fmg.yml"
 
 cat << EOF > $filename
@@ -19,7 +19,7 @@ spec:
 
 EOF
 
-kubectl apply -f $filename && echo okey
+kubectl apply -f $filename -n $namespace && echo okey
 
 sleep 15
 
@@ -42,7 +42,7 @@ spec:
   dnsNames:
   - $dnsname
 EOF
-kubectl apply -f $filename
+kubectl apply -f $filename -n $namespace
 
 
 kubectl get certificate

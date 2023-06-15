@@ -2,6 +2,7 @@
 
 fmgdns="fmgweb.eastasia.cloudapp.azure.com"
 service_name="fmgcontainerhttps"
+namespace="default"
 
 filename="fmgclusteriphttphttps.yml"
 cat << EOF > $filename
@@ -9,7 +10,6 @@ cat << EOF > $filename
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: default
   name: $service_name
 spec:
   sessionAffinity: ClientIP
@@ -68,7 +68,7 @@ spec:
     app: fortimanager
   type: ClusterIP
 EOF
-kubectl apply -f $filename
+kubectl apply -f $filename -n $namespace
  
 filename="fmgingress_port_80.yml"
 
@@ -77,11 +77,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: fmg-ingress
-  namespace: default
   annotations:
     kubernetes.io/ingress.class: kong
     cert-manager.io/cluster-issuer: "selfsigned-issuer"
-    #    konghq.com/https-redirect-status-code: "301"
+    # konghq.com/strip-path: "true"
+    # konghq.com/https-redirect-status-code: "301"
     # konghq.com/protocol: "https"
     # konghq.com/override: "https-only"
 spec:
@@ -102,6 +102,6 @@ spec:
               number: 80
 
 EOF
-kubectl apply -f $filename
+kubectl apply -f $filename -n $namespace
 
-kubectl get ingress
+kubectl get ingress -n $namespace
