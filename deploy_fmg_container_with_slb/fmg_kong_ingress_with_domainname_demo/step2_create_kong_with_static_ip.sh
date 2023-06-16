@@ -1,6 +1,7 @@
 #!/bin/bash -x 
 resourcegroup="wandyaks"
 clustername="myAKSCluster"
+fmgdnslabel="fmgweb"
 az network public-ip create \
     --resource-group $resourcegroup \
     --name fmgpublicip \
@@ -17,6 +18,11 @@ az role assignment create \
 public_ip=$(az network public-ip list -g $resourcegroup --query "[?name=='fmgpublicip']" | jq -r .[0].ipAddress) && \
 
 echo $public_ip                                                                                  
+
+PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$public_ip')].[id]" --output tsv)
+echo $PUBLICIPID
+az network public-ip update --ids $PUBLICIPID --dns-name $fmgdnslabel
+
 kubectl get namespace kong || kubectl create -f all-in-one-dbless.yaml &&  echo okey 
 
 filename="kongproxyfmg.yml"
@@ -52,4 +58,4 @@ EOF
 kubectl create -f $filename && \
 kubectl rollout status deployment ingress-kong -n kong
 kubectl  get svc -n kong
-ping fmgweb.eastasia.cloudapp.azure.com -c 5 
+echo fmgweb.eastasia.cloudapp.azure.com  

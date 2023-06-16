@@ -106,4 +106,4 @@ EOF
 kubectl apply -f $filename -n $namespace
 
 kubectl get ingress -n $namespace
-while [[ -z $(kubectl get ingress -n $namespace -o jsonpath='{.items[].status.loadBalancer.ingress[0].ip}') ]]; do echo "Waiting for IP..."; sleep 10; done; curl -k https://fmgweb.eastasia.cloudapp.azure.com/
+#while [[ -z $(kubectl get ingress -n $namespace -o jsonpath='{.items[].status.loadBalancer.ingress[0].ip}') ]]; do echo "Waiting for IP..."; sleep 10; done; curl -k https://fmgweb.eastasia.cloudapp.azure.com/
