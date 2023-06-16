@@ -967,8 +967,36 @@ fortimanager-deployment-7cc7884988-2zhd2   1/1     Running   1 (9m18s ago)   15m
 $kubectl get pod -n fortinet -o wide
 NAME                                        READY   STATUS    RESTARTS        AGE   IP            NODE                             NOMINATED NODE   READINESS GATES
 fortianalyzer-deployment-795db7d9f5-hwbrb   1/1     Running   1 (9m10s ago)   15m   10.224.0.41   aks-ubuntu-39730414-vmss000000   <none>           <none>
+```
+## demo use case - bring up both cFAZ and cFMG on one cluster with Kong as ingress controller
 
 ```
+cd test 
+./use_case_2_cfaz_cfmg_kong_ingress.sh
+```
+result
+```
+i@ecs-148531:~/test$ k get svc -n kong
+NAME                      TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+kong-admin                ClusterIP      None           <none>          8444/TCP                     37m
+kong-proxy                LoadBalancer   10.0.22.195    20.24.196.2     80:32242/TCP,443:30993/TCP   37m
+kong-proxy-fmg            LoadBalancer   10.0.134.106   20.205.107.56   80:32293/TCP,443:30222/TCP   26m
+kong-validation-webhook   ClusterIP      10.0.49.212    <none>          443/TCP                      37m
+i@ecs-148531:~/test$ k get ingress -n fortianalyzer
+NAME          CLASS    HOSTS                                ADDRESS       PORTS     AGE
+faz-ingress   <none>   fazweb.eastasia.cloudapp.azure.com   20.24.196.2   80, 443   36m
+i@ecs-148531:~/test$ k get ingress -n fortimanager
+NAME          CLASS   HOSTS                                ADDRESS       PORTS     AGE
+fmg-ingress   kong    fmgweb.eastasia.cloudapp.azure.com   20.24.196.2   80, 443   26m
+i@ecs-148531:~/test$ curl -k https://fazweb.eastasia.cloudapp.azure.com
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+i@ecs-148531:~/test$ curl -k https://fmgweb.eastasia.cloudapp.azure.com
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+i@ecs-148531:~/test$ 
+
+```
+
+
 
 ## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
 
