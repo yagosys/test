@@ -85,13 +85,6 @@ spec:
       containers:
         - name: $applabel
           image: fortinet/$applabel:7.4
-          resources:
-            limits:
-              cpu: "4"
-              memory: "8000Mi"
-            requests:
-              cpu: "4"
-              memory: "8000Mi"
           ports:
             - containerPort: 541
             - containerPort: 443
