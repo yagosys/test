@@ -1,13 +1,42 @@
 #!/bin/bash -x
-namespace="default"
+licfilename="FMG-VMTM23008863.lic"
+namespace="fortimanager"
 applabel="fortimanager"
+
+function config_admin_password() {
+adminpassword="Welcome.123"
+podname=$(kubectl get pod -l app=$applabel -n $namespace | grep Running | awk '{ print $1 }')
+echo $podname
+echo config admin password to $adminpassword
+kubectl exec -it $podname -n $namespace -- /bin/bash -c 'echo -e "config system admin user \n edit admin\n set password '$adminpassword'\n end\n" | cli'
+}
+
+function add_license_from_homedirectory() {
+licfile=$1
+[[ $licfile == "" ]] && licfile=$licfilename
+if [ ! -f "$HOME/$licfile" ]; then
+    echo "File $HOME/$licfile does not exist. put a license file in $HOME"
+    exit 1
+fi
+podname=$(kubectl get pod -l app=$applabel -n $namespace | grep Running | awk '{ print $1 }')
+echo $podname
+
+echo cp license to container
+kubectl cp $HOME/$licfile $namespace/$podname:/tmp/$licfile
+sleep 5
+echo add license from $licfile
+kubectl exec -it $podname -n $namespace -- /bin/bash -c 'echo -e "execute add-vm-license \"$(cat /tmp/'$licfile')\"" | cli'
+}
+
+kubectl create namespace  $namespace
+
+
 
 cat << EOF > pvc.yml
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: default
   name: fmgdata
 spec:
   storageClassName: managed-premium
@@ -20,7 +49,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: default
   name: fmgvar
 spec:
   storageClassName: managed-premium
@@ -31,7 +59,7 @@ spec:
       storage: 7Gi
 EOF
 
-kubectl apply -f pvc.yml
+kubectl apply -f pvc.yml -n $namespace
 
 
 filename="fmgcontainer.yml"
@@ -41,23 +69,22 @@ cat << EOF > $filename
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fortimanager-deployment
-  namespace: default
+  name: $applabel-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fortimanager
+      app: $applabel
   template:
     metadata:
       labels:
-        app: fortimanager
+        app: $applabel
     spec:
       nodeSelector:
         linux: "true"
       containers:
-        - name: fortimanager
-          image: fortinet/fortimanager:7.4
+        - name: $applabel
+          image: fortinet/$applabel:7.4
           resources:
             limits:
               cpu: "4"
@@ -119,10 +146,17 @@ spec:
             claimName: fmgdata
 EOF
 
-kubectl apply -f $filename && 
+kubectl apply -f $filename -n $namespace && 
 
-kubectl rollout status deployment fortimanager-deployment 
+kubectl rollout status deployment $applabel-deployment  -n $namespace
 
 podname=$(kubectl get pod -l app=$applabel -n $namespace | grep Running | awk '{ print $1 }') &&  \
-
 kubectl exec -it $podname -n $namespace -- /bin/bash -c 'echo -e "config system admin setting \n set http_port 80\n set admin-https-redirect disable\n end\n" | cli' 
+config_admin_password
+
+add_license_from_homedirectory
+
+kubectl rollout status deployment $applabel-deployment -n $namespace
+echo wait 60 seconds for faz to reboot and apply license
+sleep 60
+kubectl rollout status deployment $applabel-deployment -n $namespace

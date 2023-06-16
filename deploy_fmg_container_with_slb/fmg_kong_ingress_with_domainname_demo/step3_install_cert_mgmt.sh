@@ -1,11 +1,11 @@
 #!/bin/bash -x
 
-kubectl create namespace cert-manager && \
+kubectl get namespace cert-manager || kubectl create namespace cert-manager
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
 
 kubectl rollout status deployment  -n cert-manager 
 dnsname="fmgweb.eastasia.cloudapp.azure.com"
-namespace="default"
+namespace="fortimanager"
 filename="clusterissuer_fmg.yml"
 
 cat << EOF > $filename
@@ -45,5 +45,5 @@ EOF
 kubectl apply -f $filename -n $namespace
 
 
-kubectl get certificate
-kubectl get secret 
+kubectl get certificate -n $namespace
+kubectl get secret  -n $namespace

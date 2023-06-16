@@ -2,7 +2,7 @@
 
 fmgdns="fmgweb.eastasia.cloudapp.azure.com"
 service_name="fmgcontainerhttps"
-namespace="default"
+namespace="fortimanager"
 
 filename="fmgclusteriphttphttps.yml"
 cat << EOF > $filename
@@ -78,13 +78,14 @@ kind: Ingress
 metadata:
   name: fmg-ingress
   annotations:
-    kubernetes.io/ingress.class: kong
+    #kubernetes.io/ingress.class: kong
     cert-manager.io/cluster-issuer: "selfsigned-issuer"
     # konghq.com/strip-path: "true"
     # konghq.com/https-redirect-status-code: "301"
-    # konghq.com/protocol: "https"
+    konghq.com/protocol: "https"
     # konghq.com/override: "https-only"
 spec:
+  ingressClassName: "kong"
   tls:
   - hosts:
     - $fmgdns
@@ -105,3 +106,4 @@ EOF
 kubectl apply -f $filename -n $namespace
 
 kubectl get ingress -n $namespace
+while [[ -z $(kubectl get ingress -n $namespace -o jsonpath='{.items[].status.loadBalancer.ingress[0].ip}') ]]; do echo "Waiting for IP..."; sleep 10; done; curl -k https://fmgweb.eastasia.cloudapp.azure.com/
