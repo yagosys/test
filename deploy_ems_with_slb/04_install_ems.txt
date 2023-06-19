@@ -1,0 +1,2 @@
+Invoke-WebRequest -Uri  https://wandy-public-7326-0030-8177.s3.ap-southeast-1.amazonaws.com/FortiClientEndpointManagementServer_7.0.7.0398_x64.exe -OutFile FortiClientEndpointManagementServer_7.0.7.0398_x64.exe
+Start-Process -FilePath "FortiClientEndpointManagementServer_7.0.7.0398_x64.exe" -Args "/quiet" -NoNewWindow -Wait
