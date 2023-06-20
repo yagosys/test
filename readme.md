@@ -997,6 +997,37 @@ i@ecs-148531:~/test$
 ```
 
 
+## demo use case  - bring up both cFAZ and cFMG on one cluster with nginx as ingress controller 
+
+```
+cd test
+./use_case_3_cfaz_cfmg_nginx_ingress.sh
+```
+
+result
+```
+i@ecs-148531:~/test$ kubectl get svc -A
+NAMESPACE       NAME                                 TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                      AGE
+cert-manager    cert-manager                         ClusterIP      10.0.140.59    <none>           9402/TCP                     19m
+cert-manager    cert-manager-webhook                 ClusterIP      10.0.157.76    <none>           443/TCP                      19m
+default         kubernetes                           ClusterIP      10.0.0.1       <none>           443/TCP                      14h
+fortianalyzer   fazlb443                             LoadBalancer   10.0.195.228   10.224.0.63      443:30339/TCP,80:31568/TCP   18m
+fortimanager    fmglb443                             LoadBalancer   10.0.166.70    10.224.0.62      443:30468/TCP,80:31972/TCP   18m
+ingress-nginx   ingress-nginx-controller             LoadBalancer   10.0.192.210   20.239.74.124    80:32183/TCP,443:31673/TCP   16m
+ingress-nginx   ingress-nginx-controller-admission   ClusterIP      10.0.44.227    <none>           443/TCP                      17m
+ingress-nginx   ingress-secondary                    LoadBalancer   10.0.135.165   20.187.111.231   80:31267/TCP,443:31329/TCP   16m
+kube-system     kube-dns                             ClusterIP      10.0.0.10      <none>           53/UDP,53/TCP                14h
+kube-system     metrics-server                       ClusterIP      10.0.253.50    <none>           443/TCP                      14h
+i@ecs-148531:~/test$ kubectl get ingress -A
+NAMESPACE       NAME                         CLASS    HOSTS                             ADDRESS         PORTS     AGE
+fortianalyzer   faz-ingress-nginx-external   <none>   faz.eastasia.cloudapp.azure.com   20.239.74.124   80, 443   16m
+fortimanager    fmg-ingress-nginx-external   <none>   fmg.eastasia.cloudapp.azure.com                   80, 443   16m
+i@ecs-148531:~/test$ curl -k https://fmg.eastasia.cloudapp.azure.com/
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+i@ecs-148531:~/test$ curl -k https://faz.eastasia.cloudapp.azure.com/
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+```
+
 
 ## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
 
