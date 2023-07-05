@@ -2,6 +2,9 @@
 LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
 INSTANCETYPE="Standard_D8s_v4"
+#INSTANCETYPE="Standard_D4s_v4"
+clustername="myAKSCluster"
+PUBLICIPNAME="fmgpublicip"
 az group create --name $RESOURCEGROUP --location $LOCATION 
 
 WINDOWS_USERNAME='azureuser'
@@ -14,7 +17,8 @@ az aks create \
     --windows-admin-username $WINDOWS_USERNAME \
     --windows-admin-password $WINDOWS_PASSWORD \
     --vm-set-type VirtualMachineScaleSets \
-    --network-plugin azure &&  
+    --network-plugin azure \
+    --network-policy calico &&  
 
 #az aks nodepool add \
 #    --resource-group $RESOURCEGROUP \
@@ -39,3 +43,17 @@ az aks nodepool add \
     --node-count 1 && 
  
 az aks get-credentials -g $RESOURCEGROUP -n myAKSCluster --overwrite-existing
+
+#
+az network public-ip create \
+    --resource-group $RESOURCEGROUP \
+    --name $PUBLICIPNAME \
+    --sku Standard \
+    --allocation-method static
+az network public-ip show --resource-group $RESOURCEGROUP --name $PUBLICIPNAME --query ipAddress --output tsv
+CLIENT_ID=$(az aks show --name $clustername --resource-group $RESOURCEGROUP --query identity.principalId -o tsv)
+RG_SCOPE=$(az group show --name $RESOURCEGROUP --query id -o tsv)
+az role assignment create \
+    --assignee ${CLIENT_ID} \
+    --role "Network Contributor" \
+    --scope ${RG_SCOPE}
