@@ -1,5 +1,8 @@
 #!/bin/bash -x
 
+[[ -z $1 ]] && location="eastasia" || location=$1
+[[ -z $2 ]] && fmgdnslabel="fmg" || fmgdnslabel=$2
+
 ingressclass="secondary"
 filename="fmgingress.yml"
 cat << EOF > $filename
@@ -21,10 +24,10 @@ spec:
 #  ingressClassName: nginx
   tls:
   - hosts:
-    - fmg.eastasia.cloudapp.azure.com
+    - $fmgdnslabel.$location.cloudapp.azure.com
     secretName: fortimanager-tls-fmg
   rules:
-  - host: fmg.eastasia.cloudapp.azure.com
+  - host: $fmgdnslabel.$location.cloudapp.azure.com
     http:
       paths:
 #      - path: /fmg(/|$)(.*)

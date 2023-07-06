@@ -1,12 +1,14 @@
 #!/bin/bash -x 
 resourcegroup="wandyaks"
 clustername="myAKSCluster"
-fmgdnslabel="fmg"
-location="eastasia"
+#fmgdnslabel="fmg"
+[[ -z $1 ]] && LOCATION="eastasia" || LOCATION=$1
+[[ -z $2 ]] && fmgdnslabel="fmg" || fmgdnslabel=$2 
 az network public-ip create \
     --resource-group $resourcegroup \
     --name fmgpublicip \
     --sku Standard \
+    --location $LOCATION \
     --allocation-method static
 az network public-ip show --resource-group $resourcegroup --name fmgpublicip --query ipAddress --output tsv
 CLIENT_ID=$(az aks show --name $clustername --resource-group $resourcegroup --query identity.principalId -o tsv)
@@ -25,4 +27,4 @@ echo $public_ip
 
     #service.beta.kubernetes.io/azure-load-balancer-resource-group: $resourcegroup
     #service.beta.kubernetes.io/azure-dns-label-name: $fmgdnslabel
-echo $fmgdnslabel.$location.cloudapp.azure.com 
+echo $fmgdnslabel.$LOCATION.cloudapp.azure.com 

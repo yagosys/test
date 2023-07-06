@@ -1,8 +1,8 @@
 #!/bin/bash -x
 
 resourcegroup="wandyaks"
-fmgdnslabel="fmg"
-
+#fmgdnslabel="fmg"
+[[ -z $1 ]] && fmgdnslabel="fmg" || fmgdnslabel=$1
 public_ip=$(az network public-ip list -g $resourcegroup --query "[?name=='fmgpublicip']" | jq -r .[0].ipAddress) && \
 
 filename="fmglbexternal.yml"

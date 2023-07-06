@@ -1,8 +1,9 @@
 #!/bin/bash -x
 
 resourcegroup="wandyaks"
-fmgdnslabel="fmg"
+#fmgdnslabel="fmg"
 
+[[ -z $1 ]] && fmgdnslabel="fmg" || fmgdnslabel=$1
 public_ip=$(az network public-ip list -g $resourcegroup --query "[?name=='fmgpublicip']" | jq -r .[0].ipAddress) && \
 
 filename="fmglbexternalsecondaryingress.yml"
@@ -15,7 +16,7 @@ kind: Service
 metadata:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-resource-group: wandyaks
-    service.beta.kubernetes.io/azure-dns-label-name: fmg
+    service.beta.kubernetes.io/azure-dns-label-name: $fmgdnslabel
   name: ingress-secondary
   namespace: "ingress-nginx"
 spec:
