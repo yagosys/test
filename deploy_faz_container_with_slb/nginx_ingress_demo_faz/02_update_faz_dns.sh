@@ -1,12 +1,15 @@
 #!/bin/bash -x 
 resourcegroup="wandyaks"
 clustername="myAKSCluster"
-fazdnslabel="faz"
-location="eastasia"
+#fazdnslabel="faz"
+[[ -z $1 ]] && location="eastasia" || location=$1
+[[ -z $2 ]] && fazdnslabel="faz" || fazdnslabel=$2
+#location="eastasia"
 az network public-ip create \
     --resource-group $resourcegroup \
     --name fazpublicip \
     --sku Standard \
+    --location $location \
     --allocation-method static
 az network public-ip show --resource-group $resourcegroup --name fazpublicip --query ipAddress --output tsv
 CLIENT_ID=$(az aks show --name $clustername --resource-group $resourcegroup --query identity.principalId -o tsv)

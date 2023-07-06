@@ -1,8 +1,8 @@
 #!/bin/bash -x
 
 resourcegroup="wandyaks"
-fazdnslabel="faz"
-
+#fazdnslabel="faz"
+[[ -z $1 ]] && fazdnslabel="faz" || fazdnslabel=$1
 public_ip=$(az network public-ip list -g $resourcegroup --query "[?name=='fazpublicip']" | jq -r .[0].ipAddress) && \
 
 filename="fazlbexternal.yml"
@@ -14,7 +14,7 @@ kind: Service
 metadata:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-resource-group: wandyaks
-    service.beta.kubernetes.io/azure-dns-label-name: faz
+    service.beta.kubernetes.io/azure-dns-label-name: $fazdnslabel
 #    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   labels:
     app.kubernetes.io/component: controller

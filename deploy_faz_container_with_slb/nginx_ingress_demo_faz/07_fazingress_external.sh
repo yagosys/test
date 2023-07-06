@@ -1,6 +1,9 @@
 #!/bin/bash -x
 
-filename="fazingress"
+[[ -z $1 ]] && location="eastasia" || location=$1
+[[ -z $2 ]] && fazdnslabel="faz" || fazdnslabel=$2
+
+filename="fazingress.yml"
 cat << EOF > $filename
 
 apiVersion: networking.k8s.io/v1
@@ -20,10 +23,10 @@ spec:
         #  ingressClassName: nginx
   tls:
   - hosts:
-    - faz.eastasia.cloudapp.azure.com
+    - $fazdnslabel.$location.cloudapp.azure.com
     secretName: fortianalyzer-tls-faz
   rules:
-  - host: faz.eastasia.cloudapp.azure.com
+  - host: $fazdnslabel.$location.cloudapp.azure.com
     http:
       paths:
 #      - path: /faz(/|$)(.*)

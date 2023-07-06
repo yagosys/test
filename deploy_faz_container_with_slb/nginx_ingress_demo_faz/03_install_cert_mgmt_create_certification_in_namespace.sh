@@ -4,8 +4,10 @@ kubectl get namespace cert-manager || kubectl create namespace cert-manager
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
 
 kubectl rollout status deployment  -n cert-manager 
-fazdnslabel="faz"
-location="eastasia"
+#fazdnslabel="faz"
+#location="eastasia"
+[[ -z $1 ]] && location="eastasia" || location=$1
+[[ -z $2 ]] && fazdnslabel="faz" || fazdnslabel=$2
 namespace="fortianalyzer"
 applabel="fortianalyzer"
 dnsname="$fazdnslabel.$location.cloudapp.azure.com"

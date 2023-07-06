@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: fortianalyzer-policy
+  namespace: fortianalyzer
+spec:
+  podSelector:
+    matchLabels:
+      app: fortianalyzer
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: fortimanager
+      podSelector:
+        matchLabels:
+          app: fortimanager
+  - from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 443
+
