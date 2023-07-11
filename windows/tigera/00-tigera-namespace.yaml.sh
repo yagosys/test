@@ -1,8 +1,33 @@
 #!/bin/bash -xe
-kubectl get tigerastatus 
-installed=$(kubectl get tigerastatus | grep True | wc  | awk '{ print $1}')
-[[ $installed == '9' ]] && echo 'yes' || echo 'please install tiger first'
-cat << EOF | kubectl apply -f - 
+
+
+# Function to check if all tigerastatus resources are available
+check_tigerastatus() {
+  # Get the list of names
+  names=$(kubectl get tigerastatus -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+
+  for name in $names; do
+    # Get the AVAILABLE status for each name
+    status=$(kubectl get tigerastatus $name -o jsonpath='{.status.conditions[?(@.type=="Available")].status}')
+    echo $name is $status
+    if [ "$status" != "True" ]; then
+      echo "AVAILABLE status for $name is not True."
+      return 1
+    fi
+  done
+
+  # If the function hasn't returned by now, all statuses are True
+  echo "All Tigerastatus resources are now available."
+  return 0
+}
+
+# Loop until all tigerastatus resources are available
+while ! check_tigerastatus; do
+  echo "Waiting for all Tigerastatus resources to be available..."
+  sleep 5
+done
+
+cat << EOF | kubectl apply -f -
 kind: Namespace
 apiVersion: v1
 metadata:
