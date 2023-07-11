@@ -1,9 +1,14 @@
-first step is go to tigea cloud. then add cluster
-with get install file like below
+first step is go to calico cloud. then add cluster
+https://www.calicocloud.io/ or choose reinstall cluster for existing cluster
+
+then you will get install  script below 
 
 kubectl apply -f https://installer.calicocloud.io/manifests/cc-operator/latest/deploy.yaml && curl -H "Authorization: Bearer lkj9h3gwu:eiwmc8kas:faur1lb45w9w8tzk5rh46jo1bawq085vsw7som6lsy9y5q5s6tskuvyzgyur8tgr" "https://www.calicocloud.io/api/managed-cluster/deploy.yaml" | kubectl apply -f -
 
+after that, use below to monitor the instalation
+
 watch kubectl get tigerastatus
+
 i@ecs-148531:~/test/windows/tigera$ kubectl get tigerastatus
 NAME                            AVAILABLE   PROGRESSING   DEGRADED   SINCE
 apiserver                       True        False         False      4m
