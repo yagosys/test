@@ -4,7 +4,13 @@
 # Function to check if all tigerastatus resources are available
 check_tigerastatus() {
   # Get the list of names
-  names=$(kubectl get tigerastatus -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+    while true; do
+    names=$(kubectl get tigerastatus -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+
+    #  wait until tigerastatus has 9 resources which are apiserver calico cloud-core compliance image-assurance intrusion-detection log-collector management-cluster-connection monitor
+    [[ $(echo $names | wc -w) == '9' ]] && break || sleep 5
+  done
+  
 
   for name in $names; do
     # Get the AVAILABLE status for each name
