@@ -1027,6 +1027,44 @@ i@ecs-148531:~/test$ curl -k https://fmg.eastasia.cloudapp.azure.com/
 i@ecs-148531:~/test$ curl -k https://faz.eastasia.cloudapp.azure.com/
 <html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
 ```
+## demo use case - bring up aks cluster with tigera and fortigate firewall-controller integration
+
+the traffic from aks cluster will be routed to fortigate  to internet
+```
+cd test
+./use_case_4_aks_cni_calico_tigera_integration.sh
+```
+result
+```
+i@ecs-148531:~/test/windows/fortigate$ ssh azureuser@fgtvmtest1.westus2.cloudapp.azure.com show firewall policy
+Warning: Permanently added 'fgtvmtest1.westus2.cloudapp.azure.com,20.29.241.46' (ECDSA) to the list of known hosts.
+fortgate # config firewall policy
+    edit 2
+        set name "aksnodetointeret"
+        set uuid 2a2845ee-1fe7-51ee-a0b4-bd40e955d0a6
+        set srcintf "port2"
+        set dstintf "port1"
+        set action accept
+        set srcaddr "fortigate.production-microservice1"
+        set dstaddr "all"
+        set schedule "always"
+        set service "ALL"
+        set nat enable
+    next
+    edit 1
+        set name "test"
+        set uuid 5b5e64b4-1fe6-51ee-0b2e-208c88d9064c
+        set srcintf "port2"
+        set dstintf "port1"
+        set action accept
+        set srcaddr "all"
+        set dstaddr "all"
+        set schedule "always"
+        set service "ALL"
+        set logtraffic all
+        set nat enable
+
+```
 
 
 ## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
