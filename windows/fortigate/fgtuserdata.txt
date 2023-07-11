@@ -1,0 +1,38 @@
+config system interface
+   edit port2
+   set mode dhcp
+   set allowaccess ping https http ssh
+end
+config firewall policy
+    edit 1
+        set name "test"
+        set srcintf "port2"
+        set dstintf "port1"
+        set action accept
+        set srcaddr "all"
+        set dstaddr "all"
+        set schedule "always"
+        set service "ALL"
+        set logtraffic all
+        set nat enable
+    next
+end
+config system accprofile
+    edit "tigra"
+        set fwgrp custom
+        config fwgrp-permission
+            set address read-write
+        end
+    next
+end
+config system api-user
+    edit "tigera"
+        set accprofile "tigra"
+        set vdom "root"
+        config trusthost
+            edit 1
+                set ipv4-trusthost 10.0.0.0 255.0.0.0
+            next
+        end
+    next
+end
