@@ -1,3 +1,4 @@
-LOCATION="eastasia"
+[[ -z $1 ]] || LOCATION="eastasia" && LOCATION=$1
+#LOCATION="eastasia"
 RESOURCEGROUP="wandyaks"
-az group delete -g $RESOURCEGROUP
+az group delete -g $RESOURCEGROUP --yes
