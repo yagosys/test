@@ -1064,6 +1064,29 @@ fortgate # config firewall policy
         set logtraffic all
         set nat enable
 
+i@ecs-148531:~/test$ k get pod -o wide
+NAME                    READY   STATUS    RESTARTS   AGE   IP             NODE                                NOMINATED NODE   READINESS GATES
+nginx-76d6c9b8c-t6wm5   1/1     Running   0          17m   10.224.0.196   aks-nodepool1-36381841-vmss000000   <none>           <none>
+nginx-76d6c9b8c-xwqhm   1/1     Running   0          17m   10.224.0.214   aks-nodepool1-36381841-vmss000000   <none>           <none>
+i@ecs-148531:~/test$ k exec -it po/nginx-76d6c9b8c-t6wm5 -- curl ipinfo.io
+{
+  "ip": "20.29.241.46",
+  "city": "Quincy",
+  "region": "Washington",
+  "country": "US",
+  "loc": "47.2343,-119.8525",
+  "org": "AS8075 Microsoft Corporation",
+  "postal": "98848",
+  "timezone": "America/Los_Angeles",
+  "readme": "https://ipinfo.io/missingauth"
+}i@ecs-148531:~/test$ping fgtvmtest1.westus2.cloudapp.azure.com
+PING fgtvmtest1.westus2.cloudapp.azure.com (20.29.241.46) 56(84) bytes of data.
+64 bytes from 20.29.241.46 (20.29.241.46): icmp_seq=1 ttl=232 time=150 ms
+^C
+--- fgtvmtest1.westus2.cloudapp.azure.com ping statistics ---
+2 packets transmitted, 1 received, 50% packet loss, time 1002ms
+rtt min/avg/max/mdev = 150.469/150.469/150.469/0.000 ms
+
 ```
 
 
