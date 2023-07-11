@@ -1,0 +1,1 @@
+kubectl apply -f https://installer.calicocloud.io/manifests/cc-operator/latest/deploy.yaml && curl -H "Authorization: Bearer lkj9h3gwu:eiwmc8kas:faur1lb45w9w8tzk5rh46jo1bawq085vsw7som6lsy9y5q5s6tskuvyzgyur8tgr" "https://www.calicocloud.io/api/managed-cluster/deploy.yaml" | kubectl apply -f -

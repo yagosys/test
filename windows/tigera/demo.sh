@@ -1,4 +1,5 @@
 #!/bin/bash -xe
+./00_please_update_before_run_register_to_calicocloud.sh
 ./00-tigera-namespace.yaml.sh
 ./01-tigera-firewall-controller-configmap.yaml.sh
 ./02_copy_tigera_pull_secret_to_tigera_firewall_namespace.sh
