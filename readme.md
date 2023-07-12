@@ -1032,7 +1032,7 @@ i@ecs-148531:~/test$ curl -k https://faz.eastasia.cloudapp.azure.com/
 the traffic from aks cluster will be routed to fortigate  to internet
 ```
 cd test
-./use_case_4_aks_cni_calico_tigera_integration.sh
+./use_case_4_azure_cni_calico_fortigate_tigera_integration.sh
 ```
 result
 ```
@@ -1088,7 +1088,52 @@ PING fgtvmtest1.westus2.cloudapp.azure.com (20.29.241.46) 56(84) bytes of data.
 rtt min/avg/max/mdev = 150.469/150.469/150.469/0.000 ms
 
 ```
+## demo use case - bring up aks cluster with calico as cni and fortigate
 
+the traffic from aks cluster will be routed to fortigate  to internet
+
+```
+./use_case_5_cni_calico_fortigate.sh
+```
+result
+```
+i@ecs-148531:~/test$ k get node
+NAME                                STATUS   ROLES   AGE   VERSION
+aks-nodepool1-31838501-vmss000000   Ready    agent   18m   v1.25.6
+aks-ubuntu-25708522-vmss000000      Ready    agent   14m   v1.25.6
+i@ecs-148531:~/test$ k get tigerastatus
+NAME        AVAILABLE   PROGRESSING   DEGRADED   SINCE
+apiserver   True        False         False      3m2s
+calico      True        False         False      3m27s
+i@ecs-148531:~/test$ k get node -o wide
+NAME                                STATUS   ROLES   AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+aks-nodepool1-31838501-vmss000000   Ready    agent   19m   v1.25.6   10.224.0.4    <none>        Ubuntu 22.04.2 LTS   5.15.0-1040-azure   containerd://1.7.1+azure-1
+aks-ubuntu-25708522-vmss000000      Ready    agent   15m   v1.25.6   10.224.0.5    <none>        Ubuntu 22.04.2 LTS   5.15.0-1040-azure   containerd://1.7.1+azure-1
+i@ecs-148531:~/test$ k create deployment nginx --image=nginx 
+deployment.apps/nginx created
+i@ecs-148531:~/test$ k get pod -o wide
+NAME                    READY   STATUS    RESTARTS   AGE   IP               NODE                             NOMINATED NODE   READINESS GATES
+nginx-76d6c9b8c-zfhvc   1/1     Running   0          10s   192.168.187.71   aks-ubuntu-25708522-vmss000000   <none>           <none>
+i@ecs-148531:~/test$ k exec -it po/nginx-76d6c9b8c-zfhvc -- curl ipinfo.io
+{
+  "ip": "4.154.16.157",
+  "city": "Quincy",
+  "region": "Washington",
+  "country": "US",
+  "loc": "47.2343,-119.8525",
+  "org": "AS8075 Microsoft Corporation",
+  "postal": "98848",
+  "timezone": "America/Los_Angeles",
+  "readme": "https://ipinfo.io/missingauth"
+}
+i@ecs-148531:~/test$ ping fgtvmtest1.westus2.cloudapp.azure.com -c 1
+PING fgtvmtest1.westus2.cloudapp.azure.com (4.154.16.157) 56(84) bytes of data.
+64 bytes from 4.154.16.157 (4.154.16.157): icmp_seq=1 ttl=232 time=151 ms
+
+--- fgtvmtest1.westus2.cloudapp.azure.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 150.963/150.963/150.963/0.000 ms
+```
 
 ## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
 
