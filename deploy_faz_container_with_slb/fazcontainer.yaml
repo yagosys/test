@@ -5,6 +5,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fortianalyzer-deployment
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -15,11 +16,22 @@ spec:
       labels:
         app: fortianalyzer
     spec:
+#      initContainers:
+#      - name: init-sleep
+#        image: busybox
+#        command: ['sh', '-c', 'sleep 1200']
       nodeSelector: 
         linux: "true"
       containers:
         - name: fortianalyzer
           image: fortinet/fortianalyzer:7.0.7
+#          resources:
+#            limits:
+#              cpu: "4"
+#              memory: "16000Mi"
+#            requests:
+#              cpu: "4"
+#              memory: "8000Mi"
           ports:
             - containerPort: 541
             - containerPort: 443
@@ -49,7 +61,7 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 443
-            initialDelaySeconds: 180
+            initialDelaySeconds: 240
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
@@ -57,7 +69,7 @@ spec:
               path: /
               port: 443
               scheme: HTTPS
-            initialDelaySeconds: 300
+            initialDelaySeconds: 480
             periodSeconds: 10
             failureThreshold: 3
           volumeMounts:
