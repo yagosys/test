@@ -1,8 +1,11 @@
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: default
   name: fmgdata
 spec:
+#  storageClassName: managed-premium
   accessModes:
     - ReadWriteOnce
   resources:
@@ -12,8 +15,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: default
   name: fmgvar
 spec:
+#  storageClassName: managed-premium
   accessModes:
     - ReadWriteOnce
   resources:
