@@ -27,7 +27,8 @@ az network nic create \
   --resource-group $MyResourceGroup \
   --name $MyNIC \
   --vnet-name $MyVNet \
-  --subnet $MyInternalSubnet
+  --subnet $MyInternalSubnet \
+  --private-ip-address $fgtaddress
 
 az vm create \
   --resource-group $MyResourceGroup \
