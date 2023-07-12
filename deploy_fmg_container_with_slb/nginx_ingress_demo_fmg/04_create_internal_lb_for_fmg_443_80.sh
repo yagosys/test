@@ -1,6 +1,6 @@
 #!/bin/bash -x
 filename="fmglb443svc.yml"
-
+[[ -z $1 ]] && namespace="fortimanager" || namespace=$1
 cat << EOF > $filename
 ---
 apiVersion: v1
@@ -11,7 +11,7 @@ metadata:
 #    service.beta.kubernetes.io/azure-dns-label-name: fmg
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   name: fmglb443
-  namespace: fortimanager
+  namespace: $namespace
 spec:
   externalTrafficPolicy: Local
   sessionAffinity: ClientIP
@@ -33,7 +33,7 @@ kubectl apply -f $filename &&
 
 
 while true; do
-    ip=$(kubectl describe svc fmglb443 -n fortimanager | grep -w 'LoadBalancer Ingress' | awk '{print $3}')
+    ip=$(kubectl describe svc fmglb443 -n $namespace | grep -w 'LoadBalancer Ingress' | awk '{print $3}')
 
     if [[ -z "$ip" ]]; then
         echo "IP is empty, waiting for 10 seconds..."
