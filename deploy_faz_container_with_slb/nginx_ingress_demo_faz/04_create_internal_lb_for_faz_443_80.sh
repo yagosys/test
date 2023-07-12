@@ -1,6 +1,6 @@
 #!/bin/bash -x
 filename="fazlb443svc.yml"
-
+[[ -z $1 ]] && namespace="fortianalyzer" || namespace=$1
 cat << EOF > $filename
 ---
 apiVersion: v1
@@ -11,7 +11,7 @@ metadata:
 #    service.beta.kubernetes.io/azure-dns-label-name: faz
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   name: fazlb443
-  namespace: fortianalyzer
+  namespace: $namespace
 spec:
   externalTrafficPolicy: Local
   sessionAffinity: ClientIP
@@ -33,7 +33,7 @@ kubectl apply -f $filename &&
 
 
 while true; do
-    ip=$(kubectl describe svc fazlb443 -n fortianalyzer | grep -w 'LoadBalancer Ingress' | awk '{print $3}')
+    ip=$(kubectl describe svc fazlb443 -n $namespace | grep -w 'LoadBalancer Ingress' | awk '{print $3}')
 
     if [[ -z "$ip" ]]; then
         echo "IP is empty, waiting for 10 seconds..."
