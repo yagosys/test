@@ -1135,6 +1135,42 @@ PING fgtvmtest1.westus2.cloudapp.azure.com (4.154.16.157) 56(84) bytes of data.
 rtt min/avg/max/mdev = 150.963/150.963/150.963/0.000 ms
 ```
 
+## demo use case bring up fmg and faz container in same namespace with calico cni and fortigate as egress gateway
+also configured fortigate vip for faz and fmg. since faz and fmg is using overlay ip address. therefore, an internal SLB configured for load balancer traffic from fortigate to faz/fmg.
+```
+./use_case_6_cni_calico_fortigate_faz_fmg_default_namespace_vip_on_fortigate.sh
+```
+result
+
+```
+i@ecs-148531:~/test/windows/fortigate$  k get pod
+NAME                                        READY   STATUS    RESTARTS   AGE
+fortianalyzer-deployment-795db7d9f5-gpx2h   1/1     Running   0          27m
+fortimanager-deployment-546f7d8dc-pfnwf     1/1     Running   0          26m
+i@ecs-148531:~/test/windows/fortigate$ k get svc 
+NAME         TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+fazlb443     LoadBalancer   10.0.40.129    10.224.0.6    443:30264/TCP,80:32060/TCP   27m
+fmglb443     LoadBalancer   10.0.242.144   10.224.0.7    443:30202/TCP,80:32001/TCP   26m
+kubernetes   ClusterIP      10.0.0.1       <none>        443/TCP                      36m
+i@ecs-148531:~/test/windows/fortigate$ k get pod -o wide
+NAME                                        READY   STATUS    RESTARTS   AGE   IP                NODE                             NOMINATED NODE   READINESS GATES
+fortianalyzer-deployment-795db7d9f5-gpx2h   1/1     Running   0          27m   192.168.228.135   aks-ubuntu-35767738-vmss000000   <none>           <none>
+fortimanager-deployment-546f7d8dc-pfnwf     1/1     Running   0          26m   192.168.228.136   aks-ubuntu-35767738-vmss000000   <none>           <none>
+i@ecs-148531:~/test/windows/fortigate$ k get svc 
+NAME         TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+fazlb443     LoadBalancer   10.0.40.129    10.224.0.6    443:30264/TCP,80:32060/TCP   27m
+fmglb443     LoadBalancer   10.0.242.144   10.224.0.7    443:30202/TCP,80:32001/TCP   26m
+kubernetes   ClusterIP      10.0.0.1       <none>        443/TCP                      36m
+i@ecs-148531:~/test/windows/fortigate$ curl -k https://fgtvmtest1.westus2.cloudapp.azure.com:18443
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+i@ecs-148531:~/test/windows/fortigate$ curl -k https://fgtvmtest1.westus2.cloudapp.azure.com:19443
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+i@ecs-148531:~/test/windows/fortigate$ k get node -o wide
+NAME                                STATUS   ROLES   AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+aks-nodepool1-11359346-vmss000000   Ready    agent   37m   v1.25.6   10.224.0.4    <none>        Ubuntu 22.04.2 LTS   5.15.0-1040-azure   containerd://1.7.1+azure-1
+aks-ubuntu-35767738-vmss000000      Ready    agent   33m   v1.25.6   10.224.0.5    <none>        Ubuntu 22.04.2 LTS   5.15.0-1040-azure   containerd://1.7.1+azure-1
+
+```
 ## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
 
 
