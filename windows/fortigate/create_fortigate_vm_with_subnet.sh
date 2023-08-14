@@ -99,4 +99,4 @@ vmaddnic
 startvm
 create_udr_to_fortigate
 #delvm
-ssh azureuser@fgtvmtest1.westus2.cloudapp.azure.com   < fgtuserdata.txt
+ssh -o "StrictHostKeyChecking=no" azureuser@fgtvmtest1.westus2.cloudapp.azure.com   < fgtuserdata.txt
