@@ -24,7 +24,7 @@ spec:
         linux: "true"
       containers:
         - name: fortianalyzer
-          image: fortinet/fortianalyzer:7.2.3
+          image: fortinet/fortianalyzer:7.2.2
 #          resources:
 #            limits:
 #              cpu: "4"
