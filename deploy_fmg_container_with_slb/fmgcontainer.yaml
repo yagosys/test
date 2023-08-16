@@ -20,7 +20,7 @@ spec:
         linux: "true"
       containers:
         - name: fortimanager
-          image: fortinet/fortimanager:7.4
+          image: fortinet/fortimanager:7.2.2
           resources:
             limits:
               cpu: "4"
