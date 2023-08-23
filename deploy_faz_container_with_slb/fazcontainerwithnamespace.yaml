@@ -2,6 +2,7 @@
 #514, logging, OFTP , both TCP and UDP  , TCP 8443 Log from chromebook, , 8080, SOAP , TCP/445 DC polling 
 ---
 apiVersion: apps/v1
+#kind: StatefulSet
 kind: Deployment
 metadata:
   name: fortianalyzer-deployment
@@ -11,11 +12,14 @@ spec:
   selector:
     matchLabels:
       app: fortianalyzer
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: fortianalyzer
     spec:
+#      terminationGracePeriodSeconds: 60
 #      initContainers:
 #      - name: init-sleep
 #        image: busybox
@@ -24,7 +28,7 @@ spec:
         linux: "true"
       containers:
         - name: fortianalyzer
-          image: fortinet/fortianalyzer:7.0.7
+          image: fortinet/fortianalyzer:7.2.2
 #          resources:
 #            limits:
 #              cpu: "4"
