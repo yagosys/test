@@ -1171,6 +1171,33 @@ aks-nodepool1-11359346-vmss000000   Ready    agent   37m   v1.25.6   10.224.0.4 
 aks-ubuntu-35767738-vmss000000      Ready    agent   33m   v1.25.6   10.224.0.5    <none>        Ubuntu 22.04.2 LTS   5.15.0-1040-azure   containerd://1.7.1+azure-1
 
 ```
+```
+use case 7 create faz fmg in namespace fortinet with flex-vm license and config add fmg to faz for eventslog
+will also create a fortigate for access GUI to faz and fmg
+
+~/test/use_case_7.sh <FAZ token> <FMG token>
+
+use ~/test/reboot_faz_in_fortinet_namespace.sh to reboot faz for stress test. 
+```
+result 
+
+```
+i@ecs-148531:~/test$ k get pod -n fortinet
+NAME                                        READY   STATUS    RESTARTS      AGE
+fortianalyzer-deployment-7dd697477d-swpt2   1/1     Running   1 (35m ago)   41m
+fortimanager-deployment-54cf4b79b5-d74fx    1/1     Running   1 (35m ago)   41m
+i@ecs-148531:~/test$ cd windows/fortigate/
+i@ecs-148531:~/test/windows/fortigate$ ./verify.sh eastasia
+https://fgtvmtest1.eastasia.cloudapp.azure.com:18443
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+https://fgtvmtest1.eastasia.cloudapp.azure.com:19443
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+i@ecs-148531:~/test/windows/fortigate$ 
+```
+
+
+
+
 ## sumary of all product boot up  time when bring up only single cFMG /cFAZ/FMG VM/FAZ VM in the cluster. the time vary depends on the load of cluster
 
 
