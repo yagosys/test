@@ -22,8 +22,22 @@ while true ; do
   echo sleep 100;
   sleep 100 ;
   echo restart faz deployment 
+      RANDOM_CHOICE=$((RANDOM % 3 + 1))
+
+    case $RANDOM_CHOICE in
+        1)
+            kubectl delete po/$new_podname -n $namespace | tee >> fazbootlog
+            ;;
+        2)
+            kubectl rollout restart deployment/fortianalyzer-deployment -n $namespace | tee >> fazbootlog
+            ;;
+        3)
+            kubectl exec -it po/$new_podname -n $namespace -- bin/bash -c reboot | tee >> fazbootlog
+            ;;
+    esac
+#   kubectl delete po/$new_podname -n $namespace
 #  kubectl rollout restart deployment/fortianalyzer-deployment -n $namespace
-  kubectl exec -it po/$new_podname -n $namespace -- bin/bash -c reboot | tee >> fazbootlog; 
+#  kubectl exec -it po/$new_podname -n $namespace -- bin/bash -c reboot | tee >> fazbootlog; 
   sleep 10 ;
 done
 
