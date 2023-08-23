@@ -1174,6 +1174,16 @@ aks-ubuntu-35767738-vmss000000      Ready    agent   33m   v1.25.6   10.224.0.5 
 ```
 use case 7 create faz fmg in namespace fortinet with flex-vm license and config add fmg to faz for eventslog
 will also create a fortigate for access GUI to faz and fmg
+added an change to fazcontainer.yaml file with strategy: type : recreate to avoid dual WRITE to database issue which could cause database corruption. 
+
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortianalyzer
+  strategy:
+    type: Recreate
 
 ~/test/use_case_7.sh <FAZ token> <FMG token>
 
