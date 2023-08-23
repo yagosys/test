@@ -1,6 +1,6 @@
 #!/bin/bash -x
 [[ -z $1 ]] && LOCATION="westus2" || LOCATION=$1
-MyResourceGroup="MC_wandyaks_myAKSCluster_westus2"
+MyResourceGroup="MC_wandyaks_myAKSCluster_$LOCATION"
 MyVNet="aks-vnet-12723653"
 MySubnet="externalSubnet"
 MyPublicIP="fgtpublicip"
@@ -99,4 +99,4 @@ vmaddnic
 startvm
 create_udr_to_fortigate
 #delvm
-ssh -o "StrictHostKeyChecking=no" azureuser@fgtvmtest1.westus2.cloudapp.azure.com   < fgtuserdata.txt
+ssh -o "StrictHostKeyChecking=no" azureuser@fgtvmtest1.$LOCATION.cloudapp.azure.com   < fgtuserdata.txt

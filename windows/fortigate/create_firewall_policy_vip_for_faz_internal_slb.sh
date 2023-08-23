@@ -1,9 +1,11 @@
 #!/bin/bash -xe
 filename="slbfirewallpolicy"
-extip=$(ssh azureuser@fgtvmtest1.westus2.cloudapp.azure.com get system interface physical port1  | grep ip: | awk '{print $2}')
+[[ -z $1 ]] && location="westus2" || location=$1
+[[ -z $2 ]] && namespace="default" || namespace=$2
+extip=$(ssh azureuser@fgtvmtest1.$location.cloudapp.azure.com get system interface physical port1  | grep ip: | awk '{print $2}')
 echo $extip
-fazslbip=$(kubectl get svc fazlb443 -o json | jq -r .status.loadBalancer.ingress[].ip )
-fmgslbip=$(kubectl get svc fmglb443 -o json | jq -r .status.loadBalancer.ingress[].ip )
+fazslbip=$(kubectl get svc fazlb443 -o json -n $namespace | jq -r .status.loadBalancer.ingress[].ip )
+fmgslbip=$(kubectl get svc fmglb443 -o json -n $namespace | jq -r .status.loadBalancer.ingress[].ip )
 echo $fazslbip
 echo $fmgslbip
 cat << EOF >$filename
@@ -56,5 +58,5 @@ move 3 before 1
 move 4 before 1
 end
 EOF
-ssh azureuser@fgtvmtest1.westus2.cloudapp.azure.com <$filename
-ssh azureuser@fgtvmtest1.westus2.cloudapp.azure.com show firewall policy
+ssh azureuser@fgtvmtest1.$location.cloudapp.azure.com <$filename
+ssh azureuser@fgtvmtest1.$location.cloudapp.azure.com show firewall policy
