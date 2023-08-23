@@ -2,7 +2,6 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: fortimanager
   name: fmgdata
 spec:
   storageClassName: managed-premium
@@ -15,7 +14,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: fortimanager
   name: fmgvar
 spec:
   storageClassName: managed-premium
@@ -23,4 +21,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 7Gi
+      storage: 20Gi

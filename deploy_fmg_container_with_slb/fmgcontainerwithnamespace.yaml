@@ -2,15 +2,17 @@
 #514, logging, OFTP , both TCP and UDP  , TCP 8443 Log from chromebook, , 8080, SOAP , TCP/445 DC polling 
 ---
 apiVersion: apps/v1
+#kind: StatefulSet
 kind: Deployment
 metadata:
   name: fortimanager-deployment
-  namespace: fortimanager
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: fortimanager
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -20,14 +22,7 @@ spec:
         linux: "true"
       containers:
         - name: fortimanager
-          image: fortinet/fortimanager:7.0.7
-          resources:
-            limits:
-              cpu: "4"
-              memory: "8000Mi"
-            requests:
-              cpu: "4"
-              memory: "8000Mi"
+          image: fortinet/fortimanager:7.2.2
           ports:
             - containerPort: 541
             - containerPort: 443
