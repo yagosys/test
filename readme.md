@@ -1,4 +1,106 @@
 
+## some notes before run FAZ/FMG container on AKS or other k8s.
+
+1. deployment strategy
+
+when run FAZ/FMG in k8s include aks with deployment yaml. set  strategy type to "Recreate" . this is to prevent from multiple POD to access same database simultantly to avoid corruption of the database.
+
+```
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortianalyzer
+  strategy:
+    type: Recreate
+```
+
+2. VM-SIZE on AKS
+on azure aks. two vm size "standard_f16s_v2" and "standbard_b8ms"  are tested.
+on other vm size like Standard_D4_v4, Standard_D8_v4 do not create fortianalyzer POD and fortimanager POD at same namespace. instead, create them in seperate namespace 
+
+
+3. linux capabilities for container
+for linux capabilities. currently, only tested linux capabilities is "ALL" 
+ 
+```
+          securityContext:
+            capabilities:
+              add:
+                - ALL
+```
+4. miminal requirment for resoure to run FAZ/FMG container.
+
+the requirement is same as running FAZ/FMG VM. 
+
+5. DISK for /var and /data directory of faz/fmg
+
+follow same suggest for FAZ/FMG VM. use seperate DISK for /var and /data folder. on AKS. use PVC with accessModes "ReadWriteOnce" is tested.
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fazdata
+  namespace: fortinet
+spec:
+  storageClassName: managed-premium
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fazvar
+  namespace: fortinet
+spec:
+  storageClassName: managed-premium
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi`
+```
+
+on faz/fmg pod definition
+```
+          volumeMounts:
+            - name: var-fazt100
+              mountPath: /var
+            - name: data-fazt100
+              mountPath: /data
+      volumes:
+        - name: var-fazt100
+          persistentVolumeClaim:
+            claimName: fazvar
+        - name: data-fazt100
+          persistentVolumeClaim:
+            claimName: fazdata
+```
+
+6. use liveness and readiness check in pod definition
+
+it is recommended to add liveness check and readiness check when deploy FAZ/FMG POD. here is an example.
+
+```
+          readinessProbe:
+            tcpSocket:
+              port: 443
+            initialDelaySeconds: 240
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 443
+              scheme: HTTPS
+            initialDelaySeconds: 480
+            periodSeconds: 10
+            failureThreshold: 3
+```
+
 ## Prepare use az shell 
 
 ## clone the code 
