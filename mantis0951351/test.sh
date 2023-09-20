@@ -40,7 +40,7 @@ if [ $faz_zombie_counter -eq 3 ]; then
          echo $(date) >> result.log
          echo $(kubectl get svc fazcontainerhttps -n $faznamespace) failed | tee >> result.log
          echo with $(kubectl get svc fmgcontainerhttps -n $fmgnamespace)  | tee >> result.log
-         break
+         exit
 fi
 
 
@@ -76,7 +76,7 @@ if [ $fmg_zombie_counter -eq 3 ]; then
          echo $(date) >> result.log
          echo $(kubectl get svc fmgcontainerhttps -n $fmgnamespace ) failed | tee >> result.log
          echo with $(kubectl get svc fazcontainerhttps -n $faznamespace )  | tee >> result.log
-         break
+         exit
 fi
 
 sleep 30
