@@ -1,0 +1,148 @@
+found Z once in fortianalyzer-deployment-69d68f7b74-k5bwm at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-69d68f7b74-k5bwm at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-69d68f7b74-k5bwm at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+Zombie init process detected in fortianalyzer-deployment-69d68f7b74-k5bwm!
+Wed Sep 20 06:06:03 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 192.168.194.206 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 192.168.194.233 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s
+completed 1 round
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-mvbql 0/1 Running 0 32s fortianalyzer-deployment-69d68f7b74-k5bwm 0/1 Running 0 32s
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-mvbql 0/1 Running 0 32s fortianalyzer-deployment-69d68f7b74-k5bwm 0/1 Running 0 32s
+found Z once in fortianalyzer-deployment-69d68f7b74-jw7fj at fortinet
+init(1)-+-cmdbsvr(154) `-init(204)
+found Z once in fortianalyzer-deployment-69d68f7b74-jw7fj at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(377)
+found Z once in fortianalyzer-deployment-69d68f7b74-jw7fj at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(377)
+Zombie init process detected in fortianalyzer-deployment-69d68f7b74-jw7fj!
+Wed Sep 20 06:07:11 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 192.168.194.244 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 192.168.194.146 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s
+completed 2 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-jw7fj 0/1 Running 0 32s fortimanager-deployment-676b44f67c-qdr8v 0/1 Running 0 32s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-jw7fj 0/1 Running 0 32s fortimanager-deployment-676b44f67c-qdr8v 0/1 Running 0 32s
+found Z once in fortianalyzer-deployment-69d68f7b74-xbgg7 at fortinet
+init(1)-+-cmdbsvr(154) `-init(204)
+found Z once in fortianalyzer-deployment-69d68f7b74-xbgg7 at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(377)
+found Z once in fortianalyzer-deployment-69d68f7b74-xbgg7 at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(377)
+Zombie init process detected in fortianalyzer-deployment-69d68f7b74-xbgg7!
+Wed Sep 20 06:08:19 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 192.168.194.229 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 192.168.194.213 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s
+completed 3 round
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-pfprh 0/1 Running 0 32s fortianalyzer-deployment-69d68f7b74-xbgg7 0/1 Running 0 32s
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-pfprh 0/1 Running 0 32s fortianalyzer-deployment-69d68f7b74-xbgg7 0/1 Running 0 32s
+found Z once in fortianalyzer-deployment-69d68f7b74-dp2gl at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-69d68f7b74-dp2gl at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-69d68f7b74-dp2gl at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+Zombie init process detected in fortianalyzer-deployment-69d68f7b74-dp2gl!
+Wed Sep 20 06:09:27 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 192.168.194.218 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 32s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 192.168.194.190 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 31s
+completed 4 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-dp2gl 0/1 Running 0 32s fortimanager-deployment-676b44f67c-75mfg 0/1 Running 0 32s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-dp2gl 0/1 Running 0 32s fortimanager-deployment-676b44f67c-75mfg 0/1 Running 0 32s
+completed 1 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-7tg49 1/1 Running 0 2m33s
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-r7mmk 1/1 Running 0 2m33s
+completed 2 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-qgpwv 1/1 Running 0 2m33s
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-nm9g7 1/1 Running 0 2m32s
+completed 3 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-pt58d 1/1 Running 0 2m33s
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-gmdqh 1/1 Running 0 2m33s
+completed 4 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-69d68f7b74-4p45w 1/1 Running 0 2m33s
+NAME READY STATUS RESTARTS AGE fortimanager-deployment-676b44f67c-2t6dn 1/1 Running 0 2m33s
+completed 5 round
+
+
+completed 1 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-xrcd2 1/1 Running 0 2m35s fortimanager-deployment-5bdd8f4c75-pghqx 1/1 Running 0 2m35s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-xrcd2 1/1 Running 0 2m35s fortimanager-deployment-5bdd8f4c75-pghqx 1/1 Running 0 2m35s
+found Z once in fortianalyzer-deployment-5f5ffd64d6-lsvdn at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-lsvdn at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-lsvdn at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-lsvdn!
+Wed Sep 20 08:12:53 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.109.241.247 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 33s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.100.148.149 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s
+completed 2 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-lsvdn 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-xgkc2 0/1 Running 0 34s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-lsvdn 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-xgkc2 0/1 Running 0 34s
+found Z once in fortimanager-deployment-5bdd8f4c75-wk7hd at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-wk7hd at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-wk7hd at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+Zombie init process detected in fortimanager-deployment-5bdd8f4c75-wk7hd!
+Wed Sep 20 08:14:00 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.110.248.68 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 35s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.99.169.19 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 35s
+completed 3 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-v629w 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-wk7hd 0/1 Running 0 35s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-v629w 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-wk7hd 0/1 Running 0 35s
+found Z once in fortimanager-deployment-5bdd8f4c75-t7gql at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-t7gql at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-t7gql at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+Zombie init process detected in fortimanager-deployment-5bdd8f4c75-t7gql!
+Wed Sep 20 08:15:07 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.96.184.247 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.98.139.88 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s
+completed 4 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-tjth8 0/1 Running 0 34s fortimanager-deployment-5bdd8f4c75-t7gql 0/1 Running 0 34s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-tjth8 0/1 Running 0 34s fortimanager-deployment-5bdd8f4c75-t7gql 0/1 Running 0 34s
+found Z once in fortianalyzer-deployment-5f5ffd64d6-5m8vc at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-5m8vc at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) |-init(434)-+-svc cmdb reader(713) |-init(676)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-5m8vc at fortinet
+init(1)-+-FortiManagerWS(1238) |-init(204) |-init(1241) |-init(1245) |-init(1272) |-init(1371)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-5m8vc!
+Wed Sep 20 08:16:15 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.103.82.0 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.108.53.95 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s
+completed 5 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-5m8vc 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-czk66 0/1 Running 0 34s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-5m8vc 0/1 Running 0 36s fortimanager-deployment-5bdd8f4c75-czk66 0/1 Running 0 35s
+found Z once in fortianalyzer-deployment-5f5ffd64d6-jxr96 at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) `-init(359)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-jxr96 at fortinet
+init(1)-+-cmdbsvr(154) |-init(204) |-init(438)-+-svc dvmdb reade(555) |-init(598) |-init(642)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-jxr96 at fortinet
+init(1)-+-FortiManagerWS(1454) |-init(204) |-init(1507) |-init(1541) |-init(1602) |-init(1633)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-jxr96!
+Wed Sep 20 08:17:23 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.101.79.91 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 35s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.111.53.98 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 35s
+completed 6 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-jxr96 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-hrjbr 0/1 Running 0 35s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-jxr96 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-hrjbr 0/1 Running 0 35s
+found Z once in fortimanager-deployment-5bdd8f4c75-4dclg at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-4dclg at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-4dclg at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+Zombie init process detected in fortimanager-deployment-5bdd8f4c75-4dclg!
+Wed Sep 20 08:18:29 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.101.123.143 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s failed
+with NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.98.160.32 <none> 443/TCP,514/TCP,541/TCP,8123/TCP,8443/TCP 34s
+completed 7 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-sfrfv 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-4dclg 0/1 Running 0 34s
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-sfrfv 0/1 Running 0 35s fortimanager-deployment-5bdd8f4c75-4dclg 0/1 Running 0 34s
