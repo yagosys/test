@@ -1,0 +1,24 @@
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortimanager-deployment-5bdd8f4c75-q8f8b at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-q8f8b at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-q8f8b at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+Zombie init process detected in fortimanager-deployment-5bdd8f4c75-q8f8b!
+Thu Sep 21 18:40:49 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.98.12.3 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP,2544/TCP,2545/TCP,2546/TCP 33s failed
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortimanager-deployment-5bdd8f4c75-5x6lt at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-5x6lt at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+found Z once in fortimanager-deployment-5bdd8f4c75-5x6lt at fortinet
+init(1)-+-cmdbsvr(157) |-init(207) `-init(362)
+Zombie init process detected in fortimanager-deployment-5bdd8f4c75-5x6lt!
+Thu Sep 21 18:45:39 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fmgcontainerhttps ClusterIP 10.110.112.154 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP,2544/TCP,2545/TCP,2546/TCP 32s failed

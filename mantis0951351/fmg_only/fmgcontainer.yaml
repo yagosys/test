@@ -1,0 +1,66 @@
+#https://docs.fortinet.com/document/fortimanager/7.0.0/fortimanager-ports/290737/incoming-ports
+#514, logging, OFTP , both TCP and UDP  , TCP 8443 Log from chromebook, , 8080, SOAP , TCP/445 DC polling 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortimanager-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortimanager
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: fortimanager
+    spec:
+#      initContainers:
+#      - name: init-sleep
+#        image: busybox
+#        command: 
+#        - /bin/sh
+#        - -c
+#        - |
+#          unset fmgCONTAINERHTTPS_PORT_28889_TCP_PORT
+
+      containers:
+        - name: fortimanager
+          image: fortinet/fortimanager:7.2.2
+#          image: nginx:latest
+#          resources:
+#            limits:
+#              cpu: "2"
+#              memory: "16000Mi"
+#            requests:
+#              cpu: "2"
+#              memory: "8000Mi"
+#          command:
+#          - /bin/sh
+#          - -c
+#          - |
+          securityContext:
+            capabilities:
+              add:
+                - ALL
+          readinessProbe:
+            tcpSocket:
+              port: 443
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          volumeMounts:
+            - name: var-fmgt100
+              mountPath: /var
+            - name: data-fmgt100
+              mountPath: /data
+      volumes:
+        - name: var-fmgt100
+          persistentVolumeClaim:
+            claimName: fmgvar
+        - name: data-fmgt100
+          persistentVolumeClaim:
+            claimName: fmgdata
+
