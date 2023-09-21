@@ -58,6 +58,7 @@ kubectl create -f fmgcontainer.yaml -n $fmgnamespace
 #sleep 2
 kubectl create -f fmgcluster.yaml -n $fmgnamespace 
 sleep 30
+kubectl create -f ingress.yaml -n $fmgnamespace
 }
 
 function delete_fmg_fmg () {
