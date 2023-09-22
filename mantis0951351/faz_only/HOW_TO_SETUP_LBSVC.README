@@ -1,0 +1,60 @@
+1. install metallb
+
+```
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
+
+```
+2. create ipppol 
+
+replace ip address in metallbippoolyml file in case it does not match your minikube ip
+```
+kubeclt create -f metallbippool.yml
+
+```
+
+3. create LB SVC for faz
+make sure the annoation ip address match the ip addres of ippool 
+
+```
+kubectl create -f fazlb443.yaml -n fortinet
+```
+
+4. check the LB SVC
+
+```
+interbeing@appledeiMac:~/Documents/icloud/k8s/faz_only$ k get svc fazlb443 -n fortinet
+NAME       TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)           AGE
+fazlb443   LoadBalancer   10.98.164.71   192.168.49.2   38443:30128/TCP   4m31s
+
+interbeing@appledeiMac:~/Documents/icloud/k8s/faz_only$ k describe svc fazlb443 -n fortinet
+Name:                     fazlb443
+Namespace:                fortinet
+Labels:                   <none>
+Annotations:              metallb.universe.tf/ip-allocated-from-pool: production
+                          metallb.universe.tf/loadBalancerIPs: 192.168.49.2
+Selector:                 app=fortianalyzer
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.98.164.71
+IPs:                      10.98.164.71
+LoadBalancer Ingress:     192.168.49.2
+Port:                     <unset>  38443/TCP
+TargetPort:               443/TCP
+NodePort:                 <unset>  30128/TCP
+Endpoints:                10.244.1.38:443
+Session Affinity:         ClientIP
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason       Age    From                Message
+  ----    ------       ----   ----                -------
+  Normal  IPAllocated  4m38s  metallb-controller  Assigned IP ["192.168.49.2"]
+
+```
+5. access the GUI port
+
+
+```
+interbeing@appledeiMac:~/Documents/icloud/k8s/faz_only$ curl -k https://192.168.49.2:38443
+<html><body><script>top.location='/p/login/'+top.location.search;</script></body></html>
+```

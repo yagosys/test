@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fazcontainerhttps
+spec:
+  sessionAffinity: ClientIP
+  ports:
+  - port: 443
+    name: webgui
+    protocol: TCP
+    targetPort: 443
+  - port: 22
+    name: ssh
+    protocol: TCP
+    targetPort: 22
+  - port: 8888
+    name: weba
+    protocol: TCP
+    targetPort: 8888
+  - port: 8889
+    name: webb
+    protocol: TCP
+    targetPort: 8889
+  - port: 8890
+    name: webc
+    protocol: TCP
+    targetPort: 8890
+  - port: 8080
+    name: soap
+    protocol: TCP
+    targetPort: 8080
+  - port: 514
+    name: oftpd
+    protocol: TCP
+    targetPort: 514
+  - port: 541
+    name: fgfm
+    protocol: TCP
+    targetPort: 541
+  - port: 8793
+    name: mast
+    protocol: TCP
+    targetPort: 8793
+  - port: 8443
+    name: webg
+    protocol: TCP
+    targetPort: 8443
+  - port: 9999
+    name: webh
+    protocol: TCP
+    targetPort: 9999
+  - port: 161
+    name: syslog
+    protocol: UDP
+    targetPort: 161
+  - port: 542
+    name: fgfm2
+    protocol: TCP
+    targetPort: 542
+  - port: 543
+    name: fgfm3
+    protocol: TCP
+    targetPort: 543
+  #- port: 2544
+  #  name: fgfm4
+  #  protocol: TCP
+  #  targetPort: 2544
+  #- port: 2545
+  #  name: fgfm5
+  #  protocol: TCP
+  #  targetPort: 2545
+  #- port: 2546
+  #  name: fgfm6
+  #  protocol: TCP
+  #  targetPort: 2546
+  selector:
+    app: fortianalyzer
+  type: ClusterIP

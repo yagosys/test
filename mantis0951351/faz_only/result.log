@@ -1,0 +1,88 @@
+completed 1 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-mdlbk 1/1 Running 0 3m6s
+------DELETE DEPLOYMENT -----
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+completed 1 round
+NAME READY STATUS RESTARTS AGE fortianalyzer-deployment-5f5ffd64d6-nwbdc 1/1 Running 0 3m5s
+------DELETE DEPLOYMENT -----
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortianalyzer-deployment-5f5ffd64d6-v77n6 at fortinet
+init(1)-+-FortiManagerWS(1493) |-init(204) |-init(1535) |-init(1568) |-init(1621) |-init(1674)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-v77n6 at fortinet
+init(1)-+-FortiManagerWS(1493) |-init(204) |-init(1535) |-init(1568) |-init(1621) |-init(1674)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-v77n6 at fortinet
+init(1)-+-FortiManagerWS(1493) |-init(12734)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-v77n6 at fortinet
+init(1)-+-FortiManagerWS(1493) |-init(12765) |-init(12766)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-v77n6 at fortinet
+init(1)-+-FortiManagerWS(1493) |-init(12845)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-v77n6!
+Thu Sep 21 18:23:22 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.102.170.156 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP,2544/TCP,2545/TCP,2546/TCP 68s failed
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortianalyzer-deployment-5f5ffd64d6-rwpcg at fortinet
+init(1)-+-dmserver(480) |-init(5335) |-init(5336)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-rwpcg at fortinet
+init(1)-+-dmserver(480) |-init(5413)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-rwpcg at fortinet
+init(1)-+-dmserver(480) |-init(5492)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-rwpcg!
+Fri Sep 22 09:19:19 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps LoadBalancer 10.100.83.221 <pending> 443:31797/TCP,22:31509/TCP,8888:30289/TCP,8889:32536/TCP,8890:31707/TCP,8080:30586/TCP,514:32743/TCP,541:32176/TCP,8793:31361/TCP,8443:32079/TCP,9999:31213/TCP,161:31155/UDP,542:32256/TCP,543:31755/TCP,2544:31945/TCP,2545:31208/TCP,2546:31096/TCP 33s failed
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortianalyzer-deployment-5f5ffd64d6-9vpfs at fortinet
+init(1)-+-init(1506) `-init(1507)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-9vpfs at fortinet
+init(1)---init(1603)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-9vpfs at fortinet
+init(1)-+-init(1693) `-init(1694)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-9vpfs!
+Fri Sep 22 12:49:06 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.104.176.83 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP,2544/TCP,2545/TCP,2546/TCP 33s failed
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortianalyzer-deployment-5f5ffd64d6-tdsqn at fortinet
+init(1)-+-dmserver(485) |-init(3853) |-init(3854)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-tdsqn at fortinet
+init(1)-+-FortiManagerWS(3964) |-init(3937) |-init(3938) |-init(3945) |-init(3946) |-init(3947) |-init(3948) |-init(3949) |-init(3950) |-init(3951) |-init(3952) |-init(3953) |-init(3954) |-init(3955) |-init(3956) |-init(3957) |-init(3958) |-init(3959) |-init(3960) |-init(3961) |-init(3962) |-init(3963) |-init(3965) |-init(3966) |-init(3967) |-init(3968) |-init(3969) |-init(3970) |-init(3971) |-init(3972) |-init(3973) |-init(3974) |-init(3975) |-init(3976) |-init(3977) |-init(3984) |-init(3985) |-init(3986)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-tdsqn at fortinet
+init(1)-+-dmserver(485) |-init(4015) |-init(4016) |-init(4023) |-init(4024) |-init(4025) |-init(4026) |-init(4027) |-init(4028) |-init(4029) |-init(4030) |-init(4031) |-init(4032) |-init(4033) |-init(4034) |-init(4035) |-init(4036) |-init(4037) |-init(4038) |-init(4039) |-init(4040) |-init(4041)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-tdsqn!
+Fri Sep 22 12:53:56 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.102.26.113 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP 33s failed
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortianalyzer-deployment-5f5ffd64d6-stw6v at fortinet
+init(1)-+-FortiManagerWS(1124) |-init(2624) |-init(2625) |-pgsvrd(2563)---initdb(2571)---sh(2606)---postgres(2607)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-stw6v at fortinet
+init(1)-+-FortiManagerWS(1124) |-init(2900) |-init(2901) |-pgsvrd(2563)---initdb(2571)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-stw6v at fortinet
+init(1)-+-FortiManagerWS(1124) |-init(2952) |-init(2953)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-stw6v!
+Fri Sep 22 12:56:45 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.109.114.121 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP 38s failed
+------CREATE DEPLOYMENT ------
+------CHECK FOR ZOMBIE PROCESS ----------
+found Z once in fortianalyzer-deployment-5f5ffd64d6-2r9w8 at fortinet
+init(1)-+-FortiManagerWS(1439) |-init(2960) |-init(2966)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-2r9w8 at fortinet
+init(1)-+-FortiManagerWS(1439) |-init(2997) |-init(3003)
+found Z once in fortianalyzer-deployment-5f5ffd64d6-2r9w8 at fortinet
+init(1)-+-FortiManagerWS(1439) |-init(3008) |-init(3009)
+Zombie init process detected in fortianalyzer-deployment-5f5ffd64d6-2r9w8!
+Fri Sep 22 13:35:44 CST 2023
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE fazcontainerhttps ClusterIP 10.96.226.143 <none> 443/TCP,22/TCP,8888/TCP,8889/TCP,8890/TCP,8080/TCP,514/TCP,541/TCP,8793/TCP,8443/TCP,9999/TCP,161/UDP,542/TCP,543/TCP 36s failed
