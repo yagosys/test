@@ -89,24 +89,31 @@ function create_faz_fmg () {
 kubectl create -f pvc_faz.yaml -n $faznamespace 
 kubectl create -f pvc_fmg.yaml -n $fmgnamespace 
 kubectl create -f fazcontainer.yaml -n $faznamespace
+#sleep 10
 kubectl create -f fmgcontainer.yaml -n $fmgnamespace
-kubectl create -f fazcluster.yaml -n $faznamespace
-kubectl create -f fmgcluster.yaml -n $fmgnamespace 
+#sleep 10
+kubectl create -f fazcluster_long.yaml -n $faznamespace
+kubectl create -f fmgcluster_long.yaml  -n $fmgnamespace 
+sleep 30
 }
 
 function delete_faz_fmg () {
-kubectl delete -f fazcluster.yaml -n $faznamespace 
-kubectl delete -f fmgcluster.yaml -n $fmgnamespace
+kubectl delete -f fazcluster_long.yaml -n $faznamespace 
+kubectl delete -f fmgcluster_long.yaml -n $fmgnamespace
 kubectl delete -f fazcontainer.yaml -n $faznamespace 
 kubectl delete -f fmgcontainer.yaml -n $fmgnamespace 
+sleep 15
 kubectl delete -f pvc_faz.yaml -n $faznamespace 
+sleep 2
 kubectl delete -f pvc_fmg.yaml -n $fmgnamespace 
+sleep 2
+
 }
 
-#faznamespace="fortianalyzer"
-faznamespace="fortinet"
-#fmgnamespace="fortimanager"
-fmgnamespace="fortinet"
+faznamespace="fortianalyzer"
+#faznamespace="fortinet"
+fmgnamespace="fortimanager"
+#fmgnamespace="fortinet"
 
 kubectl create namespace $faznamespace
 kubectl create namespace $fmgnamespace 

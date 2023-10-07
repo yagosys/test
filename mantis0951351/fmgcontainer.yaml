@@ -17,9 +17,18 @@ spec:
       labels:
         app: fortimanager
     spec:
+#      initContainers:
+#      - name: init-sleep
+#        image: busybox
+#        command: ["/bin/sh", "-c", "sleep 1"]
       containers:
         - name: fortimanager
-          image: fortinet/fortimanager:7.2.2
+#          image: interbeing/myfmg:fmgfix.01
+          image: interbeing/myfmg:fmg7248590
+#          image: fortinet/fortimanager:7.2.2
+          imagePullPolicy: IfNotPresent
+          command: 
+          - /sbin/init
 #          resources:
 #            limits:
 #              cpu: "2"

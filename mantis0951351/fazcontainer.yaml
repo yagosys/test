@@ -20,10 +20,20 @@ spec:
 #      initContainers:
 #      - name: init-sleep
 #        image: busybox
-#        command: ['sh', '-c', 'sleep 1200']
+#        command: 
+#        - /bin/sh
+#        - -c
+#        - |
+#          unset FAZCONTAINERHTTPS_PORT_28889_TCP_PORT
+
       containers:
         - name: fortianalyzer
-          image: fortinet/fortianalyzer:7.2.2
+#          image: fortinet/fortianalyzer:7.2.2
+          image: interbeing/myfmg:faz7248590
+          imagePullPolicy: IfNotPresent
+          command:
+          - /sbin/init
+#          image: nginx:latest
 #          resources:
 #            limits:
 #              cpu: "2"
@@ -31,6 +41,10 @@ spec:
 #            requests:
 #              cpu: "2"
 #              memory: "8000Mi"
+#          command:
+#          - /bin/sh
+#          - -c
+#          - |
           securityContext:
             capabilities:
               add:
