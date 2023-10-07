@@ -94,7 +94,7 @@ kubectl create -f fmgcontainer.yaml -n $fmgnamespace
 #sleep 10
 kubectl create -f fazcluster_long.yaml -n $faznamespace
 kubectl create -f fmgcluster_long.yaml  -n $fmgnamespace 
-sleep 30
+sleep  $TIME_TO_WAIT_FOR_CONTAINER_TO_BOOT
 }
 
 function delete_faz_fmg () {
@@ -110,11 +110,11 @@ sleep 2
 
 }
 
-faznamespace="fortianalyzer"
-#faznamespace="fortinet"
-fmgnamespace="fortimanager"
-#fmgnamespace="fortinet"
-
+#faznamespace="fortianalyzer"
+faznamespace="fortinet"
+#fmgnamespace="fortimanager"
+fmgnamespace="fortinet"
+TIME_TO_WAIT_FOR_CONTAINER_TO_BOOT=120
 kubectl create namespace $faznamespace
 kubectl create namespace $fmgnamespace 
 ncount=1
