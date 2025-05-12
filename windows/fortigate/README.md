@@ -1,7 +1,10 @@
 ##diagram
 ```bash
-10.0.2.5 ----10.0.2.4--eth1-(cFOS on ubuntu vM)-eth0 ---10.0.1.4 ---10.0.1.5
+client-2 10.0.2.5 ----10.0.2.4--eth1-(cFOS on ubuntu vM)-eth0 ---10.0.1.4 ---10.0.1.5 client-1
 ```
+
+both client-2 and clinet-1 has route point to cFOS VM for peer subnet.configred in vnet UDR.  
+
 
 ## ubuntu vm config
 
