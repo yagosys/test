@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 
 # Global variables with default values using variable expansion
 LOCATION="${LOCATION:-westus2}"
@@ -23,7 +23,7 @@ MyRouteEntry="${MyRouteEntry:-0.0.0.0/0}"
 # Function to clean up resources on failure
 cleanup() {
     echo "Cleaning up resources..."
-    az group delete --name "$MyResourceGroup" --yes --no-wait
+    #az group delete --name "$MyResourceGroup" --yes --no-wait
     exit 1
 }
 
@@ -62,6 +62,8 @@ runcmd:
   - usermod -aG docker azureuser
   - iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
   - iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+  - echo docker login -u username -p password
+  - echo docker pull interbeing/fos:x86v255
 EOF
 
     # 1. Create Resource Group
@@ -207,7 +209,7 @@ create_ubuntu_client_in_internalnet() {
 
 # Function to create Ubuntu client in external network
 create_ubuntu_client_in_externalnet() {
-    az network public-ip create \
+echo omit    az network public-ip create \
         --resource-group "$MyResourceGroup" \
         --name "$MyPublicIP3" \
         --sku Standard || { echo "Failed to create external client public IP"; exit 1; }
@@ -217,8 +219,8 @@ create_ubuntu_client_in_externalnet() {
         --name "$MyExternalClientNIC" \
         --vnet-name "$MyVNet" \
         --subnet "$MySubnet" \
-        --network-security-group "$MyNSG" \
-        --public-ip-address "$MyPublicIP3" || { echo "Failed to create external client NIC"; exit 1; }
+        --network-security-group "$MyNSG" 
+#        --public-ip-address "$MyPublicIP3" || { echo "Failed to create external client NIC"; exit 1; }
 
     az vm create \
         --resource-group "$MyResourceGroup" \
@@ -295,17 +297,172 @@ EXTERNAL_NIC_IP=$(az network nic show --resource-group "$MyResourceGroup" --name
         --route-table "externalRouteTable" || { echo "Failed to update external subnet"; exit 1; }
 }
 
-# Execute main provisioning
-provision_azure_resources "$@"
+function test_host_reachability() {
+set -x
+echo "Testing connectivity from internal client to external client..."
+PUBLIC_IP=$(az network public-ip show --resource-group "$MyResourceGroup" --name "$MyPublicIP" --query ipAddress -o tsv)
+echo $PUBLIC_IP
+INTERNAL_CLIENT_IP=$(az network nic show --resource-group "$MyResourceGroup" --name "$MyClientNIC" --query 'ipConfigurations[0].privateIPAddress' -o tsv)
+EXTERNAL_CLIENT_IP=$(az network nic show --resource-group "$MyResourceGroup" --name "$MyExternalClientNIC" --query 'ipConfigurations[0].privateIPAddress' -o tsv)
+ssh -o StrictHostKeyChecking=no azureuser@$INTERNAL_CLIENT_IP -J azureuser@$PUBLIC_IP  "ping -I eth0 -c 4 $EXTERNAL_CLIENT_IP"
+ssh -o StrictHostKeyChecking=no azureuser@$EXTERNAL_CLIENT_IP -J azureuser@$PUBLIC_IP  'tmux new-session -d -s httpserver "python3 -m http.server"'
+ssh -o StrictHostKeyChecking=no azureuser@$INTERNAL_CLIENT_IP -J azureuser@$PUBLIC_IP  "curl -v -m 5 -H 'User-Agent: () { :; }; /bin/ls' http://$EXTERNAL_CLIENT_IP:8000"
+#ssh -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it cfos tail /var/log/log/ips.0
+}
 
-# Execute client creation
+function show_cfos_log() {
+set -x
+echo "Testing connectivity from internal client to external client..."
+PUBLIC_IP=$(az network public-ip show --resource-group "$MyResourceGroup" --name "$MyPublicIP" --query ipAddress -o tsv)
+echo $PUBLIC_IP
+ssh -t  -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it cfos tail /var/log/log/traffic.0
+ssh -t  -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it cfos tail /var/log/log/ips.0
+}
+
+
+function create_cfos() {
+    local imagetag="${1:-interbeing/fos:x86v255}"
+    local repo_type="${2:-private}"
+    local container_name="${3:-cfos}"
+
+    PUBLIC_IP=$(az network public-ip show --resource-group "$MyResourceGroup" --name "$MyPublicIP" --query ipAddress -o tsv)
+
+    # Check Docker authentication if repo is private
+    if [ "$repo_type" = "private" ]; then
+        if ! ssh azureuser@$PUBLIC_IP "grep -q 'https://index.docker.io/v1/' ~/.docker/config.json 2>/dev/null"; then
+            echo "Docker authentication required for private repository..."
+            ssh -t azureuser@$PUBLIC_IP "docker login"
+        fi
+    fi
+
+    # Check if image exists before pulling
+    ssh azureuser@$PUBLIC_IP \
+        "if ! docker inspect --type=image $imagetag >/dev/null 2>&1; then
+            echo 'Pulling Docker image...'
+            docker pull $imagetag
+        else
+            echo 'Image $imagetag already exists. Skipping pull.'
+        fi"
+
+    # Run container
+    ssh azureuser@$PUBLIC_IP \
+        "docker run -it -d --name $container_name --network host --privileged -v ${container_name}data:/data $imagetag"
+
+    # Verify container status
+    echo -e "\nContainer status:"
+    ssh azureuser@$PUBLIC_IP "docker ps --filter 'name=$container_name'"
+
+    # Display credentials
+    echo -e "\nLogin credentials:"
+    echo "Username: admin"
+    echo "Password: [empty]"
+    echo "Use 'execute import-license' to import license after login if license not yet applied"
+
+    # Connect to CLI
+    ssh -t azureuser@$PUBLIC_IP "docker exec -it $container_name /bin/cli"
+}
+
+function config_cfos_policy() {
+set -x 
+    filename="policy.json"
+
+    # Create policy.json locally
+    cat << EOF > "$filename"
+[
+    {
+        "policyid": 10,
+        "status": "enable",
+        "utm-status": "enable",
+        "name": "",
+        "comments": "",
+        "srcintf": [
+            "eth1"
+        ],
+        "dstintf": [
+            "eth0"
+        ],
+        "srcaddr": [
+            "all"
+        ],
+        "dstaddr": [
+            "all"
+        ],
+        "srcaddr6": [],
+        "dstaddr6": [],
+        "service": [
+            "ALL"
+        ],
+        "ssl-ssh-profile": "no-inspection",
+        "profile-type": "single",
+        "profile-group": "",
+        "profile-protocol-options": "default",
+        "av-profile": "",
+        "webfilter-profile": "",
+        "ips-sensor": "default",
+        "application-list": "",
+        "action": "accept",
+        "nat": "disable",
+        "custom-log-fields": [],
+        "logtraffic": "all"
+    }
+]
+EOF
+
+    # Get public IP
+    PUBLIC_IP=$(az network public-ip show --resource-group "$MyResourceGroup" --name "$MyPublicIP" --query ipAddress -o tsv)
+
+echo $PUBLIC_IP
+    # Copy policy.json to the VM
+    scp -o StrictHostKeyChecking=no "$filename" azureuser@$PUBLIC_IP:~/policy.json
+
+    # Copy file from VM into the cfos container
+    ssh -t azureuser@$PUBLIC_IP "docker exec -i cfos sh -c '/bin/busybox more > /data/cmdb/config/firewall/policy.json'" < policy.json
+    ssh -t azureuser@$PUBLIC_IP "docker stop cfos" 
+    ssh -t azureuser@$PUBLIC_IP "docker start cfos" 
+
+
+}
+
+function showcfosusage() {
+echo ssh azureuser@$PUBLIC_IP docker login 
+echo ssh azureuser@$PUBLIC_IP docker pull interbeing/fos:x86v255
+
+echo step 1. run cfos on $PUBLIC_IP and apply license
+echo docker run -it -d --rm --name cfos --network host --privileged -v cfosdata:/data interbeing/fos:x86v255
+echo docker exec -it cfos sh
+echo config cfos with policy 
+echo config firewall policy
+echo    edit 10
+echo        set utm-status enable
+echo        set srcintf "eth1"
+echo        set dstintf "eth0"
+echo        set srcaddr "all"
+echo        set dstaddr "all"
+echo        set service "ALL"
+echo        set ips-sensor "default"
+echo        set logtraffic all
+echo    next
+echo end
+echo step 2. run web server on $EXTERNAL_CLIENT_IP with python3 -m http.server in tmux 
+echo step 3. run attak on $INTERNAL_CLIENT_IP 
+echo curl -v  -m 5 -H "User-Agent: () { :; }; /bin/ls" http://$EXTERNAL_CLIENT_IP:8000
+echo "check log on cfos with tail -f /var/log/log/ips.0"
+echo "docker exec -it cfos tail /var/log/log/ips.0
+date=2025-05-11 time=23:55:50 eventtime=1747007750 tz="+0000" logid="0419016384" type="utm" subtype="ips" eventtype="signature" level="alert" severity="critical" srcip=10.0.2.5 dstip=10.0.1.5 srcintf="eth1" dstintf="eth0" sessionid=5 action="dropped" proto=6 service="HTTP" policyid=10 attack="Bash.Function.Definitions.Remote.Code.Execution" srcport=57658 dstport=8000 hostname="10.0.1.5" url="/" direction="outgoing" attackid=39294 profile="default" incidentserialno=246415361 msg="applications3: Bash.Function.Definitions.Remote.Code.Execution"
+date=2025-05-11 time=23:57:26 eventtime=1747007846 tz="+0000" logid="0419016384" type="utm" subtype="ips" eventtype="signature" level="alert" severity="critical" srcip=10.0.2.5 dstip=10.0.1.5 srcintf="eth1" dstintf="eth0" sessionid=6 action="dropped" proto=6 service="HTTP" policyid=10 attack="Bash.Function.Definitions.Remote.Code.Execution" srcport=46990 dstport=8000 hostname="10.0.1.5" url="/" direction="outgoing" attackid=39294 profile="default" incidentserialno=246415362 msg="applications3: Bash.Function.Definitions.Remote.Code.Execution""
+
+}
+
+function main() {
+provision_azure_resources "$@"
 create_ubuntu_client_in_internalnet
 create_ubuntu_client_in_externalnet
 create_udr_to_fortigate
 createudrforexternalnet
+create_cfos "interbeing/fos:x86v255" "private" "cfos" 
+config_cfos_policy 
+test_host_reachability
+show_cfos_log
+}
 
-# Optional: Test connectivity (requires SSH access to internal client)
-# echo "Testing connectivity from internal client to external client..."
-# INTERNAL_CLIENT_IP=$(az network nic show --resource-group "$MyResourceGroup" --name "$MyClientNIC" --query 'ipConfigurations[0].privateIpAddress' -o tsv)
-# EXTERNAL_CLIENT_IP=$(az network nic show --resource-group "$MyResourceGroup" --name "$MyExternalClientNIC" --query 'ipConfigurations[0].privateIpAddress' -o tsv)
-# ssh azureuser@$PUBLIC_IP "ssh azureuser@$INTERNAL_CLIENT_IP ping -c 4 $EXTERNAL_CLIENT_IP"
+main 
