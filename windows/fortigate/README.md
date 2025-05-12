@@ -1,3 +1,10 @@
+##about createubuntuwith2nic.sh
+### run script under azure cloud console
+```bash
+./createubuntuwith2nic.sh  <docker image repo>   <public or private repo>  <azure resource region>
+```
+
+
 ##diagram
 ```bash
 client-2 10.0.2.5 ----10.0.2.4--eth1-(cFOS on ubuntu vM)-eth0 ---10.0.1.4 ---10.0.1.5 client-1
