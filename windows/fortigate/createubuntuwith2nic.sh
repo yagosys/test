@@ -348,8 +348,8 @@ function create_cfos() {
         fi"
 
     # Run container
-    ssh azureuser@$PUBLIC_IP \
-        "docker run -it -d --name $container_name --network host --privileged -v ${container_name}data:/data $imagetag"
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null azureuser@$PUBLIC_IP \
+        "docker run -it -d --name $container_name --network host --privileged -v cfosdata:/data $imagetag"
 
     # Verify container status
     echo -e "\nContainer status:"
@@ -359,10 +359,13 @@ function create_cfos() {
     echo -e "\nLogin credentials:"
     echo "Username: admin"
     echo "Password: [empty]"
-    echo "Use 'execute import-license' to import license after login if license not yet applied"
 
-    # Connect to CLI
-    ssh -t azureuser@$PUBLIC_IP "docker exec -it $container_name /bin/cli"
+    if ! ssh -t azureuser@$PUBLIC_IP "docker exec -i cfos ls /etc/device.crt" ; then 
+       echo "Use 'execute import-license' to import license after login if license not yet applied"
+       ssh -t azureuser@$PUBLIC_IP "docker exec -it $container_name /bin/cli"
+    else
+       echo license already exist
+    fi 
 }
 
 function config_cfos_policy() {
