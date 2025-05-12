@@ -19,6 +19,8 @@ MyDNSLabel="${MyDNSLabel:-ubuntuvm-$(date +%s)}"
 MyRouteTable="${MyRouteTable:-tofortigate}"
 MyRoute="${MyRoute:-someroute}"
 MyRouteEntry="${MyRouteEntry:-0.0.0.0/0}"
+MycFOSContainerName="${MycFOSContainerName:-cfos}"
+alias ssh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 # Function to clean up resources on failure
 cleanup() {
@@ -33,7 +35,7 @@ trap cleanup ERR
 # Function to provision main Azure resources
 provision_azure_resources() {
     # Override location if provided as argument
-    LOCATION="${1:-${LOCATION}}"
+    LOCATION="${3:-${LOCATION}}"
 
     # Update dependent variables that rely on dynamic values
     MyResourceGroup="${MyResourceGroup:-MC_wandyaks_myAKSCluster_${LOCATION}}"
@@ -307,7 +309,7 @@ EXTERNAL_CLIENT_IP=$(az network nic show --resource-group "$MyResourceGroup" --n
 ssh -o StrictHostKeyChecking=no azureuser@$INTERNAL_CLIENT_IP -J azureuser@$PUBLIC_IP  "ping -I eth0 -c 4 $EXTERNAL_CLIENT_IP"
 ssh -o StrictHostKeyChecking=no azureuser@$EXTERNAL_CLIENT_IP -J azureuser@$PUBLIC_IP  'tmux new-session -d -s httpserver "python3 -m http.server"'
 ssh -o StrictHostKeyChecking=no azureuser@$INTERNAL_CLIENT_IP -J azureuser@$PUBLIC_IP  "curl -v -m 5 -H 'User-Agent: () { :; }; /bin/ls' http://$EXTERNAL_CLIENT_IP:8000"
-#ssh -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it cfos tail /var/log/log/ips.0
+#ssh -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it $MycFOSContainerName tail /var/log/log/ips.0
 }
 
 function show_cfos_log() {
@@ -315,15 +317,16 @@ set -x
 echo "Testing connectivity from internal client to external client..."
 PUBLIC_IP=$(az network public-ip show --resource-group "$MyResourceGroup" --name "$MyPublicIP" --query ipAddress -o tsv)
 echo $PUBLIC_IP
-ssh -t  -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it cfos tail /var/log/log/traffic.0
-ssh -t  -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it cfos tail /var/log/log/ips.0
+ssh -t  -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it $MycFOSContainerName tail /var/log/log/traffic.0
+ssh -t  -o StrictHostKeyChecking=no azureuser@$PUBLIC_IP docker exec -it $MycFOSContainerName tail /var/log/log/ips.0
 }
 
 
 function create_cfos() {
     local imagetag="${1:-interbeing/fos:x86v255}"
     local repo_type="${2:-private}"
-    local container_name="${3:-cfos}"
+    local container_name="${3:-$MycFOSContainerName}"
+    MycFOSContainerName=$container_name
 
     PUBLIC_IP=$(az network public-ip show --resource-group "$MyResourceGroup" --name "$MyPublicIP" --query ipAddress -o tsv)
 
@@ -416,9 +419,11 @@ echo $PUBLIC_IP
     scp -o StrictHostKeyChecking=no "$filename" azureuser@$PUBLIC_IP:~/policy.json
 
     # Copy file from VM into the cfos container
-    ssh -t azureuser@$PUBLIC_IP "docker exec -i cfos sh -c '/bin/busybox more > /data/cmdb/config/firewall/policy.json'" < policy.json
-    ssh -t azureuser@$PUBLIC_IP "docker stop cfos" 
-    ssh -t azureuser@$PUBLIC_IP "docker start cfos" 
+    ssh -t azureuser@$PUBLIC_IP "docker exec -i $MycFOSContainerName sh -c '/bin/busybox more > /data/cmdb/config/firewall/policy.json'" < policy.json
+    ssh -t azureuser@$PUBLIC_IP "docker stop $MycFOSContainerName" 
+    ssh -t azureuser@$PUBLIC_IP "docker ps"
+    ssh -t azureuser@$PUBLIC_IP "docker start $MycFOSContainerName" 
+    ssh -t azureuser@$PUBLIC_IP "docker ps"
 
 
 }
@@ -453,16 +458,30 @@ date=2025-05-11 time=23:57:26 eventtime=1747007846 tz="+0000" logid="0419016384"
 
 }
 
+function print_usage() {
+echo "Usage: $0 {imagetag [public | private ] region "
+echo "Example ./$0 interbeing/fos:x86v255 private westus2"
+echo "Example ./$0 yourrepo  public westus2"
+}
+
 function main() {
-provision_azure_resources "$@"
+if [ $# -lt 1 ]; then
+    print_usage
+    exit 1
+fi 
+
+local image="${1:-interbeing/fos:x86v255}"
+local mode="${2:-private}"
+local location="${3:-westus2}"
+provision_azure_resources 
 create_ubuntu_client_in_internalnet
 create_ubuntu_client_in_externalnet
 create_udr_to_fortigate
 createudrforexternalnet
-create_cfos "interbeing/fos:x86v255" "private" "cfos" 
+create_cfos $image $mode "cfos" 
 config_cfos_policy 
 test_host_reachability
 show_cfos_log
 }
 
-main 
+main $@
